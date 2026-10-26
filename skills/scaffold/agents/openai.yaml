@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scaffold"
+  short_description: "Start a repo on the standard stack with CI deploys"
+  default_prompt: "Use $scaffold to set up a new project for this."

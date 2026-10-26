@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unslop"
+  short_description: "Strip AI-writing patterns, keep meaning and facts"
+  default_prompt: "Use $unslop to edit this text so it reads plainly and calmly."

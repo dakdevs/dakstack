@@ -1,0 +1,4 @@
+interface:
+  display_name: "Best Practices"
+  short_description: "Research current docs and conventions, then build"
+  default_prompt: "Use $best-practices to research the right way to do this, then do it."

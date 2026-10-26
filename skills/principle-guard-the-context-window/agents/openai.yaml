@@ -1,0 +1,4 @@
+interface:
+  display_name: "Guard the Context Window"
+  short_description: "Keep bulk output out of the main thread"
+  default_prompt: "Use $principle-guard-the-context-window while working through this large task."

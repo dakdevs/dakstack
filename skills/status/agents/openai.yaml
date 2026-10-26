@@ -1,0 +1,4 @@
+interface:
+  display_name: "Status"
+  short_description: "Verified status of threads, PRs, and deploys"
+  default_prompt: "Use $status: where are we and what is next?"

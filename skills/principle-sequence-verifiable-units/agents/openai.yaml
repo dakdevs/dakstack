@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sequence Verifiable Units"
+  short_description: "Work in checked phases; ship in a proving order"
+  default_prompt: "Use $principle-sequence-verifiable-units to plan this as checked phases."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ship"
+  short_description: "Rebase, PR, babysit, merge, and confirm the deploy"
+  default_prompt: "Use $ship to get this merged and deployed."

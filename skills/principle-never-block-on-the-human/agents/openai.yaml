@@ -1,0 +1,4 @@
+interface:
+  display_name: "Never Block On The Human"
+  short_description: "Proceed on reversible work; ask only when it matters"
+  default_prompt: "Use $principle-never-block-on-the-human to keep this moving without waiting on me."

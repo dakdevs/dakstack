@@ -1,0 +1,4 @@
+interface:
+  display_name: "Subtract Before You Add"
+  short_description: "Delete dead weight first, then build on less"
+  default_prompt: "Use $principle-subtract-before-you-add to cut before adding to this."

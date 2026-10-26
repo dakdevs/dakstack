@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fanout"
+  short_description: "One Opus delegate, worktree, and PR per unit of work"
+  default_prompt: "Use $fanout to split this across Opus 5.5 delegates."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Film"
+  short_description: "Make an Apple-level product film with a critique loop"
+  default_prompt: "Use $film to make a launch video for this."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Outcome Oriented Execution"
+  short_description: "Converge on the end state without shim code"
+  default_prompt: "Use $principle-outcome-oriented-execution to plan this migration toward its end state."

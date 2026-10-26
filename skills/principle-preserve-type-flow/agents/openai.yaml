@@ -1,0 +1,4 @@
+interface:
+  display_name: "Preserve Type Flow"
+  short_description: "Infer from owners, parse once, never cast"
+  default_prompt: "Use $principle-preserve-type-flow to check the types in this TypeScript change."

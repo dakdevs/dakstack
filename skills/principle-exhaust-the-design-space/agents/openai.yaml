@@ -1,0 +1,4 @@
+interface:
+  display_name: "Exhaust The Design Space"
+  short_description: "Compare 2-3 real prototypes before committing"
+  default_prompt: "Use $principle-exhaust-the-design-space to compare options before building this."

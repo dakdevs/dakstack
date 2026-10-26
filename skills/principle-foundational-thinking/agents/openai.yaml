@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundational Thinking"
+  short_description: "Settle data shapes and scaffolding before logic"
+  default_prompt: "Use $principle-foundational-thinking to choose the data structures before building this."

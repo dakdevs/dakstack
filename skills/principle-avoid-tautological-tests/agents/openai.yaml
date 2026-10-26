@@ -1,0 +1,4 @@
+interface:
+  display_name: "Avoid Tautological Tests"
+  short_description: "Every test needs an independent oracle"
+  default_prompt: "Use $principle-avoid-tautological-tests to check these tests can actually fail."

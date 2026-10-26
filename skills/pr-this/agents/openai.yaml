@@ -1,0 +1,4 @@
+interface:
+  display_name: "PR This"
+  short_description: "Create or refresh the branch PR from the full diff"
+  default_prompt: "Use $pr-this to open or update the PR for this branch."

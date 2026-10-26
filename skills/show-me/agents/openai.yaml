@@ -1,0 +1,4 @@
+interface:
+  display_name: "Show Me"
+  short_description: "Capture real screenshots and video and deliver them"
+  default_prompt: "Use $show-me to show me the latest version."

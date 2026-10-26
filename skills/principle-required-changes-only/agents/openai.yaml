@@ -1,0 +1,4 @@
+interface:
+  display_name: "Required Changes Only"
+  short_description: "Change only the lines the goal requires"
+  default_prompt: "Use $principle-required-changes-only to keep this change minimal."

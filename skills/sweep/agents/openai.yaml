@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sweep"
+  short_description: "Audit and free disk space safely"
+  default_prompt: "Use $sweep to free up disk space."

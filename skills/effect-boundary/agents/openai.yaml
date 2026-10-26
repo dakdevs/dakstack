@@ -1,0 +1,4 @@
+interface:
+  display_name: "Effect Boundary"
+  short_description: "Where Effect belongs and how to write it"
+  default_prompt: "Use $effect-boundary to decide whether and how this code should use Effect."

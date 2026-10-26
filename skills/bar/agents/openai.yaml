@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bar"
+  short_description: "Review with a lens-by-model matrix until all approve"
+  default_prompt: "Use $bar to make sure this PR passes the bar."

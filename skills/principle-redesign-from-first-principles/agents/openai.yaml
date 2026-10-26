@@ -1,0 +1,4 @@
+interface:
+  display_name: "Redesign From First Principles"
+  short_description: "Rebuild as if the new need existed from day one"
+  default_prompt: "Use $principle-redesign-from-first-principles to redesign this around the new requirement."

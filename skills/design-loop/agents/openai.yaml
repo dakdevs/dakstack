@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Loop"
+  short_description: "Prototype in Paper, iterate, then build after approval"
+  default_prompt: "Use $design-loop to design this in Paper first."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ship to PR"
+  short_description: "Everything ship does, stopping at a ready PR"
+  default_prompt: "Use $ship-to-pr to get this ready to merge without merging it."

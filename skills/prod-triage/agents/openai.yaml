@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prod Triage"
+  short_description: "Rank production errors and fix each in its own PR"
+  default_prompt: "Use $prod-triage on the production errors from the past 24 hours."

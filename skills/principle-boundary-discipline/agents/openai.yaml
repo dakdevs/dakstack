@@ -1,0 +1,4 @@
+interface:
+  display_name: "Boundary Discipline"
+  short_description: "Validate at the edges, trust typed data inside"
+  default_prompt: "Use $principle-boundary-discipline to check where this code validates and handles errors."
