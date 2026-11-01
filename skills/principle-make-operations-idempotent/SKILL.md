@@ -1,39 +1,22 @@
 ---
 name: principle-make-operations-idempotent
-description: Designs state-changing operations to reach the same correct end state no matter how many times they run or where a previous run stopped. Use when designing commands, startup and shutdown steps, syncs, retries, or processing loops that must survive crashes, restarts, and repeats.
+description: "Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs."
+disable-model-invocation: true
 ---
 
 # Make Operations Idempotent
 
-An operation is **idempotent** when running it twice leaves the same result
-as running it once. Build every state-changing operation to converge on the
-correct state however many times it runs and wherever it starts from.
+Design operations so they converge to the correct state regardless of how many times they run or where the previous run stopped. Every state-mutating operation should answer: "What happens if this runs twice? What happens if the previous run crashed halfway?"
 
-Commands, lifecycle steps, and processing loops live where crashes, restarts,
-and retries are normal. If leftover partial state changes what the next run
-does, every restart turns into a debugging session.
+**Why:** Commands, lifecycle operations, and processing loops run where crashes, restarts, and retries are normal. If partial state changes the next run's outcome, every restart becomes a debugging session.
 
-For each operation that changes state, answer two questions: what happens if
-this runs twice, and what happens if the last run crashed halfway?
+**The idea:** derive each step from the state that exists, not from what the previous run meant to do. Read the current state, compare it to the goal, and apply only the difference. A step written this way is safe to repeat, because a repeat finds nothing left to do.
 
-## Patterns
-
-- **Startup converges.** On start, scan for existing state, clean up stale
-  artifacts, and adopt sessions that are still alive instead of starting
-  duplicates.
-- **Clean up by content.** Decide what is a duplicate or stale by comparing
-  content, not by creation order.
-- **Locks heal themselves.** Write the owner's process ID into the lock. If
-  that process is gone, the lock is stale and the next run may take it.
-- **Scheduling is repeatable.** Failed work respawns cleanly, and fresh input
-  is regenerated after each cycle rather than reused from a broken one.
+Anything a run leaves behind, such as a lock, a temporary file, a half-written record, or a claimed job, must be recognizable as stale by the next run. Judge staleness by evidence that stays true wherever the previous run could have stopped, not only in the common case. A marker that the next run cannot judge turns every crash into manual cleanup. For example, write to a temporary path and rename it into place, or compare artifacts by content instead of by creation order.
 
 **The test:**
-
 1. What happens if this runs twice in a row?
-2. What happens if the previous run crashed at each possible point?
-3. Does running it again always reach the same end state?
+2. What happens if the previous run crashed at every possible point?
+3. Does re-execution converge to the same end state?
 
-If any answer is "it depends on what state was left behind", add a
-reconciliation step: look at the actual state first, then do only what is
-needed to reach the target.
+If any answer is "it depends on what state was left behind," the operation needs a reconciliation step.

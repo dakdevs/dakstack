@@ -1,39 +1,18 @@
 ---
 name: principle-minimize-reader-load
-description: Reduces the work a reader must do to understand code by cutting layers of indirection and hidden or mutable state. Use when code is hard to trace, when reviewing or shaping a design, or before adding a wrapper, adapter, or new piece of state.
+description: "Apply when reviewing or shaping code that's hard to trace. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope."
+disable-model-invocation: true
 ---
 
 # Minimize Reader Load
 
-Maintainable code is code a reader can understand with little effort. Measure
-that effort on two separate axes:
+Maintainability is the work a reader must do to understand code. Track two axes: **layers to trace** (indirections between the question and the answer) and **state to hold** (hidden or mutable context the reader must keep in their head). LOC, cyclomatic complexity, and "clean architecture" are proxies. Reader load is the thing that matters. The two axes are independent. A flat file with 50 globals can be as hard to reason about as a 6-layer adapter stack. Guard both. This is the human analog of [Guard the Context Window](../principle-guard-the-context-window/SKILL.md). Working memory is finite for readers too.
 
-1. **Layers to trace:** how many hops of indirection sit between a question
-   and its answer.
-2. **State to hold:** how much hidden or changing context the reader must
-   keep in their head.
+- **Collapse layers** that cost more than they save: wrappers with one caller, adapters with no second implementation, speculative indirection that was never needed. Inline them.
+- **Make adjacent layers change the abstraction.** A layer that repeats the same methods and arguments adds reader load without compression. Collapse pass-through layers.
+- **Demand interface compression.** A broad interface that hides little complexity makes readers learn both the surface and the implementation. Prefer boundaries that hide meaningful decisions.
+- **Shrink state scope:** prefer pure functions (returns over mutations), locals over fields, fields over module state, and module state over globals. Derive instead of sync.
+- **Name the invariant at the boundary,** not in every consumer, so the reader learns it once.
+- Before adding a layer or a piece of state, ask: does it reduce reader load elsewhere by at least as much?
 
-**Why:** Code is read far more often than it is written. Line counts,
-cyclomatic complexity (a count of branch paths), and "clean architecture" are
-stand-ins. Reader load is what matters. The two axes are independent: one
-flat file with 50 globals can be as hard to follow as a six-layer adapter
-stack, so guard both. Readers have limited working memory, just as an agent
-has a limited context window (`principle-guard-the-context-window`).
-
-## How
-
-- **Collapse layers that do not pay for themselves.** Inline wrappers with
-  one caller, adapters with no second implementation, and indirection built
-  for a future that never arrived.
-- **Shrink the scope of state.** Prefer pure functions that return values
-  over ones that mutate. Prefer locals to fields, fields to module state, and
-  module state to globals. Derive a value instead of keeping two copies in
-  sync.
-- **State an invariant once, at the boundary.** An invariant is a rule that
-  always holds, such as "this id is never empty". Name it where data enters,
-  not in every consumer, so the reader learns it once.
-- **Before adding a layer or a piece of state,** ask whether it removes at
-  least as much reader load somewhere else. If not, do not add it.
-
-**The test:** Can a new reader answer "where does X come from?" and "what can
-change X?" in under 30 seconds? If not, cut layers or cut state.
+**The test:** can a new reader answer "where does X come from?" and "what can change X?" in under 30 seconds? If not, cut layers or cut state.

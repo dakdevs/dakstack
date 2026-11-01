@@ -1,50 +1,34 @@
 ---
 name: principle-boundary-discipline
-description: Puts validation, type narrowing, and error handling at system boundaries, trusts typed data inside, and keeps business logic in pure functions behind a thin shell. Use when wiring validation, error handling, config loading, CLI or network input, external API calls, or framework adapters.
+description: "Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions."
+disable-model-invocation: true
 ---
 
 # Boundary Discipline
 
-Guard the edges. Trust the inside. A **boundary** is where data enters your
-system from outside it: CLI args, config files, env vars, network requests,
-external API responses, files, queue messages.
+Place validation, type narrowing, and error handling at system boundaries. Trust internal code unconditionally. Business logic lives in pure functions. The shell is thin and mechanical.
 
-Checks scattered through the code are noisy, repeat each other, and make the
-code look safer than it is. Check once at the edge. Keep logic out of
-framework wiring so you can test it without the framework.
+**Why:** Scattered validation is noisy, redundant, and gives a false sense of safety. Keep logic out of framework wiring so it can be tested without the framework.
 
-## The rule
+**The pattern:**
+- **At boundaries** (CLI args, config files, external APIs, network protocols): validate, return errors, handle defensively.
+- **Inside the system:** typed data, error propagation, no re-validation. Trust the types.
+- **Across the boundary.** Expose domain concepts, not the boundary's private representation. Keep general-purpose mechanism inside and special-purpose policy at the edge.
 
-- **At a boundary:** parse, return errors, and handle failure defensively.
-- **Inside:** pass typed data, propagate errors, and never re-validate.
-  Trust the types.
+**Applications:**
 
-## Validation and errors
+Validation and error handling:
+- Validate config at parse time (the boundary), not inside business logic
+- Parse raw data into domain types at the boundary
+- Do not re-export transport, storage, framework, or wire types through the public surface
+- No redundant nil checks deep in call chains if the boundary already validated
 
-- Parse untrusted input once, at the entrypoint, and send typed results
-  inward. Never store raw input to parse later at the place it is used.
-- Never carry unparsed external input into domain logic, and never label it
-  as trusted typed data before it is parsed.
-- Parse config when it is loaded, not inside business logic.
-- If an upstream parser already guarantees the data at runtime, reuse that
-  result. Don't add a second schema or parse. A static type alone is not a
-  runtime guarantee (see `principle-preserve-type-flow`).
-- Drop nil and shape checks deep in call chains when the boundary already
-  checked.
+Code organization:
+- Business logic in pure functions with no framework dependencies
+- Parse functions: pure transforms from raw bytes to typed state
+- Prompt construction: structured state in, string out
+- Scoring and assessment: pure transforms from state to results
 
-## Code layout
-
-- Business logic lives in pure functions with no framework imports. A
-  **pure function** returns a result from its inputs alone and changes
-  nothing outside itself.
-- The shell (handlers, adapters, CLI entry) is thin and mechanical: read
-  input, parse it, call the pure core, write output.
-- Parsing: raw bytes in, typed state out.
-- Prompt building: structured state in, string out.
-- Scoring and assessment: state in, result out.
-
-**The test:**
-
-- Is this data crossing a system boundary right now? If not, the check is
-  redundant. Delete it.
-- Could this be a pure function the shell just calls? If yes, extract it.
+**The tests:**
+- "Is this data crossing a system boundary right now?" If not, validation is redundant.
+- "Can this be a pure function that the shell just calls?" If yes, extract it.

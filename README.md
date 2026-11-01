@@ -8,8 +8,10 @@ instruction I kept retyping or a correction I kept making. They work in
 Claude Code and Codex, and use [T3 Code](https://t3.codes) features when they
 are available.
 
-The stack is self-contained: skills only call other skills in this repo.
-Many are rewrites of other people's skills; see [CREDITS.md](CREDITS.md).
+Original workflows call skills in this repository. Borrowed principles and
+both thermonuclear reviews retain exact upstream text, including any external
+references. See [CREDITS.md](CREDITS.md) and
+[the provenance manifest](upstream-skills.json).
 
 ## Workflows
 
@@ -129,9 +131,10 @@ bun test
 bun run test:e2e
 ```
 
-The test checks that every skill has valid frontmatter, stays under 100
-lines, has Codex metadata, is listed in this README, and refers only to
-skills in this stack. The installation E2E copies only the distributed
+The tests check frontmatter, metadata, README registration, and local skill
+references. Authored skills stay under 100 lines. Exact upstream imports
+retain their original descriptions, length, and references; SHA-256 checks
+protect their contents from edits, including formatting. The installation E2E copies only the distributed
 skills into a temporary directory and checks their Markdown dependencies.
 It proves packaging, not agent behavior or hosted execution.
 
@@ -166,3 +169,19 @@ the orchestrator supplies their absolute paths and verifies the model used.
 The main thread owns product intent, fixes, PR replies, and resolution.
 Review agents inspect completed published work and post findings. Independent
 validators reproduce those findings before the main thread accepts them.
+
+## Exact upstream sources
+
+The 23 borrowed principles and both thermonuclear reviews are copied verbatim
+from the pinned revision in upstream-skills.json. Do not rewrite, reflow, or
+append stack policy inside those SKILL.md files. Prettier excludes exactly
+those originals; lint verifies their hashes. Confirm the remote source too:
+
+```bash
+bun run verify:upstream --online
+```
+
+Keep stack-specific orchestration, authorization, commit rules, and evidence
+requirements in the shipping workflows and agent contracts. User instructions
+remain authoritative when an upstream principle suggests a different delivery
+sequence. The five locally authored principle skills retain their local text.

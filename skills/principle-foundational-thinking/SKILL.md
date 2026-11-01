@@ -1,50 +1,21 @@
 ---
 name: principle-foundational-thinking
-description: Gets core types, data structures, and scaffolding right before writing logic, so later code becomes obvious and options stay open. Use when choosing core types or data shapes, sequencing setup work against feature work, or deciding what state concurrent actors may share.
+description: "Apply before writing logic: choosing core types and data structures, sequencing scaffold-vs-feature work, asking what concurrent actors share. Get the data structures right so downstream code becomes obvious."
+disable-model-invocation: true
 ---
 
 # Foundational Thinking
 
-Structural choices protect option value: the freedom to change course later.
-Code-level choices protect simplicity. Over-engineering is often a choice
-made too early that closes doors. The right foundational data structure
-keeps them open.
+**Structural decisions** protect option value. **Code-level decisions** protect simplicity.
 
-## Data structures first
+**Data structures first.** Get the data shape right before writing logic. Define core types early, trace every access pattern, and choose structures that match the dominant paths.
 
-Settle the shape of the data before writing logic. The right shape makes the
-code that follows obvious.
+At code level, DRY the structure, not every line. Types and data models should converge. Three similar statements still beat a premature abstraction. Prefer explicit over clever. Test behavior and edge cases, not line counts.
 
-- Define the core types early.
-- Trace every access pattern: who reads and writes what, and how.
-- Choose structures that fit the most common paths.
-- Changing a data structure late is a rewrite. Early, it is often a one-line
-  diff.
+**Concurrency corollary.** Before sharing state between actors, ask "what happens if another actor modifies this concurrently?" If not "nothing", isolate.
 
-At the code level, remove duplication in structure, not in every line. Types
-and data models should converge on one definition. Three similar statements
-still beat an abstraction made too early. Prefer explicit code to clever
-code. Test behavior and edge cases, not line counts.
+**Scaffold first.** If something helps every later phase, do it first. Ask "does every subsequent phase benefit from this existing?" CI, linting, test infrastructure, and shared types are scaffold. Sequence for option value: setup before features, tests before fixes. Keep commits small and single-purpose.
 
-## Shared state
+Each increment should land a coherent abstraction or deepen one that exists. Do not spread a new capability across callers as special-case coordination.
 
-Before sharing state between actors (threads, processes, agents, requests),
-ask: "What happens if another actor changes this at the same time?" If the
-answer is anything but "nothing", isolate the state.
-
-## Scaffold first
-
-Scaffold is anything that helps every later phase: CI, linting, test
-infrastructure, shared types. Ask: "Does every later phase benefit from this
-existing?" If yes, do it first.
-
-- Order work for option value: setup before features, tests before fixes.
-- Keep commits small and single-purpose.
-- Remove dead weight before laying foundations
-  (`principle-subtract-before-you-add`).
-
-This skill decides the order of work. `principle-experience-first` decides
-its target.
-
-**The test:** Could you list the core types and their main access paths
-before writing the first function? If not, the logic is coming too early.
+Subtraction comes before scaffolding. Remove dead code first, then lay foundations.
