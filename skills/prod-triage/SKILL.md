@@ -5,6 +5,9 @@ description: Triages production errors from Sentry, Vercel logs, PostHog, or Axi
 
 # Prod Triage
 
+Apply [docs context](../docs-context/SKILL.md) to the deployed environment,
+relevant contracts and runbooks, gathering, ranking, reproduction, and fixes.
+
 ## Gather
 
 Check Executor for a connector first (Sentry, PostHog, Axiom, Vercel). Fall
@@ -24,9 +27,7 @@ of the user before fixing, unless they said "fix them".
 
 ## Fix
 
-For each issue the user wants fixed, apply
-[docs context](../docs-context/SKILL.md) to its deployed environment,
-relevant contracts and runbooks, and subsequent reproduction and fixes.
+For each issue the user wants fixed:
 
 1. **Revalidate.** Confirm it still happens on the current production commit
    and is not already fixed or caused by a bot or attack. If an automated

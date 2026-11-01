@@ -48,10 +48,10 @@ subagents (one per technology, one for the codebase) and combine the results.
 
 When sources disagree:
 
-- Version-matched official docs establish supported API usage and config.
-- Repository instructions and accepted product decisions establish local
-  intent; verify existing code and tests against that contract.
-- Community guidance supplies leads to validate with primary evidence.
+- Official docs decide API usage, config format, and signatures.
+- The codebase decides style, structure, and architecture.
+- Well-supported community practice decides performance, security, and edge
+  cases the docs do not cover.
 - If a real conflict remains and the choice matters, ask the user.
 
 ## 6. Choose and proceed
