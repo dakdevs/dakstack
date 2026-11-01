@@ -39,6 +39,7 @@ references. See [CREDITS.md](CREDITS.md) and
 | `thermo-nuclear-review`              | Audits a branch for bugs, broken behavior, security holes, developer-experience regressions, and feature-gate leaks. |
 | `thermo-nuclear-code-quality-review` | Reviews a branch against a very strict maintainability bar.                                                          |
 | `best-practices`                     | Researches current, version-specific docs and the codebase's conventions before writing code.                        |
+| `docs-context`                       | Grounds investigation, implementation, review, and validation in applicable docs and observed evidence.              |
 | `unslop`                             | Removes AI-writing patterns from prose while keeping meaning, evidence, and formats.                                 |
 | `no-comments`                        | Reviews comments and hidden workarounds through a separate Grok 4.7 agent after the PR is published.                 |
 | `replicate-issue`                    | Reproduces bugs and findings, checks product intent, and guides verified fixes and thread dispositions.              |
@@ -84,7 +85,8 @@ agents doing the work.
 
 ```text
 kitchen-mode / ship / ship-to-pr
-  → before proof → working commits + tests → after proof → published PR
+  → situation + relevant docs → before proof → working commits + tests
+  → docs-backed expectations + after proof → published PR
   → independent multi-model audits → peer challenges → independent validation
   → main-thread fixes + commits → refreshed after proof → replies/resolution
   → repeat full panel → unanimous current-head approval + CI → merge or handoff
@@ -95,6 +97,16 @@ Each commit is a complete, working version with its tests. Every PR includes
 inspectable before and after proof; any later change refreshes the after
 record. The main thread owns fixes and thread outcomes. Unclear product
 intent returns to the user before a dependent fix or resolution.
+
+`docs-context` runs throughout this flow. Understand the observed incident or
+desired capability, read the relevant product/architecture/runbook docs and
+version-matched official references, then verify that they apply to the
+actual environment. Carry sources and checkable expectations into delegate
+briefs, PR proof, reviews, and finding validation. Revisit them as evidence,
+scope, versions, or implementations change, and update affected project docs.
+Reviewers verify the sources independently; documentation alone does not
+establish working behavior. Missing docs and conflicts are recorded with
+their limits, and unresolved product decisions return to the main thread.
 
 The review coordinator launches separate Claude Opus 5.5, GPT-6.1 Sol, and
 Grok 4.7 reviewers plus a dedicated Grok comment reviewer. Each first audits

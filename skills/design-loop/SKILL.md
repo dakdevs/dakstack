@@ -7,6 +7,9 @@ description: Designs UI in Paper before building it - studies references, makes 
 
 Design first, build second. Building starts only after the user approves the
 design.
+Apply [docs context](../docs-context/SKILL.md) to product requirements,
+approved designs, accessibility guidance, and implementation constraints;
+revisit the affected sources and checks when the design changes.
 
 ## Steps
 

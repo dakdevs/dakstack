@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs Context"
+  short_description: "Ground each task stage in applicable docs and observed evidence"
+  default_prompt: "Use $docs-context to understand the situation, read the relevant documentation, validate its applicability, and verify the result."

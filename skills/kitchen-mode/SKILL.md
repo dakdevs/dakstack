@@ -16,6 +16,8 @@ smallest scope. Record accepted product decisions, acceptance checks, and
 which facts remain unknown. Investigate observable facts yourself. Ask the
 user only about a material product decision that evidence cannot settle.
 Continue independent work while that question is pending.
+Apply [docs context](../docs-context/SKILL.md) throughout the task. Carry
+applicable sources, expectations, verification, and gaps into every brief.
 
 For implementation, follow `ship-to-pr` unless the user explicitly requested
 `ship`. A read-only or local-only task keeps that boundary; this skill does
@@ -42,8 +44,8 @@ A validator cannot be the reviewer or author of the finding it validates.
 
 Each brief includes goal, owned files, permitted actions, acceptance checks,
 base/head SHAs, product decisions, absolute path to this skill, selected role
-prompt, and applicable leaf skills. The delegate reads this entire skill
-before starting, then each applicable leaf. A missing prompt is a blocker,
+prompt, docs context, and applicable leaf skills. The delegate reads this
+entire skill before starting, then each applicable leaf. A missing prompt is a blocker,
 not permission to substitute an unbriefed general agent.
 
 Spawn a fresh delegate for each new audit, peer challenge, or review head. Do not resume an old

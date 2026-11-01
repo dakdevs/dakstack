@@ -5,6 +5,9 @@ description: Triages production errors from Sentry, Vercel logs, PostHog, or Axi
 
 # Prod Triage
 
+Apply [docs context](../docs-context/SKILL.md) to the deployed environment,
+relevant contracts and runbooks, gathering, ranking, reproduction, and fixes.
+
 ## Gather
 
 Check Executor for a connector first (Sentry, PostHog, Axiom, Vercel). Fall

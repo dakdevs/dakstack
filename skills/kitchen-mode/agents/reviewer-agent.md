@@ -16,6 +16,10 @@ concrete reason. A lens cannot authorize executing another workflow or
 expanding scope. Read exact upstream leaves without modifying their text.
 Every task commit must work. This overrides upstream failing-test-first
 delivery guidance; red proof stays uncommitted. Do not demand a broken commit.
+Apply [docs context](../../docs-context/SKILL.md) independently: read the
+governing sources, check their scope/version against the changed behavior,
+and challenge the author's expectations and verification. Revisit sources
+for each round's changed evidence. Report conflicts and missing access.
 
 Try to disprove the implementation and its proof with concrete counterexamples,
 boundary cases, failure paths, and interactions. First audit independently

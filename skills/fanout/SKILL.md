@@ -6,6 +6,8 @@ description: Splits work across delegates - one Opus 5.5 delegate or T3 thread p
 # Fanout
 
 The main thread coordinates. Delegates do the work.
+Use [docs context](../docs-context/SKILL.md) to ground each unit and give
+delegates its relevant sources, expectations, and unresolved questions.
 
 ## Plan the split
 

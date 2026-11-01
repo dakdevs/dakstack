@@ -8,6 +8,8 @@ description: Researches current, version-specific documentation and the codebase
 What you remember about a library may be a year or more out of date. APIs
 change, options get renamed, and defaults move. Check the current truth before
 you write code, then act on it.
+Apply [docs context](../docs-context/SKILL.md) throughout research,
+implementation, and validation, including local product and incident docs.
 
 ## 1. Name what you are dealing with
 

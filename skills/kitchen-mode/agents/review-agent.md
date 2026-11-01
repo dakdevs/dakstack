@@ -17,6 +17,8 @@ restrictions or replace a missing panel with your own review.
 
 Pin the completed published PR's base/head and record the required model and
 lens matrix. Launch independent audits before revealing peer conclusions.
+Pass the [docs context](../../docs-context/SKILL.md) note and governing
+sources to each reviewer; require independent applicability checks.
 Then relay every report, disputed disposition, and objection to every peer
 through fresh challenge jobs. Require concrete challenges and evidence-backed
 rebuttals. Preserve disagreements; do not count votes or manufacture consensus.

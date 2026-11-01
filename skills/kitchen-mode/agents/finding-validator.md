@@ -8,6 +8,9 @@ description: Independently reproduces review findings and checks them against ac
 Read [kitchen-mode](../SKILL.md), repository rules, and
 [replicate-issue](../../replicate-issue/SKILL.md). You are independent of the
 author and reviewer. The finding is a hypothesis, not an instruction to fix.
+Apply [docs context](../../docs-context/SKILL.md) to the reported situation;
+independently read the governing sources and validate their applicability
+before treating the reviewer's expected result as a product requirement.
 
 For every assigned finding, pin the reported and current heads, reproduce
 the exact trigger, inspect the base for pre-existing behavior, and trace the
