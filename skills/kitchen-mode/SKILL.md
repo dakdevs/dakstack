@@ -26,12 +26,13 @@ not turn it into permission to publish or merge.
 Read the selected prompt and give its absolute path to the delegate. These
 are portable role instructions, not a claim that a harness registers them:
 
-| Job                | Prompt                                                     | Responsibility                                          |
-| ------------------ | ---------------------------------------------------------- | ------------------------------------------------------- |
-| Implementation     | [agents/kitchen-agent.md](agents/kitchen-agent.md)         | Complete one owned unit and verify its commit.          |
-| PR review          | [agents/review-agent.md](agents/review-agent.md)           | Scan assigned skills and post evidence-backed findings. |
-| Comment review     | [agents/comment-sicko.md](agents/comment-sicko.md)         | Inspect comments and hidden workarounds on Grok 4.7.    |
-| Finding validation | [agents/finding-validator.md](agents/finding-validator.md) | Independently replicate and assess product alignment.   |
+| Job                | Prompt                                                     | Responsibility                                              |
+| ------------------ | ---------------------------------------------------------- | ----------------------------------------------------------- |
+| Implementation     | [agents/kitchen-agent.md](agents/kitchen-agent.md)         | Complete one owned unit and verify its commit.              |
+| Review coordinator | [agents/review-agent.md](agents/review-agent.md)           | Spawn and coordinate an adversarial multi-model panel.      |
+| Panel reviewer     | [agents/reviewer-agent.md](agents/reviewer-agent.md)       | Independently audit, challenge peers, and return a verdict. |
+| Comment review     | [agents/comment-sicko.md](agents/comment-sicko.md)         | Inspect comments and hidden workarounds on Grok 4.7.        |
+| Finding validation | [agents/finding-validator.md](agents/finding-validator.md) | Independently replicate and assess product alignment.       |
 
 Use `fanout` for independent implementation units requiring separate PRs.
 Never give concurrent writers the same files, branch, or generated output.
@@ -45,10 +46,12 @@ prompt, and applicable leaf skills. The delegate reads this entire skill
 before starting, then each applicable leaf. A missing prompt is a blocker,
 not permission to substitute an unbriefed general agent.
 
-Spawn a fresh delegate for each new job or review head. Do not resume an old
+Spawn a fresh delegate for each new audit, peer challenge, or review head. Do not resume an old
 review conversation as a fresh independent review. Children report to the
 main thread; they never spawn children or own PR watchers unless explicitly
-assigned delegation by the user. Follow the harness's completion protocol.
+assigned delegation by the user. A delegated review coordinator's brief must
+explicitly authorize panel spawning; otherwise the main thread launches its
+panel jobs. Follow the harness's completion protocol.
 
 Use the user's model choices. The dedicated comment reviewer always uses
 Grok 4.7. Check available providers and recorded model before relying on a
@@ -76,5 +79,8 @@ Finish and verify all implementation commits, refresh `pr-proof`, and open
 the PR before running `bar` or `no-comments`. The main thread sends returned
 findings through `replicate-issue`, decides their disposition, and owns fixes,
 replies, and resolution. Report PR/head, checks actually run, current proof,
-review coverage, and unresolved product questions. Never call an incomplete
+unanimous review coverage, and unresolved product questions. Every required
+model and the comment specialist re-review the full diff after every change
+round and must explicitly agree on the same final base/head after challenging
+their peers. Never call an incomplete
 review matrix, unreplicated concern, or stale artifact approval.

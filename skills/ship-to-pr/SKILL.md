@@ -22,6 +22,10 @@ Reviewers post findings on the published PR. The main thread independently
 validates them through `replicate-issue`, checks product decisions, owns
 fixes, and replies/resolves as each outcome is verified. No automatic fixes
 from unvalidated findings and no resolution of unanswered product questions.
+After every change round, the entire multi-model panel re-reviews the full
+diff and challenges peers. Ready means every required reviewer, including
+the comment specialist, explicitly approves the same current base/head.
+Disagreement or a missing reviewer blocks readiness; a majority is insufficient.
 
 ## No merging
 

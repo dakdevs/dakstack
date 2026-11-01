@@ -82,6 +82,7 @@ test("literal Markdown examples do not require files in the installation", () =>
 test.each([
   "kitchen-agent",
   "review-agent",
+  "reviewer-agent",
   "comment-sicko",
   "finding-validator",
 ])(

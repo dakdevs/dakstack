@@ -57,7 +57,8 @@ does not dispose of a finding. For each one:
    out of scope. Note it as a follow-up instead of fixing it here.
 3. **Fix confirmed issues at the cause** (`principle-fix-root-causes`),
    verify a working commit, push, refresh `pr-proof` and the PR body, and
-   obtain current-head review coverage. Never weaken tests to turn checks green.
+   obtain unanimous current-head panel approval after full-diff re-review and
+   peer challenge. Never weaken tests to turn checks green.
 4. **Re-run the bot** on the new head so it can confirm the fix. Most rerun on
    push. If one needs a comment to rerun, that comment needs the user's
    permission like any other.
@@ -80,8 +81,6 @@ a time. Fix real bugs in the intended case. Decline the rest with a reason and
 list them as follow-ups: tests nobody needs, guards for cases that do not
 matter, extra compatibility, small performance costs. When two fixes work,
 choose the one that deletes or narrows code.
-
-Screenshots or video help reviewers on UI changes when you can upload them.
 
 ## Base branch and merging
 

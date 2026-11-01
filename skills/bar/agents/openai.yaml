@@ -1,4 +1,4 @@
 interface:
   display_name: "Bar"
-  short_description: "Post PR findings, independently validate, and review fixes"
+  short_description: "Adversarial multi-model rounds until unanimous approval"
   default_prompt: "Use $bar to make sure this PR passes the bar."

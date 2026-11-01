@@ -23,7 +23,7 @@ the PR review gate has not run.
    scope, SHAs, decisions, checks, and comment authorization. If unavailable,
    report the blocked role; do not substitute a model without approval.
 2. Have it post distinct evidence-backed findings using
-   [the review contract](../kitchen-mode/agents/review-agent.md), then return
+   [the reviewer contract](../kitchen-mode/agents/reviewer-agent.md), then return
    comment/thread links to the main thread. When part of `bar`, use its one
    dedicated comment reviewer rather than launching a duplicate.
 3. Validate every finding with `replicate-issue` through a fresh independent
@@ -33,8 +33,10 @@ the PR review gate has not run.
    until a type, test, runtime check, or lint can enforce them. Ask the user
    through the main thread when encoding requires a new product decision.
 5. Verify and commit each complete fix, push, refresh `pr-proof`, reply with
-   evidence, and resolve only validated outcomes. Re-review changed comment
-   behavior on the new head through a fresh job.
+   evidence, and resolve only validated outcomes. In `bar`, join peer challenge
+   and re-run the full comment audit on every new review round; all required
+   reviewers must agree on the same current base/head. Standalone cleanup
+   also requires a fresh review of the new head after fixes.
 
 Report proposed versus actual deletions, protected comments, validated
 refactors, thread dispositions, checks, and unresolved constraints. A clean
