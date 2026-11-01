@@ -1,5 +1,5 @@
 ---
-name: taste
+name: principle-taste
 description: Holds the user's standing code, UI, copy, and operations preferences, collected from their repeated corrections to agents. Use when writing or reviewing TypeScript, React, Effect, UI, marketing or client copy, or when running bulk or destructive operations, so the user does not have to correct the same thing again.
 ---
 

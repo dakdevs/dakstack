@@ -21,7 +21,7 @@ The main thread coordinates. Delegates do the work.
 
 - **Execution delegates:** Claude Opus 5.5 at medium reasoning unless the user
   names another model. Each gets its unit, its owned files, its acceptance
-  checks, the repo's rules, and `taste`.
+  checks, the repo's rules, and `principle-taste`.
 - **One unit, one checkout.** Use `delegate_task` with
   `isolation: "worktree"`, or a new T3 thread with a worktree when the user
   asks for separate conversations. Link each thread's PR to it.

@@ -18,7 +18,7 @@ design.
    SVG), and real data. Never invent copy, testimonials, numbers, or
    "illustrative" images.
 3. **Show screenshots** of each prototype at desktop and mobile sizes (see
-   `show-me`). Before showing, review it yourself against `taste`, and fix what fails.
+   `show-me`). Before showing, review it yourself against `principle-taste`, and fix what fails.
    Check hover, focus, and pressed states, and that motion is short (under
    300ms for UI), eased, and interruptible.
 4. **Apply feedback literally.** The user gives short notes ("less borders",
@@ -40,7 +40,7 @@ route, and say so.
 
 ## Standing rules
 
-Read `taste` for the full list. The ones most often missed in design:
+Read `principle-taste` for the full list. The ones most often missed in design:
 
 - No borders for structure. Separate areas with background contrast and good
   rounded corners. Keep dividers short and subtle.

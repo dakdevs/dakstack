@@ -28,7 +28,7 @@ people's branches still need the user.
 ## Steps
 
 1. **Finish the change.** Do the smallest change that meets the goal. Work
-   on a branch, never the default branch. Follow `taste`.
+   on a branch, never the default branch. Follow `principle-taste`.
 2. **Prove it.** Collect proof you observed yourself for every change in the
    diff (see Proof).
 3. **Pass the bar.** Run `bar` on the diff and fix what it finds.

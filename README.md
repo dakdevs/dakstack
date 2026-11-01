@@ -13,20 +13,20 @@ Many are rewrites of other people's skills; see [CREDITS.md](CREDITS.md).
 
 ## Workflows
 
-| Skill         | Say                           | What it does                                                                                                                                                    |
-| ------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ship`        | "ship it", "get it merged"    | Takes a change to merged and deployed with nobody watching: proves it, passes the bar, files the PR, babysits it, merges, and confirms the deploy.              |
-| `ship-to-pr`  | "ship to PR"                  | Same as `ship`, but stops when the PR is ready for me to merge.                                                                                                 |
-| `bar`         | "make sure it passes the bar" | Reviews with one delegate per review skill per model, relays findings between them, fixes through Opus, and re-reviews until all of them approve the same head. |
-| `show-me`     | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL.                                   |
-| `design-loop` | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                                                           |
-| `taste`       | (automatic)                   | My standing code, UI, copy, and operations rules.                                                                                                               |
-| `fanout`      | "use Opus delegates"          | One delegate, worktree, and PR per independent unit, stacked when dependent.                                                                                    |
-| `status`      | "what's next?"                | Checks git, PRs, deploys, and threads, then answers with the next action.                                                                                       |
-| `prod-triage` | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one in its own PR.                                                                                |
-| `scaffold`    | "set up a new repo"           | Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.                                                                                            |
-| `sweep`       | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                                                  |
-| `film`        | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                                                          |
+| Skill             | Say                           | What it does                                                                                                                                                    |
+| ----------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ship`            | "ship it", "get it merged"    | Takes a change to merged and deployed with nobody watching: proves it, passes the bar, files the PR, babysits it, merges, and confirms the deploy.              |
+| `ship-to-pr`      | "ship to PR"                  | Same as `ship`, but stops when the PR is ready for me to merge.                                                                                                 |
+| `bar`             | "make sure it passes the bar" | Reviews with one delegate per review skill per model, relays findings between them, fixes through Opus, and re-reviews until all of them approve the same head. |
+| `show-me`         | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL.                                   |
+| `design-loop`     | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                                                           |
+| `principle-taste` | (automatic)                   | My standing code, UI, copy, and operations rules.                                                                                                               |
+| `fanout`          | "use Opus delegates"          | One delegate, worktree, and PR per independent unit, stacked when dependent.                                                                                    |
+| `status`          | "what's next?"                | Checks git, PRs, deploys, and threads, then answers with the next action.                                                                                       |
+| `prod-triage`     | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one in its own PR.                                                                                |
+| `scaffold`        | "set up a new repo"           | Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.                                                                                            |
+| `sweep`           | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                                                  |
+| `film`            | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                                                          |
 
 ## Commands
 
@@ -36,7 +36,7 @@ Many are rewrites of other people's skills; see [CREDITS.md](CREDITS.md).
 | `babysit-pr`                         | Watches a PR through CI and review bots, fixing real failures and real findings at their cause.                      |
 | `thermo-nuclear-review`              | Audits a branch for bugs, broken behavior, security holes, developer-experience regressions, and feature-gate leaks. |
 | `thermo-nuclear-code-quality-review` | Reviews a branch against a very strict maintainability bar.                                                          |
-| `effect-boundary`                    | Decides where Effect belongs and how to write, test, and review it as functional code with layers and no classes.    |
+| `principle-effect-boundary`          | Decides where Effect belongs and how to write, test, and review it as functional code with layers and no classes.    |
 | `best-practices`                     | Researches current, version-specific docs and the codebase's conventions before writing code.                        |
 | `unslop`                             | Removes AI-writing patterns from prose while keeping meaning, evidence, and formats.                                 |
 
@@ -79,7 +79,7 @@ agents doing the work.
 ```text
 design-loop ──> fanout ──> bar ──> ship / ship-to-pr ──> status
                   │         │            │
-                taste    principles   pr-this, babysit-pr, show-me
+                principle-taste    principles   pr-this, babysit-pr, show-me
                          thermo-nuclear-*
 ```
 
@@ -111,9 +111,35 @@ These replace any installed skills with the same names.
 ## Develop
 
 ```bash
+bun install
+bun run lint
+bun run prettier
 bun test
+bun run test:e2e
 ```
 
 The test checks that every skill has valid frontmatter, stays under 100
 lines, has Codex metadata, is listed in this README, and refers only to
-skills in this stack.
+skills in this stack. The installation E2E copies only the distributed
+skills into a temporary directory and checks their Markdown dependencies.
+It proves packaging, not agent behavior or hosted execution.
+
+## Naming audit
+
+All 45 existing skills were classified by their job. Durable decision rules
+use the `principle-` prefix; commands that produce an artifact or run a
+workflow keep an action name. The 26 existing principles keep their names.
+The standing preferences formerly called taste become `principle-taste`,
+and the Effect architecture rules become `principle-effect-boundary`.
+
+The remaining 17 commands keep their names: `ship`, `ship-to-pr`, `bar`,
+`pr-this`, `babysit-pr`, `thermo-nuclear-review`,
+`thermo-nuclear-code-quality-review`, `best-practices`, `unslop`,
+`show-me`, `design-loop`, `fanout`, `status`, `prod-triage`, `scaffold`,
+`sweep`, and `film`. Their output is a review, research, edited prose,
+evidence, design, delivery, status, investigation, project, cleanup, or film.
+New commands follow the same distinction.
+
+Remove the old taste and effect-boundary skill directories after installing
+this version; installers may leave renamed directories behind. Update any
+personal instructions or shortcuts that invoke those old names.

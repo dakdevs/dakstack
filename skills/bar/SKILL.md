@@ -15,7 +15,7 @@ Use what the user names. Fill in only what they leave out.
 - **Lenses:** `thermo-nuclear-review`, `thermo-nuclear-code-quality-review`,
   `principle-preserve-type-flow`, `principle-boundary-discipline`,
   `principle-avoid-tautological-tests`, `principle-laziness-protocol`.
-  Add `effect-boundary` when the diff touches Effect code,
+  Add `principle-effect-boundary` when the diff touches Effect code,
   `principle-make-operations-idempotent` for syncs, retries, and lifecycle
   steps, and `best-practices` when the user asks "is this best practice?".
 - **Reviewer models, all at medium reasoning:** Claude Opus 5.5, GPT-6.1 Sol,
