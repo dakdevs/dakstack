@@ -22,8 +22,8 @@ and repository rules for rebasing, force pushes, and administrator merges.
 1. **Plan and capture before.** Pin base/head, inspect existing user work,
    record product decisions and acceptance criteria, and start `pr-proof`.
    For bugs, use `replicate-issue` before implementation.
-2. **Implement in logical commits.** Follow
-   `principle-sequence-verifiable-units`. Each commit is one complete,
+2. **Implement in logical commits.** Read and follow
+   [sequence verifiable units](../principle-sequence-verifiable-units/SKILL.md). Each commit is one complete,
    working, testable block, including its tests and necessary migrations or
    callers. Run its checks before committing. Temporary breakage stays in
    the working tree, never a commit. Preserve unrelated user changes.
@@ -40,13 +40,15 @@ and repository rules for rebasing, force pushes, and administrator merges.
 5. **Review the published PR.** Run `bar`, including `no-comments` on its
    own Grok 4.7 agent. Reviewers intentionally scan applicable skill lenses,
    post actionable findings on the PR, and return thread IDs to the main
-   thread. No reviewer edits code.
+   thread. Reviewers challenge one another's reports. No reviewer edits code.
 6. **Validate and address.** The main thread launches independent finding
    validators through `replicate-issue`, checks their evidence and product
    alignment, then owns each fix. Ask the user about unresolved intent;
    keep those findings open. Commit each verified fix, push, refresh after
    proof and the PR body, and reply/resolve threads as outcomes are proven.
-   New heads require fresh review jobs and current coverage.
+   After every change round, every required model and the comment specialist
+   re-audits the full diff and challenges peers until all explicitly approve
+   the same current base/head. No majority vote or stale approval passes.
 7. **Carry through CI and feedback.** Use `babysit-pr`. Route new findings
    through the same validation cycle, including older unresolved threads.
    After any change, return through proof and review before the gate.
@@ -60,7 +62,8 @@ and repository rules for rebasing, force pushes, and administrator merges.
 - All task work is committed in verified units; the full diff is complete.
 - Before evidence is inspectable and after proof covers the current SHA.
 - Required checks pass. No silent waivers, fabricated runs, or weaker tests.
-- Required review coverage is complete on this head, including Grok comment
+- Every required reviewer explicitly approves this base/head after adversarial
+  peer challenge. Review coverage is complete, including Grok comment
   review; all findings have validated dispositions and appropriate replies.
 - No unresolved blocking finding, product question, or change request.
 - The branch is current with its base, mergeable, and authorized to merge.

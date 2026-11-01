@@ -29,9 +29,11 @@ one that already exists.
 
 1. **Verify task commits.** Inspect `git status` and ownership. Commit only
    complete, checked task units with their tests, following
-   `principle-sequence-verifiable-units`. Never sweep user work, secrets,
+   [sequence verifiable units](../principle-sequence-verifiable-units/SKILL.md), read directly from its file. Never sweep user work, secrets,
    generated bulk, or unrelated files into a catch-all commit. Ask only when
    ownership is ambiguous and necessary; preserve everything else.
+   Never commit a red test or broken intermediate state: working commits
+   override the leaf's failing-test-first delivery order. Capture red proof uncommitted.
 2. **Gather context in parallel.** The base branch
    (`gh repo view --json defaultBranchRef,nameWithOwner`), then
    `git log --oneline <base>..HEAD`, `git diff --stat <base>...HEAD`, the full

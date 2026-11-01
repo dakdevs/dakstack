@@ -1,56 +1,23 @@
 ---
 name: principle-build-the-lever
-description: Builds the smallest tool - a codemod, script, generator, rerunnable check, or shared delegate skill - that does or proves the work, when that tool makes the work more repeatable or more verifiable than existing tools and tests. Use when facing non-trivial edits, migrations, analyses, or checks, or before fanning repetitive work out to subagents.
+description: "Apply to any non-trivial work, not just bulk work: edits, migrations, analyses, checks. Build the tool that does it or proves it (codemod, script, generator, or a skill your subagents follow) instead of working by hand. The tool is the artifact a reviewer can rerun."
+disable-model-invocation: true
 ---
-
 # Build the Lever
 
-A lever is a small tool that does the work or proves it: a codemod, a
-script, a generator, a query, a rerunnable check, or a skill your subagents
-follow. Build one when it helps. Do not build one by reflex.
+When the work isn't trivial, build the tool that does it instead of doing it by hand.
 
-**Why:** A lever pays off in two ways. Throughput: it applies the change the
-same way every time and reruns for free. Confidence: a reviewer can read one
-artifact and rerun it. Hand edits can only be rechecked by redoing them. A
-deterministic script turns "trust me" into "run this".
+A codemod, generator, or script does the work the same way every time and reruns for free. The tool is one artifact a reviewer can read and rerun to check the work. Hand-done changes can only be re-verified by redoing them. A deterministic script turns "trust me" into "run this".
 
-## When to build one
+Default to building the lever. Skip it only when the task is trivial, a couple of obvious edits you can see at a glance.
 
-Build a new lever only when it makes the work more repeatable, or verifies it
-more strongly than the tools and tests that already exist. Otherwise use the
-existing ones. Being non-trivial does not, by itself, demand a new file. The
-bar is benefit, not repetition: a one-off still earns a lever when the lever
-is what makes the work checkable.
+- Do the first unit by hand to learn the recipe, then build the tool. Prove it by rerunning it on that unit and diffing against your hand-done version. Make the lever safe to rerun.
+- Codemod or script for edits, generator for repetitive files, a dump-to-sqlite query for analysis, a rerunnable check for verification.
+- A deterministic lever beats fan-out. If the tool can process every unit in one pass, run it yourself. Don't fan out delegates to hand-apply what a script can do.
+- When you fan work out to subagents, write the lever as a skill they all read: the recipe, the verification contract, and the do-not-touch fences in one artifact. Keep it outside the delegates' write scope so they can't quietly edit the contract.
+- Applying this principle produces a file. If you cited it and there is no codemod, script, generator, or delegate skill in the diff, you didn't apply it.
+- Commit the lever when the work outlives the session.
 
-## How
+The bar is triviality, not repetition. A one-off still earns a lever when the lever is what makes the work checkable. Per the [Laziness Protocol](../principle-laziness-protocol/SKILL.md), build the smallest script that does or proves the job, never a framework.
 
-- Do the first unit by hand to learn the recipe. Then build the tool and
-  prove it by rerunning it on that unit and diffing against your hand result.
-- Make it safe to rerun. A reviewer will rerun it.
-- Pick the fitting shape: a codemod or script for edits, a generator for
-  repetitive files, a dump into SQLite and a query for analysis, a rerunnable
-  check for verification.
-- Build the smallest lever that does or proves the job, never a framework
-  (`principle-laziness-protocol`). Prove its result before relying on it.
-- Prefer a deterministic lever to fan-out. If one pass can process every
-  unit, run it yourself instead of sending delegates to hand-apply it.
-- When you do fan out, write the lever as a skill every delegate reads: the
-  recipe, the verification contract, and the do-not-touch fences in one
-  place. Each delegate then inherits the same hardened version instead of a
-  re-explained prompt that drifts. Keep that skill outside the delegates'
-  write scope so none can quietly change the contract.
-
-## Keeping it
-
-- Keep a lever beyond scratch only when something durable will use it again,
-  such as a later run, CI, or a reviewer, and you are allowed to write it
-  there.
-- Committing or publishing it needs its own permission.
-
-Making a recurring instruction into a lasting guardrail is
-`principle-encode-lessons-in-structure`. Scripting the final check is covered
-in `principle-prove-it-works`.
-
-**The test:** If you claim this principle, can you name the lever, what it
-made repeatable or provable that existing tools could not, and the run that
-proved it? If not, either use the existing tools or build the lever.
+Distinct from [Encode Lessons in Structure](../principle-encode-lessons-in-structure/SKILL.md), which makes a recurring instruction a durable guardrail. This is throughput and reviewability on the work in front of you. For scripting the verification itself, see [Prove It Works](../principle-prove-it-works/SKILL.md).

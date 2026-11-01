@@ -55,9 +55,10 @@ does not dispose of a finding. For each one:
    for the user. For red checks, distinguish code defects from verified flakes.
 2. **Pre-existing or new.** A problem that already exists on the base branch is
    out of scope. Note it as a follow-up instead of fixing it here.
-3. **Fix confirmed issues at the cause** (`principle-fix-root-causes`),
+3. **Fix confirmed issues at the cause.** Read [fix root causes](../principle-fix-root-causes/SKILL.md),
    verify a working commit, push, refresh `pr-proof` and the PR body, and
-   obtain current-head review coverage. Never weaken tests to turn checks green.
+   obtain unanimous current-head panel approval after full-diff re-review and
+   peer challenge. Never weaken tests to turn checks green.
 4. **Re-run the bot** on the new head so it can confirm the fix. Most rerun on
    push. If one needs a comment to rerun, that comment needs the user's
    permission like any other.
@@ -81,8 +82,6 @@ list them as follow-ups: tests nobody needs, guards for cases that do not
 matter, extra compatibility, small performance costs. When two fixes work,
 choose the one that deletes or narrows code.
 
-Screenshots or video help reviewers on UI changes when you can upload them.
-
 ## Base branch and merging
 
 - Watch `main` (or the base) and rebase when it moves under the PR.
@@ -91,8 +90,9 @@ Screenshots or video help reviewers on UI changes when you can upload them.
   ready.
 - If another PR makes this one obsolete, stop watching, tell the user, and ask
   before closing it unless they already authorized closing.
-- The PR is ready when required checks pass on the latest head, the bots have
-  reviewed that head, and every finding is fixed or dismissed with a reason.
+- Ready requires passing checks, completed bot review, validated finding
+  dispositions, and every required panel reviewer/comment specialist's APPROVE
+  on the same current base/head after full-diff review and peer challenge.
 - Merge only if the user explicitly asked. Otherwise report that it is ready.
 - Right before merging, `git fetch` and check the PR again. Never merge when it
   is BEHIND or DIRTY, or when base commits that landed after the last green run

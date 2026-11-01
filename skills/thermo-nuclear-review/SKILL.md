@@ -1,81 +1,51 @@
 ---
 name: thermo-nuclear-review
-description: Audits a branch's changes for bugs, broken existing behavior, security holes, developer-experience regressions, and feature-gate leaks, tracing each finding end to end before reporting it. Use when the user asks for a thermo nuclear, thermonuclear, or deep review, or a security and correctness audit of a branch or PR diff.
+description: Comprehensive security and correctness audit of a branch's changes. Use for thermo nuclear, thermonuclear, or deep review requests, or branch/PR diff audits focused on bugs, breaking changes, security issues, devex regressions, and feature-gate leaks.
+disable-model-invocation: true
 ---
 
 # Thermo Nuclear Review
 
-Audit the checked-out branch as a security expert. Nothing may slip through:
-be thorough, rigorous, and skeptical, and follow every change to its effects.
+Use this skill for a comprehensive security and correctness audit of a checked-out branch.
 
-This is a review. It never authorizes edits. Report findings; do not fix them.
+## Prompt
 
-## Scope
+You are a security expert performing a comprehensive review of a checked out branch. Audit this branch and its changes extremely thoroughly for bugs, changes that break existing features/functionality, and security vulnerabilities. Be EXTREMELY thorough, rigorous, careful, ambitious, and attentive. NOTHING can slip through.
 
-- Report only problems in code the branch adds or changes. Start from the diff.
-- Do not report flaws in code the branch leaves untouched, even real ones.
+# Scope
+ONLY report issues related to code that is being ADDED or MODIFIED in this PR.
+Focus on changes in the diff.
+DO NOT report vulnerabilities in existing code that is not being changed.
 
-## What to hunt
+# Guidelines
 
-**Broken behavior.** Modules and packages depend on each other in ways the
-diff does not show. A small change in one place often breaks something far
-away. Trace every caller, consumer, and side effect of each change.
+## Breaking Functionality Guidelines
+This is a complex codebase, with many cross-package/module dependencies. Often simple code changes in one place have subtle interactions that break functionality elsewhere. You MUST be extremely thorough in tracing through possible side effects of the changes.
 
-**Security.** Find every vulnerability the changed code introduces. Raw
-untrusted input must be parsed once at its entrypoint, with typed results
-passed downstream.
+## Breaking Devex Guidelines
+It can be easy to break developers' ability to run / build the code locally. You MUST catch changes that will impact users' developer experience. Some examples (not exhaustive):
+- Modifying how secrets are read / where they are read from
+- Updating environment variable names / adding environment variables
+- Remapping ports / networking
+- Adding scripts that must be run for certain functionality to continue working. Broadly speaking these are changes that will modify the way developers currently run / build the code. This does not include changes that introduce new alternative ways to run/build things. Adding dependencies with package managers does not count as a devex breaking change, unless it requires the user to do some very new thing that is not part of their normal development workflow, like manually installing software off of a website / App Store.
 
-**Developer experience.** Catch any change to how developers run or build the
-code locally, such as:
+## Feature Leak Guidelines
+The codebase might carefully gate features behind feature flags or internal-only checks. You MUST NOT allow any features that are meant to be behind a feature gate leak. These leaks are often subtle. Be VERY careful and thorough.
 
-- where or how secrets are read;
-- renamed or newly required environment variables;
-- remapped ports or changed networking;
-- a new script that must be run for something to keep working.
+## Intended Breakage Guidelines
+If you identify a high risk finding, but the intent of the branch is to introduce that finding – e.g. break some functionality, remove a feature flag, remove a safeguard – AND the scope of the change is well constrained, you SHOULD NOT waste the author's time by reporting the issue to them. However, if you believe it is likely that they are not aware of the full implications of their change, or you are worried that they are under-weighting the negative impacts (extreme example: a developer pushes a PR titled "Delete the database"), or you are worried that the change is actually malicious, you should still report the finding.
 
-A new, optional way to run or build does not count. A new package-manager
-dependency does not count, unless it forces a step outside the normal
-workflow, like installing software by hand from a website or app store.
+## Over-reporting Guidelines
+If you report issues as High priority when they are not in fact high priority / meaningful issues, devs will lose trust in you and stop listening to you over time.
+NEVER misreport the priority / importance of issues. Be extremely thorough in tracing issues end-to-end to gain complete, and total confidence before reporting.
 
-**Feature leaks.** Features may sit behind feature flags or internal-only
-checks. Nothing gated may leak past its gate. These leaks are subtle; check
-every path that can reach gated code.
+# Final Response
+IF you have medium-to-high priority / risk findings, and there is a PR for this branch, then check the PR/MR discussion using gh/glab cli to see if there are comments from BugBot or others present.
+If so, take their findings into account. If they found issues you missed, evaluate them to determine if they are valid and include them in your report. If they found some of the same issues you did, see if there is anything from their findings that are worth incorporating into your response.
+Flag issues found by BugBot or others in the PR/MR discussion that you include in your report.
 
-## Intended breakage
 
-If a risky change is the point of the branch (it removes a flag, drops a
-safeguard, or breaks a behavior on purpose) and its scope is tight, do not
-report it. Report it anyway when:
-
-- the author likely has not seen the full consequences;
-- the author seems to underweight the harm (say, a PR titled "Delete the
-  database");
-- the change might be malicious.
-
-## Severity
-
-Never inflate severity. Calling minor issues high trains people to ignore
-you. Trace each issue end to end until you are fully confident before you
-report it at any level.
-
-## Finish your research
-
-Never hand over a half-checked finding. Do not write "the client does X,
-which is fine if the backend handles it" when you can read the backend.
-Read it and settle the question.
-
-## Outside reviews
-
-Finish your own audit first, so you review with fresh eyes. Then, if you
-have medium or high findings and the branch has a PR, read its discussion
-with `gh` or `glab` for comments from review bots or people.
-
-- Check each of their findings yourself. Add the valid ones you missed.
-- Where they overlap with yours, take any detail that strengthens your report.
-- Mark every finding you took from the discussion and say who raised it.
-
-## Report
-
-For each finding give file, line, severity, whether it is in scope, the
-failure scenario, and the evidence you traced. Order by severity. If you
-found nothing at medium or above, say so plainly.
+# Critical Rules
+- NEVER present issues with unfinished research. E.g. Never say something like, "The client has issue X, but if handled in the backend then this is ok." if you have access to the backend code and can check for yourself.
+- You MUST wait to check the PR/MR discussion until AFTER you have performed your audit. This way you have fresh eyes while you review.
+- Be EXTREMELY thorough, rigorous, careful, ambitious, and attentive. NOTHING can slip through.

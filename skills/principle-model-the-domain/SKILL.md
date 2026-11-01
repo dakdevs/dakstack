@@ -1,50 +1,24 @@
 ---
 name: principle-model-the-domain
-description: Encodes the real domain in a fitting structure - a state machine, typed model, lookup table, discriminated union, or reducer - instead of conditionals scattered across files. Use when writing stateful logic, or when code branches heavily or repeats the same shape assumption in several places.
+description: "Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files."
+disable-model-invocation: true
 ---
 
 # Model the Domain
 
-Put the rules of the domain into a data structure instead of spreading them
-across if/else chains.
+Encode the real domain in a data structure instead of scattering it across conditionals. A structure that matches the domain makes invalid states unrepresentable and deletes branches. Choosing it at write time is cheap. Recovering it later reads as a refactor and gets deferred.
 
-**Why:** Scattered booleans, repeated assumptions about a data shape, and
-branching spread across files are accidental complexity. A structure that
-matches the domain makes invalid states impossible to represent and deletes
-branches. Picking it while you write is cheap. Recovering it later looks like
-a refactor, and refactors get put off.
+Reach for:
 
-## Structures to reach for
+- A state machine instead of scattered booleans, phases, or lifecycle checks.
+- A typed model instead of loose parameters or repeated shape assumptions.
+- A map, registry, lookup table, or discriminated union instead of branching spread across files.
+- A reducer or command/event model instead of ad hoc state mutations.
+- A module organized around one body of domain knowledge instead of a sequence such as load, validate, transform, and save. Execution order is not ownership.
+- A small module boundary that gathers repeated behavior, ownership, or invariants.
+- A queue, cache, index, graph, tree, or normalized collection where the access pattern calls for it.
+- Any other structure that fits. When none fits, work out what the code must never allow and how the data gets read, then find the structure that encodes exactly that.
 
-- A state machine instead of scattered booleans, phase flags, or lifecycle
-  checks.
-- A typed object or model instead of loose parameters or the same shape
-  assumed in many places.
-- A map, registry, lookup table, or discriminated union (a type whose
-  variants carry a tag field) instead of branches spread across files.
-- A reducer or command/event model instead of ad hoc state mutation.
-- A module built around one body of domain knowledge, not around a sequence
-  such as load, validate, transform, save. Execution order is not ownership.
-- A small module boundary that gathers repeated behavior, ownership, or
-  invariants (rules that must always hold).
-- A queue, cache, index, graph, tree, or normalized collection when the way
-  data is read calls for one.
-- Anything else that fits. When nothing obvious does, write down what the
-  code must never allow and how the data is read, then find the structure
-  that encodes exactly that.
+Do not force an abstraction. Prefer boring code if the current shape is already clear, local, and unlikely to grow. Be skeptical of an abstraction that adds indirection without removing branches, duplicated rules, invalid states, or lifecycle risk.
 
-## Do not force it
-
-Keep boring code when the current shape is clear, local, and unlikely to
-grow. Distrust an abstraction that adds indirection without removing
-branches, duplicated rules, invalid states, or lifecycle risk.
-
-## Signs you skipped this
-
-- A new feature adds one more branch to an existing if/else chain.
-- A second boolean must stay in sync with the first.
-- Modules are named after phases (temporal decomposition), and each one
-  repeats the same domain rules.
-
-**The test:** Can the code represent a state the domain forbids? If yes, and
-a structure would rule it out with less branching, use the structure.
+The sign that you skipped this is a new feature that grows an existing if/else chain by one more branch, or a second boolean that must stay in sync with the first. Temporal decomposition is another sign. Phase-named modules repeat the same domain rules across steps.

@@ -10,6 +10,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
+import provenance from "../upstream-skills.json";
 
 const installations: string[] = [];
 
@@ -51,6 +52,57 @@ test("a skills-only install preserves every bundled Markdown dependency", () => 
   expect(brokenLinks(install())).toEqual([]);
 });
 
+test("all hidden upstream leaves can be discovered on disk and read by absolute path", () => {
+  const installation = install();
+  const hidden = readdirSync(installation)
+    .map((name) => join(installation, name, "SKILL.md"))
+    .filter((path) =>
+      /^disable-model-invocation: true$/m.test(readFileSync(path, "utf8")),
+    );
+  expect(hidden.map((path) => relative(installation, path)).sort()).toEqual(
+    provenance.skills.map((skill) => `${skill.name}/SKILL.md`).sort(),
+  );
+  for (const path of hidden) {
+    expect(readFileSync(path)).toEqual(
+      readFileSync(
+        join(import.meta.dir, "../skills", relative(installation, path)),
+      ),
+    );
+  }
+});
+
+test.each(
+  Object.entries({
+    ship: ["principle-sequence-verifiable-units"],
+    "pr-this": ["principle-sequence-verifiable-units"],
+    "babysit-pr": ["principle-fix-root-causes"],
+    "prod-triage": [
+      "principle-fix-root-causes",
+      "principle-laziness-protocol",
+      "principle-test-behavior-not-implementation",
+    ],
+    "replicate-issue": ["principle-fix-root-causes"],
+    "principle-avoid-tautological-tests": [
+      "principle-test-behavior-not-implementation",
+    ],
+    "principle-effect-boundary": ["principle-test-behavior-not-implementation"],
+  }),
+)(
+  "standalone %s declares readable file dependencies",
+  (caller, dependencies) => {
+    const installation = install();
+    const source = readFileSync(join(installation, caller, "SKILL.md"), "utf8");
+    const targets = [...source.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map(
+      (match) => resolve(installation, caller, match[1]),
+    );
+    for (const dependency of dependencies) {
+      const target = join(installation, dependency, "SKILL.md");
+      expect(targets).toContain(target);
+      expect(readFileSync(target).length).toBeGreaterThan(0);
+    }
+  },
+);
+
 test("installation validation catches a missing bundled resource", () => {
   const installation = install();
   rmSync(join(installation, "unslop/references/patterns.md"));
@@ -82,6 +134,7 @@ test("literal Markdown examples do not require files in the installation", () =>
 test.each([
   "kitchen-agent",
   "review-agent",
+  "reviewer-agent",
   "comment-sicko",
   "finding-validator",
 ])(

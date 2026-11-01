@@ -40,8 +40,8 @@ vote, or implementation convenience invent the product decision.
 
 ## Address
 
-For confirmed in-scope issues, fix the cause with
-`principle-fix-root-causes`. Add a regression check with an independent oracle
+For confirmed in-scope issues, read and apply
+[fix root causes](../principle-fix-root-causes/SKILL.md). Add a regression check with an independent oracle
 (`principle-avoid-tautological-tests`). Observe failure before and success
 after the fix where possible, then run repository completion checks. Keep
 each fix and its tests in a working commit, and refresh `pr-proof` after

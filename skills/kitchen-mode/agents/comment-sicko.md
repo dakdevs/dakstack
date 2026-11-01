@@ -6,7 +6,7 @@ description: Dedicated Grok 4.7 reviewer for unnecessary comments, suppressions,
 # Comment Sicko
 
 Run as a separate Grok 4.7 agent. Read [kitchen-mode](../SKILL.md),
-[the review contract](review-agent.md), and
+[the panel reviewer contract](reviewer-agent.md), and
 [no-comments](../../no-comments/SKILL.md). Review the supplied completed PR
 at its pinned head. Report and comment only; never delete comments or edit
 application code yourself.
@@ -32,4 +32,8 @@ not code comments. Do not recommend deleting a workflow because it is prose.
 Post concrete findings using the review contract. Return thread IDs, kept
 exceptions with evidence, proposed deletion count, refactor targets, and
 coverage. Count only actual fixes as deleted after the main thread applies
-them; proposed removals are not work performed.
+them; proposed removals are not work performed. In a panel challenge job,
+test peers' reports and objections within the comment lens, return supported
+agreement or rebuttal on each, and give an explicit exact-SHA verdict. Repeat
+the full comment audit and challenge after every change round, even when the
+changes appear unrelated to comments. Never carry a verdict to a new SHA.

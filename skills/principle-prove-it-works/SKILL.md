@@ -1,53 +1,22 @@
 ---
 name: principle-prove-it-works
-description: Verifies finished work by observing the real artifact - running the feature, reading the actual value, inspecting the diff - instead of trusting a proxy, a self-report, or "it compiles". Use when a task is done and before you call it done, when checking a delegate's work, or when a check fails and you need to know whether to trust it.
+description: "Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'"
+disable-model-invocation: true
 ---
 
 # Prove It Works
 
-Finishing a task is not the same as knowing it works. Before you say done,
-ask: "How do I prove this actually works?" Then look at the real thing.
+Verify every task output by checking the real thing directly. Do not infer from proxies, self-reports, or "it compiles."
 
-**Why:** Work you have not checked has unknown correctness. Indirect checks,
-such as file timestamps, how fresh an output looks, a delegate's summary, or
-an old screenshot, feel cheaper than looking directly. A wrong guess costs far
-more than a direct look.
+**Why:** Unverified work has unknown correctness. Indirect verification (file mtimes, output freshness, agent self-reports, cached screenshots) feels cheaper than direct observation. Acting on a wrong inference costs far more than checking the source.
 
-## Look at the real thing, not a proxy
-
-A proxy is anything that stands in for the thing you care about.
-
-- Check whether a process is alive by asking the process, not by reading
-  state derived from it.
-- Read the actual value, not a cached or computed copy of it.
-- When a check fails, suspect how you looked before you suspect the system.
-
-## Code and features
-
-1. Build it. This is required, but it proves little.
-2. Run it and drive the real feature path.
-3. Follow the whole chain: does data get from input to output?
-4. For integrations, test the full communication path end to end.
-
-## Delegated work
-
-Trust artifacts, not reports. A delegate reports what it meant to do, which
-is not always what happened. Read the git diff, the file contents, or the
-runtime behavior yourself.
+Check the real thing, not a proxy:
+- Check process liveness directly, not indirectly through derived state
+- Read the actual value, not a cached or derived representation
+- When verification fails, suspect the observation method before suspecting the system
 
 ## Script the check when you can
 
-The strongest proof is a deterministic script that reruns the same
-comparison. A one-time glance is weaker. For example, a script that compares
-old and new compiled output catches what your eye misses.
+The strongest proof is a deterministic script that re-runs the same comparison, not a one-time eyeball. Write the script, run it, and keep its output as an artifact a reviewer can re-run instead of trusting your word.
 
-- Write the script, run it, and keep its output so a reviewer can rerun it
-  instead of taking your word.
-- Keep the artifact visible to the user. Most work needs only that.
-- Publish reviewable before/after evidence for every PR through `pr-proof`.
-  Refresh after proof whenever the change moves. Commit supporting artifacts
-  only when useful and within the task's authorization; avoid generated bulk.
-
-**The test:** Can you point to something you observed in this session, not
-something you inferred, that shows the feature working? If not, you have not
-proved it.
+Keep the artifact visible for the human. Commit it only for large or complex work where the trail has to be auditable later, like a big port or migration (the **show-me-your-work** skill).

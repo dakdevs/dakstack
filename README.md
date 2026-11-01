@@ -8,25 +8,27 @@ instruction I kept retyping or a correction I kept making. They work in
 Claude Code and Codex, and use [T3 Code](https://t3.codes) features when they
 are available.
 
-The stack is self-contained: skills only call other skills in this repo.
-Many are rewrites of other people's skills; see [CREDITS.md](CREDITS.md).
+Original workflows call skills in this repository. Borrowed principles and
+both thermonuclear reviews retain exact upstream text, including any external
+references. See [CREDITS.md](CREDITS.md) and
+[the provenance manifest](upstream-skills.json).
 
 ## Workflows
 
-| Skill          | Say                           | What it does                                                                                                                    |
-| -------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `ship`         | "ship it", "get it merged"    | Finishes verified commits, publishes proof and the PR, reviews and validates findings, then merges and checks deployment.       |
-| `ship-to-pr`   | "ship to PR"                  | Same as `ship`, but stops when the PR is ready for me to merge.                                                                 |
-| `bar`          | "make sure it passes the bar" | Reviews a finished PR through skill lenses, posts findings, independently validates them, and checks fixes on the current head. |
-| `show-me`      | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL.   |
-| `design-loop`  | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                           |
-| `fanout`       | "use Opus delegates"          | One delegate, worktree, and PR per independent unit, stacked when dependent.                                                    |
-| `status`       | "what's next?"                | Checks git, PRs, deploys, and threads, then answers with the next action.                                                       |
-| `prod-triage`  | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one in its own PR.                                                |
-| `scaffold`     | "set up a new repo"           | Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.                                                            |
-| `sweep`        | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                  |
-| `film`         | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                          |
-| `kitchen-mode` | "kitchen mode"                | Coordinates implementation, review, comment review, and independent finding validation using bundled agent prompts.             |
+| Skill          | Say                           | What it does                                                                                                                  |
+| -------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `ship`         | "ship it", "get it merged"    | Finishes verified commits, publishes proof and the PR, reviews and validates findings, then merges and checks deployment.     |
+| `ship-to-pr`   | "ship to PR"                  | Same as `ship`, but stops when the PR is ready for me to merge.                                                               |
+| `bar`          | "make sure it passes the bar" | Runs adversarial multi-model audits and peer challenges after every change round until everyone approves the same head.       |
+| `show-me`      | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL. |
+| `design-loop`  | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                         |
+| `fanout`       | "use Opus delegates"          | One delegate, worktree, and PR per independent unit, stacked when dependent.                                                  |
+| `status`       | "what's next?"                | Checks git, PRs, deploys, and threads, then answers with the next action.                                                     |
+| `prod-triage`  | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one in its own PR.                                              |
+| `scaffold`     | "set up a new repo"           | Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.                                                          |
+| `sweep`        | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                |
+| `film`         | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                        |
+| `kitchen-mode` | "kitchen mode"                | Coordinates implementation, review, comment review, and independent finding validation using bundled agent prompts.           |
 
 ## Commands
 
@@ -83,9 +85,9 @@ agents doing the work.
 ```text
 kitchen-mode / ship / ship-to-pr
   → before proof → working commits + tests → after proof → published PR
-  → bar + Grok comment reviewer → posted findings → independent validation
+  → independent multi-model audits → peer challenges → independent validation
   → main-thread fixes + commits → refreshed after proof → replies/resolution
-  → current-head review + CI → merge (ship) or open PR (ship-to-pr)
+  → repeat full panel → unanimous current-head approval + CI → merge or handoff
 ```
 
 Reviews begin after the entire implementation is finished and published.
@@ -93,6 +95,14 @@ Each commit is a complete, working version with its tests. Every PR includes
 inspectable before and after proof; any later change refreshes the after
 record. The main thread owns fixes and thread outcomes. Unclear product
 intent returns to the user before a dependent fix or resolution.
+
+The review coordinator launches separate Claude Opus 5.5, GPT-6.1 Sol, and
+Grok 4.7 reviewers plus a dedicated Grok comment reviewer. Each first audits
+independently, then challenges the other reports. After every change round,
+the entire panel reviews the full diff again. Every required reviewer must
+explicitly approve the same base/head and agree on finding dispositions.
+One dissent, missing reviewer, or blocked verification keeps the gate closed;
+there is no majority vote, stale approval, or fixed-round shortcut.
 
 ## Install
 
@@ -129,9 +139,10 @@ bun test
 bun run test:e2e
 ```
 
-The test checks that every skill has valid frontmatter, stays under 100
-lines, has Codex metadata, is listed in this README, and refers only to
-skills in this stack. The installation E2E copies only the distributed
+The tests check frontmatter, metadata, README registration, and local skill
+references. Authored skills stay under 100 lines. Exact upstream imports
+retain their original descriptions, length, and references; SHA-256 checks
+protect their contents from edits, including formatting. The installation E2E copies only the distributed
 skills into a temporary directory and checks their Markdown dependencies.
 It proves packaging, not agent behavior or hosted execution.
 
@@ -164,5 +175,32 @@ well. They are portable briefs, not automatic native agent registrations;
 the orchestrator supplies their absolute paths and verifies the model used.
 
 The main thread owns product intent, fixes, PR replies, and resolution.
-Review agents inspect completed published work and post findings. Independent
-validators reproduce those findings before the main thread accepts them.
+The coordinator can spawn reviewers when explicitly delegated that authority;
+otherwise the main thread launches its panel. Individual reviewers inspect
+completed published work, post findings, and challenge peers without spawning
+children. Independent validators reproduce findings before the main thread
+accepts them. The five bundled role prompts travel with a skills-only install.
+
+## Exact upstream sources
+
+The 23 borrowed principles and both thermonuclear reviews are copied verbatim
+from the pinned revision in upstream-skills.json. Do not rewrite, reflow, or
+append stack policy inside those SKILL.md files. Prettier excludes exactly
+those originals; lint verifies their hashes. Confirm the remote source too:
+
+```bash
+bun run verify:upstream --online
+```
+
+Keep stack-specific orchestration, authorization, commit rules, and evidence
+requirements in the shipping workflows and agent contracts. User instructions
+remain authoritative when an upstream principle suggests a different delivery
+sequence. The five locally authored principle skills retain their local text.
+
+The exact imports retain disable-model-invocation: true. In Claude Code,
+their descriptions are absent from automatic model discovery, and the model
+cannot auto-invoke or preload them. Users can still invoke them manually.
+Coordinators inventory installed `*/SKILL.md` files on disk, resolve relevant
+leaves to absolute paths, and read those files directly before passing the
+paths to delegates. The model's skill list and Skill tool are not the loading
+route for these imports. See [Claude's invocation controls](https://code.claude.com/docs/en/skills).

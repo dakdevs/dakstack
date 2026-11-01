@@ -1,45 +1,21 @@
 ---
 name: principle-outcome-oriented-execution
-description: Drives planned rewrites and migrations straight toward the target architecture, accepting declared local breakage inside phases instead of writing throwaway compatibility code to keep every step smooth. Use when executing a planned rewrite or migration that has explicit phase boundaries.
+description: "Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code."
+disable-model-invocation: true
 ---
 
 # Outcome-Oriented Execution
 
-Aim at the verifiable end state, not at keeping every step stable. Code
-written only to keep an intermediate step working tends to outlive the
-migration and become debt. Converge on the target and prove correctness at
-declared boundaries.
+Optimize for the intended, verifiable end state rather than preserving smooth intermediate states.
 
-## Rules
+**Why:** Keeping every intermediate step fully stable often creates temporary compatibility code that becomes long-lived debt. Converge on the target architecture and prove correctness at explicit verification boundaries.
 
-- **End state first.** The integrity of the finished architecture matters
-  more than stability while you get there.
-- **Breakage is allowed only inside a phase.** It must be planned, scoped,
-  and reversible.
-- **Define phases up front.** Before you start, write each phase boundary,
-  where breakage is acceptable, and which static and runtime checks must pass
-  at the boundary.
-- **Close each phase green.** Finish the phase compile-complete with its
-  checks passing before you start the next
-  (`principle-sequence-verifiable-units`).
-- **Watch what you touch.** While migrating, keep fast, high-signal checks
-  running on the areas you are changing.
-- **Verify the whole at the end.** Run full static and runtime verification
-  before calling the plan done.
+**Core rule:**
+- Prioritize end-state integrity over transitional stability
+- Intermediate breakage is acceptable when it is planned, scoped, and reversible
 
-## Hard limit: published boundaries
-
-Breakage never crosses a commit, PR, or deploy boundary. Every committed,
-merged, or deployed state must work. Temporary breakage stays in the working
-tree until the phase is complete and verified. Do not delete an API that an independently deployed consumer still
-needs. Follow the repo's PR and deploy rules. If they conflict with the
-plan, change the plan.
-
-## When it applies
-
-Only for planned rewrites and migrations with explicit phase boundaries. For
-ordinary changes, keep every step working.
-
-**The test:** Can you point to the declared phase where each breakage lives,
-and the green check that closed it? Is any compatibility shim in the diff
-that the end state does not need?
+**Guardrails:**
+- Use this for planned rewrites and migrations with explicit phase boundaries
+- Declare where temporary breakage is acceptable
+- Keep high-signal checks for actively touched areas while migrating
+- Require full static and runtime verification at plan completion

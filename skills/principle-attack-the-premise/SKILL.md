@@ -1,41 +1,21 @@
 ---
 name: principle-attack-the-premise
-description: Stops a run of failing fixes by naming the shared assumption behind them, counting which actors hold the problem, and removing the cause instead of compensating for it. Use when two or more fixes built on the same premise have failed the same check.
+description: "Apply when two or more fixes that share one premise have failed the same gate. Write the premise down and test it directly before you write another fix that assumes it."
+disable-model-invocation: true
 ---
 
 # Attack the Premise
 
-When two or more fixes that rest on one premise fail the same gate, suspect
-the premise, not the fixes. A gate is the check they all failed: a test, a
-benchmark, a review. Each failure is evidence against the shared premise.
+When two or more fixes that share one premise have failed the same gate, suspect the premise, not the fixes.
 
-## How
+**Why:** Each failed fix is evidence against the belief it assumed. A third fix on the same premise spends effort where the evidence already says the cause is not.
 
-1. **Write the premise down.** It is the one sentence every failed fix took
-   for granted.
-2. **Take a census before the next fix.** Count the imbalance for each actor
-   (each worker, node, client, or component involved). The census tells you
-   _who_ holds the imbalance, not how big it is. Write it as a script you can
-   rerun (`principle-build-the-lever`).
-3. **Read the skew.** If the same few actors hold most of the imbalance on
-   every run, something gives them that role. Find what assigns it. That
-   assignment is your next "why" (`principle-fix-root-causes`).
-4. **Remove the asymmetry; do not compensate for it**
-   (`principle-laziness-protocol`). Rotate the role, randomize who gets it,
-   or move it, so no actor holds it every run. Compensations leave the
-   assignment in place and add work on every run. Examples of compensation:
-   a return path, a shared pool, a batched hand-off, a periodic rebalance.
+**Pattern:**
+- **Write the premise down.** The premise is the one sentence that every failed fix assumed.
+- **Test the premise before the next fix.** Find an observation that would come out differently if the premise were false, and make it. Look at how the failures are distributed, not only at how large they are. Make the check rerunnable per [Build the Lever](../principle-build-the-lever/SKILL.md).
+- **Follow the evidence.** If it contradicts the premise, the cause is elsewhere. Look for what the failures have in common that the premise did not predict. If it confirms the premise, ask the next "why" per [Fix Root Causes](../principle-fix-root-causes/SKILL.md). The earlier fixes may have treated a consequence instead of the cause.
+- **Remove the condition instead of compensating for it**, per the [Laziness Protocol](../principle-laziness-protocol/SKILL.md). If the evidence shows that one part always lands on the losing side, change what puts it there. A mechanism that cleans up after it leaves the cause in place and adds work on every run.
 
-## Stop rules
+**Stop:** Do not start the next fix before the premise is written down and tested.
 
-- Do not start the next fix until the premise is written and the census
-  exists.
-- If the census is even across actors, the premise is not the cause. Look
-  elsewhere, and keep the census as evidence.
-
-This skill questions a fact the current design assumes. Rebuilding a design
-around a new requirement is `principle-redesign-from-first-principles`.
-
-**The test:** Can you name the premise in one sentence and show a census
-that points at who holds the imbalance? If not, you are not ready for the
-next fix.
+This principle is distinct from [Redesign from First Principles](../principle-redesign-from-first-principles/SKILL.md), which rebuilds a design around a new requirement. It questions a fact the current design assumes.
