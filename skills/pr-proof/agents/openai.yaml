@@ -1,0 +1,4 @@
+interface:
+  display_name: "PR proof"
+  short_description: "Keep comparable before and current after evidence on every PR"
+  default_prompt: "Use $pr-proof to capture and refresh this PR before and after evidence."

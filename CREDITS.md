@@ -38,6 +38,20 @@ the stack.
 | `unslop`                                             | [cursor/plugins](https://github.com/cursor/plugins) (pstack)          | [pstack/skills/unslop/SKILL.md](https://github.com/cursor/plugins/blob/main/pstack/skills/unslop/SKILL.md)                                                                                         | Rewritten                               |
 | `babysit-pr`                                         | [t3dotgg/tstack](https://github.com/t3dotgg/tstack) (MIT)             | [skills/babysit-pr/SKILL.md](https://github.com/t3dotgg/tstack/blob/main/skills/babysit-pr/SKILL.md)                                                                                               | Rewritten, without its `pr-wait` script |
 
+## Factory roles
+
+- `no-comments` adapts the comment review and root-cause cleanup ideas from
+  [pstack no-comments](https://github.com/cursor/plugins/blob/main/pstack/skills/no-comments/SKILL.md).
+- The Comment Sicko role adapts the specialized comment audit from
+  [pstack comment-sicko](https://github.com/cursor/plugins/blob/main/pstack/agents/comment-sicko.md).
+  Here it is a report-only Grok 4.7 reviewer; deletion requires validation.
+- `kitchen-mode` and its implementation role adapt the parent-owned workflow,
+  full skill read, and leaf-principle loading from
+  [pstack poteto-agent](https://github.com/cursor/plugins/blob/main/pstack/agents/poteto-agent.md)
+  and [poteto-mode](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md).
+  The portable roles, post-PR review cycle, and product-intent validation are
+  written for this stack. No upstream persona text is copied.
+
 ## Skills folded into other skills
 
 These are not separate skills in dakstack. Their main steps are part of the

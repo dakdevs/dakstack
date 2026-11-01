@@ -78,3 +78,22 @@ test("literal Markdown examples do not require files in the installation", () =>
   );
   expect(brokenLinks(installation)).toEqual([]);
 });
+
+test.each([
+  "kitchen-agent",
+  "review-agent",
+  "comment-sicko",
+  "finding-validator",
+])(
+  "a skills-only installation includes the %s role and detects its removal",
+  (role) => {
+    const installation = install();
+    const prompt = join(installation, "kitchen-mode/agents", `${role}.md`);
+    expect(existsSync(prompt)).toBe(true);
+    expect(readFileSync(prompt, "utf8")).toContain(`name: ${role}\n`);
+    rmSync(prompt);
+    expect(brokenLinks(installation)).toContain(
+      `kitchen-mode/SKILL.md: agents/${role}.md`,
+    );
+  },
+);

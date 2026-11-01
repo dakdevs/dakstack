@@ -28,6 +28,8 @@ Many are rewrites of other people's skills; see [CREDITS.md](CREDITS.md).
 | `sweep`           | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                                                  |
 | `film`            | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                                                          |
 
+| `kitchen-mode` | "kitchen mode" | Coordinates implementation, review, comment review, and independent finding validation using bundled agent prompts. |
+
 ## Commands
 
 | Skill                                | What it does                                                                                                         |
@@ -39,6 +41,10 @@ Many are rewrites of other people's skills; see [CREDITS.md](CREDITS.md).
 | `principle-effect-boundary`          | Decides where Effect belongs and how to write, test, and review it as functional code with layers and no classes.    |
 | `best-practices`                     | Researches current, version-specific docs and the codebase's conventions before writing code.                        |
 | `unslop`                             | Removes AI-writing patterns from prose while keeping meaning, evidence, and formats.                                 |
+
+| `no-comments` | Reviews comments and hidden workarounds through a separate Grok 4.7 agent after the PR is published. |
+| `replicate-issue` | Reproduces bugs and findings, checks product intent, and guides verified fixes and thread dispositions. |
+| `pr-proof` | Captures before/after evidence for every PR and refreshes the after record whenever work changes. |
 
 ## Principles
 
@@ -143,3 +149,15 @@ New commands follow the same distinction.
 Remove the old taste and effect-boundary skill directories after installing
 this version; installers may leave renamed directories behind. Update any
 personal instructions or shortcuts that invoke those old names.
+
+## Portable agents
+
+Agent prompts ship inside the kitchen-mode skill's agents directory, beside
+its Codex metadata. Read [kitchen-mode](skills/kitchen-mode/SKILL.md) for the
+role links and delegation contract. Installing skills copies the prompts as
+well. They are portable briefs, not automatic native agent registrations;
+the orchestrator supplies their absolute paths and verifies the model used.
+
+The main thread owns product intent, fixes, PR replies, and resolution.
+Review agents inspect completed published work and post findings. Independent
+validators reproduce those findings before the main thread accepts them.
