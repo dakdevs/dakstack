@@ -111,6 +111,37 @@ test("installation validation catches a missing bundled resource", () => {
   );
 });
 
+test.each([
+  "ship/SKILL.md",
+  "ship-to-pr/SKILL.md",
+  "kitchen-mode/SKILL.md",
+  "kitchen-mode/agents/kitchen-agent.md",
+  "kitchen-mode/agents/review-agent.md",
+  "kitchen-mode/agents/reviewer-agent.md",
+  "kitchen-mode/agents/finding-validator.md",
+  "replicate-issue/SKILL.md",
+  "prod-triage/SKILL.md",
+  "bar/SKILL.md",
+  "best-practices/SKILL.md",
+  "pr-proof/SKILL.md",
+  "fanout/SKILL.md",
+  "design-loop/SKILL.md",
+  "scaffold/SKILL.md",
+])("%s can load docs context from a skills-only installation", (caller) => {
+  const installation = install();
+  const source = readFileSync(join(installation, caller), "utf8");
+  const targets = [...source.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) =>
+    resolve(installation, dirname(caller), match[1]),
+  );
+  const docs = join(installation, "docs-context/SKILL.md");
+  expect(targets).toContain(docs);
+  expect(readFileSync(docs, "utf8")).toContain("name: docs-context\n");
+  rmSync(docs);
+  expect(brokenLinks(installation)).toContain(
+    `${caller}: ${relative(dirname(join(installation, caller)), docs)}`,
+  );
+});
+
 test("installation validation rejects a dependency outside the installed stack", () => {
   const installation = install();
   writeFileSync(

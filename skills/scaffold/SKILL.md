@@ -7,6 +7,9 @@ description: Starts a new project on the user's standard stack - Bun, Turborepo,
 
 ## Decide
 
+Use [docs context](../docs-context/SKILL.md) to validate the chosen stack,
+versions, setup guidance, and deployment checks before and during the build.
+
 Take what the user specified. Otherwise use these defaults, and state each
 choice in the report.
 

@@ -12,12 +12,12 @@ coordinator may be the main thread or an explicitly delegated agent.
 
 ## Entry gate
 
-Record PR URL, task scope and product decisions, base and head SHAs, checks,
-and current `pr-proof`. Require finished implementation, committed task
-work, a pushed head, and inspectable before/after evidence before launching
-reviews. Missing publication returns to the caller's `pr-this` step; a
-review request alone does not authorize creating a PR. Explicit local-only
-reviews may report locally, but cannot satisfy this published-PR gate.
+Record PR URL, task scope/product decisions, base/head SHAs, checks, `pr-proof`,
+and [docs context](../docs-context/SKILL.md). Before reviews, require finished
+implementation, committed task work, a pushed head, and inspectable
+before/after proof. Missing publication returns to `pr-this`; a review
+request alone does not authorize PR creation. Explicit local-only reviews
+may report locally, but cannot satisfy this published-PR gate.
 
 ## Required panel
 

@@ -24,7 +24,9 @@ of the user before fixing, unless they said "fix them".
 
 ## Fix
 
-For each issue the user wants fixed:
+For each issue the user wants fixed, apply
+[docs context](../docs-context/SKILL.md) to its deployed environment,
+relevant contracts and runbooks, and subsequent reproduction and fixes.
 
 1. **Revalidate.** Confirm it still happens on the current production commit
    and is not already fixed or caused by a bot or attack. If an automated

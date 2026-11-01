@@ -9,6 +9,7 @@ Follow `ship` through implementation, verification, publication, post-PR
 review, finding validation, and CI. Replace its merge/deploy step with this
 handoff. The order is mandatory: complete working commits and proof, publish
 PR, then review. Do not review unfinished local work as the final PR review.
+Carry [docs context](../docs-context/SKILL.md) through every stage and fix.
 
 ## Commit and evidence contract
 

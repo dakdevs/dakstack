@@ -7,6 +7,8 @@ description: Captures comparable before and after evidence for every PR and refr
 
 Every PR carries checkable before and after evidence. A description of what
 should happen is not proof. Record what you observed and where it came from.
+Include [docs context](../docs-context/SKILL.md) for consequential decisions:
+applicable sources, derived expectations, observed checks, and unresolved gaps.
 
 ## Before implementation
 

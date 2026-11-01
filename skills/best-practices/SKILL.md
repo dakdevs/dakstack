@@ -8,6 +8,8 @@ description: Researches current, version-specific documentation and the codebase
 What you remember about a library may be a year or more out of date. APIs
 change, options get renamed, and defaults move. Check the current truth before
 you write code, then act on it.
+Apply [docs context](../docs-context/SKILL.md) throughout research,
+implementation, and validation, including local product and incident docs.
 
 ## 1. Name what you are dealing with
 
@@ -46,10 +48,10 @@ subagents (one per technology, one for the codebase) and combine the results.
 
 When sources disagree:
 
-- Official docs decide API usage, config format, and signatures.
-- The codebase decides style, structure, and architecture.
-- Well-supported community practice decides performance, security, and edge
-  cases the docs do not cover.
+- Version-matched official docs establish supported API usage and config.
+- Repository instructions and accepted product decisions establish local
+  intent; verify existing code and tests against that contract.
+- Community guidance supplies leads to validate with primary evidence.
 - If a real conflict remains and the choice matters, ask the user.
 
 ## 6. Choose and proceed

@@ -12,7 +12,9 @@ before changing code. Use safe fixtures and the actual affected surface.
 
 1. Record the report, PR/comment/thread link if present, environment, exact
    base, reported head, current head, trigger, and claimed expected result.
-2. Read the task and accepted product decisions. Trace relevant contracts,
+2. Apply [docs context](../docs-context/SKILL.md) to the report and relevant
+   documentation; validate source applicability and carry its checks forward.
+   Read the task and accepted product decisions. Trace relevant contracts,
    designs, callers, and tests. Distinguish a violated decision from a new
    preference. An existing test is evidence, not authority over an explicit
    product decision.
