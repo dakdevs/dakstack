@@ -21,7 +21,9 @@ The main thread coordinates. Delegates do the work.
 
 - **Execution delegates:** Claude Opus 5.5 at medium reasoning unless the user
   names another model. Each gets its unit, its owned files, its acceptance
-  checks, the repo's rules, and `principle-taste`.
+  checks, the repo's rules, `principle-taste`, and the absolute
+  [kitchen implementation prompt](../kitchen-mode/agents/kitchen-agent.md).
+  Require logical working commits with tests and before/after proof.
 - **One unit, one checkout.** Use `delegate_task` with
   `isolation: "worktree"`, or a new T3 thread with a worktree when the user
   asks for separate conversations. Link each thread's PR to it.
@@ -39,13 +41,14 @@ The main thread coordinates. Delegates do the work.
   task (`schedule_task` in T3 Code) and send a short visual: a table of unit, owner, state, and PR.
 - A delegate that stalls gets cancelled and relaunched once, with the reason.
 - Never interrupt a thread the user did not mention.
-- If Opus hits its quota, hand off to a new thread on GPT-6.1 Sol medium. Give it a
-  handoff note: goal, state, decisions, open work, links. Have that thread delegate to Opus again when quota returns, and
-  settle the old thread.
+- If a required model hits quota, report the blocked unit and ask before
+  substitution. Create another top-level thread only when the user asks.
 
 ## Finish
 
 Inspect each delegate's diff and evidence yourself; a summary is not proof.
-Run `bar` on each PR when the user asked for review, then `ship` the ones the
+Complete each unit, publish its PR with `pr-proof`, then run `bar` when the
+user requested review. Main-thread triage uses `replicate-issue`; reviewers
+never apply their own findings. Run `ship` on the ones the
 user asked to merge. Settle or archive finished threads. Report every PR, its
 state, and anything still blocked.

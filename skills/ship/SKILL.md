@@ -1,91 +1,84 @@
 ---
 name: ship
-description: Takes a change from its current state to merged and deployed without the user watching - finish it, prove it, pass the bar, file the PR, babysit CI and review bots, merge, and confirm the deploy. Use when the user says "ship it", "$ship", "get it merged", "$pr-this and get it merged", "force merge", or "fix the checks and merge".
+description: Completes a task in working commits, publishes a PR with before/after proof, runs independent PR reviews and finding validation, then merges and confirms deployment. Use when the user says "ship it", "$ship", "get it merged", "force merge", or "fix the checks and merge". Invocation requests the review comments, replies, and resolutions in this workflow.
 ---
 
 # Ship
 
-The user is not watching this thread. Nobody reads your updates until long
-after you stop, and nobody will prompt you again. You own the work from where
-it is now to a merged PR and a working deploy.
+Own the task through a merged PR and an observed working deploy. Run only
+when the user requests shipping or merging. Use `ship-to-pr` to stop before
+merge. Follow `principle-taste` and the repository's rules.
 
-Run this workflow only when the user asked to ship or merge. For a PR that
-stops before the merge, use `ship-to-pr`.
+## Authorization
 
-## What the user grants
+The workflow covers this task's commits, push, PR publication, review
+comments, replies, and resolutions. Merge only under the user's merge grant.
+A skill does not expand permission to production data, destructive actions,
+other people's branches, or unrelated publication. Honor existing session
+and repository rules for rebasing, force pushes, and administrator merges.
 
-- Merge the PR once the merge gate passes.
-- Rebase the PR's own branch and push it with `--force-with-lease`.
-- Use whatever test method gives direct proof (browser, simulator, running
-  the app, screenshots), even where a repo file says to ask first. Repo rules
-  about which commands or fixtures to use still apply.
-- Admin merge (`gh pr merge --admin`) only when the user said "force" or
-  "admin" for this task.
+## Ordered workflow
 
-Nothing else. Production data, deleting things, closing PRs, and other
-people's branches still need the user.
+1. **Plan and capture before.** Pin base/head, inspect existing user work,
+   record product decisions and acceptance criteria, and start `pr-proof`.
+   For bugs, use `replicate-issue` before implementation.
+2. **Implement in logical commits.** Follow
+   `principle-sequence-verifiable-units`. Each commit is one complete,
+   working, testable block, including its tests and necessary migrations or
+   callers. Run its checks before committing. Temporary breakage stays in
+   the working tree, never a commit. Preserve unrelated user changes.
+3. **Finish the entire task.** Run required lint, format, typecheck, build,
+   unit and E2E checks; add/update tests for changed behavior. Inspect the
+   complete diff. Fetch the base, resolve conflicts preserving both sides'
+   intent, regenerate lockfiles, and rerun affected verification. Do not
+   open the review phase with TODO implementation or uncommitted task work.
+4. **Capture after and publish.** Refresh `pr-proof` against the complete
+   committed head. Use `pr-this` to push and open/update the PR, including
+   comparable before/after proof. Mark implementation complete and ready
+   for review. A draft may exist earlier, but reviews cannot start until
+   this step is complete.
+5. **Review the published PR.** Run `bar`, including `no-comments` on its
+   own Grok 4.7 agent. Reviewers intentionally scan applicable skill lenses,
+   post actionable findings on the PR, and return thread IDs to the main
+   thread. No reviewer edits code.
+6. **Validate and address.** The main thread launches independent finding
+   validators through `replicate-issue`, checks their evidence and product
+   alignment, then owns each fix. Ask the user about unresolved intent;
+   keep those findings open. Commit each verified fix, push, refresh after
+   proof and the PR body, and reply/resolve threads as outcomes are proven.
+   New heads require fresh review jobs and current coverage.
+7. **Carry through CI and feedback.** Use `babysit-pr`. Route new findings
+   through the same validation cycle, including older unresolved threads.
+   After any change, return through proof and review before the gate.
+8. **Merge and confirm deploy.** Re-fetch and verify the gate on the live
+   PR immediately before merge. Use the repository merge method under the
+   user's grant. Observe the production deploy/build reach ready and check
+   the actual changed path. Report an unavailable deployment separately.
 
-## Steps
+## Gate on the current head
 
-1. **Finish the change.** Do the smallest change that meets the goal. Work
-   on a branch, never the default branch. Follow `principle-taste`.
-2. **Prove it.** Collect proof you observed yourself for every change in the
-   diff (see Proof).
-3. **Pass the bar.** Run `bar` on the diff and fix what it finds.
-4. **Rebase** onto the latest base branch. When conflicts appear, keep the
-   intent of both sides, regenerate lockfiles with the package manager
-   rather than hand-merging them, and leave no conflict markers. Rerun the
-   checks and re-prove any behavior the conflict touched.
-5. **File the PR** with `pr-this`. Add one line saying how you proved the
-   change, and embed screenshots or video for UI changes with `show-me`.
-6. **Babysit** with `babysit-pr`. Fix real CI failures and real bot findings
-   at the cause, prove each fix, and push.
-7. **Merge** once the merge gate passes, with the repo's merge method. If
-   the user said "just merge it", merge now; do not enable auto-merge.
-8. **Confirm the deploy.** Watch the production deploy (Vercel, Cloudflare,
-   GitHub Actions, or TestFlight) reach ready and check that it serves the
-   change.
+- All task work is committed in verified units; the full diff is complete.
+- Before evidence is inspectable and after proof covers the current SHA.
+- Required checks pass. No silent waivers, fabricated runs, or weaker tests.
+- Required review coverage is complete on this head, including Grok comment
+  review; all findings have validated dispositions and appropriate replies.
+- No unresolved blocking finding, product question, or change request.
+- The branch is current with its base, mergeable, and authorized to merge.
 
-Stay active from step 1 to step 8. While waiting on checks or bots, use the
-watcher from `babysit-pr` so a change wakes you. Ending your turn while
-something is pending stops the work.
+## Waiting and blockers
 
-## Proof
+Follow harness completion notices and `babysit-pr` watchers. In T3, only
+the main owner watches; call `watch_pull_request` and end the turn when
+waiting for checks/reviews. On wake, inspect the live PR and resume. Before
+handing back or asking a blocking product question, unwatch the PR.
 
-Proof is evidence you saw in this session: command output, a reproduction,
-a screenshot. Prefer, in order:
-
-- The original failure reproduced, then passing after the fix.
-- The checks CI runs: lint, typecheck, tests.
-- A focused test that fails without the change
-  (`principle-avoid-tautological-tests`).
-- For UI or runtime behavior, the running app. Green mocked tests do not
-  prove the experience works.
-
-If you cannot prove a change, you are not confident. Ask.
-
-## Merge gate
-
-All true on the latest head:
-
-- Proof covers every change in the diff, and `bar` passed.
-- Required checks are green. A check is skipped only if the user said so.
-- Review bots finished, and each finding is fixed or dismissed with a reason.
-- No human review requests changes.
-- The branch is current with its base and mergeable.
-
-## Asking the user
-
-A question in plain text goes unseen. Use the harness's question tool
-(`AskUserQuestion` in Claude Code, `request_user_input` in Codex) and put
-the PR link, the blocker, and options with your recommendation in it. Ask
-only when you cannot prove the change, cannot pass the gate yourself, need
-something outside the grant, the goal is ambiguous in a way that changes the
-result, or another PR makes this one obsolete. If no answer comes, leave the
-PR open and unmerged and lead your final message with the question.
+Ask through the available user-question tool when intent, access, or an
+unmet gate requires the user. Identify the PR, evidence, blocked decision,
+and recommendation. Continue independent work; never infer approval from
+silence. Leave the PR open if the gate cannot pass.
 
 ## Report
 
-PR link, merge commit, deploy URL or build number, the proof, and every
-decision you made for the user. Answer "merged?" with yes or no first. In T3
-Code, call `unwatch_pull_request` before stopping early.
+Say whether merged, with PR URL, head/merge SHA, deploy URL or build,
+before/after proof, checks actually run, review coverage, dispositions,
+and any remaining blocker. Never present a pending gate as completed.

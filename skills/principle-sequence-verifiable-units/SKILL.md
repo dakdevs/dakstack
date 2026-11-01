@@ -34,6 +34,15 @@ after a batch is buried, and you have already built on top of it.
 
 Order commits and PRs so the sequence reads as an argument.
 
+- **Every commit works.** Before creating any task commit, finish its
+  logical block, include its tests and required callers, inspect the diff,
+  and pass the block's checks. A later commit must never be needed to repair
+  an earlier commit. Local breakage remains uncommitted, including red tests
+  captured for proof. Do not split by file type when that breaks the project.
+- **Keep an evidence trail.** Record each commit's purpose, verification
+  commands and results. Recheck rewritten commits after rebases or amendments
+  where their contents or dependencies changed. Never rewrite user history
+  or mix unrelated user work into a task commit.
 - **Every published unit stands on its own.** Each PR must pass its checks
   and be safe to merge and deploy alone. Follow the repo's deploy rules, such
   as separate schema PRs. Never publish a broken intermediate unit.

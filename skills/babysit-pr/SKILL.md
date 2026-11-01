@@ -25,10 +25,8 @@ required checks pass, someone comments or reviews, or the branch conflicts.
 - Before you stop, hand off, or ask the user anything, call
   `unwatch_pull_request`. A watched thread stays out of the user's inbox. Merge
   or close ends the watch by itself.
-- If the watch stops because it could not read the PR, the GitHub rate limit
-  is usually spent. Run `gh api rate_limit --jq .resources.graphql`. If
-  `remaining` is near zero, wait for `reset` with one background command, then
-  watch again. Never retry in a tight loop.
+- If the watch cannot read the PR, inspect the API error and rate budget.
+  Report the blocker and reset time; never retry in a tight loop.
 
 **Elsewhere**, run `gh pr checks <n> --watch --fail-fast` as a background or
 monitored command (in Claude Code, `run_in_background` or the Monitor tool) so
@@ -48,20 +46,27 @@ checks with `gh api repos/<owner>/<repo>/commits/<sha>/check-runs`.
 
 ## Triage
 
-Act only on checks and comments newer than the latest push. For each one:
+Inspect new checks and comments plus every unresolved older thread. A push
+does not dispose of a finding. For each one:
 
-1. **Real or not.** Read the cited code. A finding is real only if the source
-   shows the problem. For a red check, decide whether the code failed or the
-   infrastructure flaked; rerun only true flakes.
+1. **Validate independently.** Use `replicate-issue` and a fresh finding
+   validator for review findings. Reproduce, inspect the base, and compare
+   with accepted product decisions. Return unclear intent to the main thread
+   for the user. For red checks, distinguish code defects from verified flakes.
 2. **Pre-existing or new.** A problem that already exists on the base branch is
    out of scope. Note it as a follow-up instead of fixing it here.
-3. **Fix real ones at the cause** (`principle-fix-root-causes`), prove the fix,
-   and push. Never weaken a test, assertion, or timeout to turn a check green.
+3. **Fix confirmed issues at the cause** (`principle-fix-root-causes`),
+   verify a working commit, push, refresh `pr-proof` and the PR body, and
+   obtain current-head review coverage. Never weaken tests to turn checks green.
 4. **Re-run the bot** on the new head so it can confirm the fix. Most rerun on
    push. If one needs a comment to rerun, that comment needs the user's
    permission like any other.
-5. **Reply or resolve only with the user's permission.** Without it, list each
-   dismissed finding and its reason in your report instead.
+5. **Reply and resolve within authorization.** Explicit `ship`, `ship-to-pr`,
+   `bar`, or `kitchen-mode` invocation requests their review comment cycle.
+   Otherwise require the user's explicit comment request. Reply on original
+   threads with evidence and fix SHAs; resolve only verified fixes or validated
+   dismissals. Keep product questions and disagreements open. Without comment
+   authorization, report dispositions and draft replies instead.
 
 Bot specifics:
 
