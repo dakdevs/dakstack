@@ -71,7 +71,7 @@ or query Context7 library `/effect-ts/effect`.
 
 Use the repo's test runner; do not add an Effect-specific one. Provide stub
 layers, run to a Promise or `Exit`, and assert literal values and typed
-failures (`principle-test-behavior-not-implementation`): a stub answering
+failures (read [test behavior](../principle-test-behavior-not-implementation/SKILL.md)): a stub answering
 503 makes `post(...).pipe(Effect.flip, Effect.provide(transportLayer(stub)))`
 resolve to `{ _tag: "Refused", status: 503 }`. For time, provide
 `TestClock.layer()` from `effect/testing` and move it with `TestClock.adjust`

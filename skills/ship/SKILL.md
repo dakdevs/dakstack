@@ -22,8 +22,8 @@ and repository rules for rebasing, force pushes, and administrator merges.
 1. **Plan and capture before.** Pin base/head, inspect existing user work,
    record product decisions and acceptance criteria, and start `pr-proof`.
    For bugs, use `replicate-issue` before implementation.
-2. **Implement in logical commits.** Follow
-   `principle-sequence-verifiable-units`. Each commit is one complete,
+2. **Implement in logical commits.** Read and follow
+   [sequence verifiable units](../principle-sequence-verifiable-units/SKILL.md). Each commit is one complete,
    working, testable block, including its tests and necessary migrations or
    callers. Run its checks before committing. Temporary breakage stays in
    the working tree, never a commit. Preserve unrelated user changes.

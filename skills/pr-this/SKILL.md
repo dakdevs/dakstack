@@ -29,7 +29,7 @@ one that already exists.
 
 1. **Verify task commits.** Inspect `git status` and ownership. Commit only
    complete, checked task units with their tests, following
-   `principle-sequence-verifiable-units`. Never sweep user work, secrets,
+   [sequence verifiable units](../principle-sequence-verifiable-units/SKILL.md), read directly from its file. Never sweep user work, secrets,
    generated bulk, or unrelated files into a catch-all commit. Ask only when
    ownership is ambiguous and necessary; preserve everything else.
 2. **Gather context in parallel.** The base branch

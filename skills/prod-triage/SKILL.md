@@ -34,9 +34,10 @@ For each issue the user wants fixed:
    failing test, a script, or a request), then narrow it until one cause
    remains. Use sandbox keys and test data.
    Never use production data, assets, or accounts to test.
-3. **Fix the cause** with `principle-fix-root-causes` and
-   `principle-laziness-protocol`. Add a test that fails without the fix
-   (`principle-test-behavior-not-implementation`).
+3. **Fix the cause.** Read [fix root causes](../principle-fix-root-causes/SKILL.md)
+   and [laziness protocol](../principle-laziness-protocol/SKILL.md) directly.
+   Add a test that fails without the fix; read
+   [test behavior](../principle-test-behavior-not-implementation/SKILL.md).
 4. **One issue, one PR.** Run independent fixes in parallel with `fanout`.
 5. **Ship** each with `ship` when the user asked to merge. After deploy,
    check that the error stops.

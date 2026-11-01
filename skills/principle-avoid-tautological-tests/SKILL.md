@@ -74,7 +74,7 @@ assertions.
 - **Simple is not tautological.** A literal can discriminate sharply.
 - **Implementation-coupled is not tautological.** A private-state check may
   catch bugs but is brittle; usually swap it for an observable one
-  (`principle-test-behavior-not-implementation`).
+  (read [test behavior](../principle-test-behavior-not-implementation/SKILL.md) directly).
 - **Weak is not always tautological.** A smoke test, assertion-free test, or
   happy-path-only test can be inadequate without being self-confirming.
 - **Computed expectations, mocks, snapshots, and references are not banned.**

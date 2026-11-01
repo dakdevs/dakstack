@@ -55,7 +55,7 @@ does not dispose of a finding. For each one:
    for the user. For red checks, distinguish code defects from verified flakes.
 2. **Pre-existing or new.** A problem that already exists on the base branch is
    out of scope. Note it as a follow-up instead of fixing it here.
-3. **Fix confirmed issues at the cause** (`principle-fix-root-causes`),
+3. **Fix confirmed issues at the cause.** Read [fix root causes](../principle-fix-root-causes/SKILL.md),
    verify a working commit, push, refresh `pr-proof` and the PR body, and
    obtain unanimous current-head panel approval after full-diff re-review and
    peer challenge. Never weaken tests to turn checks green.
@@ -90,8 +90,9 @@ choose the one that deletes or narrows code.
   ready.
 - If another PR makes this one obsolete, stop watching, tell the user, and ask
   before closing it unless they already authorized closing.
-- The PR is ready when required checks pass on the latest head, the bots have
-  reviewed that head, and every finding is fixed or dismissed with a reason.
+- Ready requires passing checks, completed bot review, validated finding
+  dispositions, and every required panel reviewer/comment specialist's APPROVE
+  on the same current base/head after full-diff review and peer challenge.
 - Merge only if the user explicitly asked. Otherwise report that it is ready.
 - Right before merging, `git fetch` and check the PR again. Never merge when it
   is BEHIND or DIRTY, or when base commits that landed after the last green run
