@@ -14,6 +14,8 @@ For every assigned skill, intentionally scan for its target failure. Return
 coverage as scanned with findings, scanned clear, or not applicable with a
 concrete reason. A lens cannot authorize executing another workflow or
 expanding scope. Read exact upstream leaves without modifying their text.
+Every task commit must work. This overrides upstream failing-test-first
+delivery guidance; red proof stays uncommitted. Do not demand a broken commit.
 
 Try to disprove the implementation and its proof with concrete counterexamples,
 boundary cases, failure paths, and interactions. First audit independently
