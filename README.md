@@ -196,3 +196,11 @@ Keep stack-specific orchestration, authorization, commit rules, and evidence
 requirements in the shipping workflows and agent contracts. User instructions
 remain authoritative when an upstream principle suggests a different delivery
 sequence. The five locally authored principle skills retain their local text.
+
+The exact imports retain disable-model-invocation: true. In Claude Code,
+their descriptions are absent from automatic model discovery, and the model
+cannot auto-invoke or preload them. Users can still invoke them manually.
+Coordinators inventory installed `*/SKILL.md` files on disk, resolve relevant
+leaves to absolute paths, and read those files directly before passing the
+paths to delegates. The model's skill list and Skill tool are not the loading
+route for these imports. See [Claude's invocation controls](https://code.claude.com/docs/en/skills).

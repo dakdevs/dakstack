@@ -60,7 +60,13 @@ before substitution; never silently use a different model or fast variant.
 
 ## Principles to route
 
-Inventory the installed stack for review coverage. Read relevant leaves:
+Inventory installed `*/SKILL.md` files on disk, including leaves absent from
+the model-visible skill catalog. Resolve applicable leaves to absolute paths
+and read their files directly. Exact upstream imports retain the flag
+disable-model-invocation: true: Claude cannot auto-invoke or preload them.
+Do not use model discovery or the Skill tool as the inventory/loading route.
+User invocation remains available. Give delegates absolute leaf paths.
+Read relevant leaves:
 
 - Scope and size: `principle-required-changes-only`,
   `principle-laziness-protocol`, `principle-subtract-before-you-add`.

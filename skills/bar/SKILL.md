@@ -21,8 +21,9 @@ reviews may report locally, but cannot satisfy this published-PR gate.
 
 ## Required panel
 
-Inventory every installed skill. Mark each as applicable with its concrete
-failure lens or not applicable with a reason. Review all applicable
+Inventory every skill on disk using [kitchen-mode's leaf-loading rule](../kitchen-mode/SKILL.md#principles-to-route),
+including hidden imports. Read absolute leaf paths, not the model catalog.
+Mark each applicable or excluded with a concrete reason. Review applicable
 principles plus `thermo-nuclear-review` and
 `thermo-nuclear-code-quality-review`. Inspect workflow skills for relevant
 contract failures without executing their operational steps. Include tests,

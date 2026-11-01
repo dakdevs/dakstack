@@ -10,6 +10,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
+import provenance from "../upstream-skills.json";
 
 const installations: string[] = [];
 
@@ -49,6 +50,25 @@ const brokenLinks = (installation: string) =>
 
 test("a skills-only install preserves every bundled Markdown dependency", () => {
   expect(brokenLinks(install())).toEqual([]);
+});
+
+test("all hidden upstream leaves can be discovered on disk and read by absolute path", () => {
+  const installation = install();
+  const hidden = readdirSync(installation)
+    .map((name) => join(installation, name, "SKILL.md"))
+    .filter((path) =>
+      /^disable-model-invocation: true$/m.test(readFileSync(path, "utf8")),
+    );
+  expect(hidden.map((path) => relative(installation, path)).sort()).toEqual(
+    provenance.skills.map((skill) => `${skill.name}/SKILL.md`).sort(),
+  );
+  for (const path of hidden) {
+    expect(readFileSync(path)).toEqual(
+      readFileSync(
+        join(import.meta.dir, "../skills", relative(installation, path)),
+      ),
+    );
+  }
 });
 
 test("installation validation catches a missing bundled resource", () => {
