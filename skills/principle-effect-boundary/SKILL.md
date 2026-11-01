@@ -1,5 +1,5 @@
 ---
-name: effect-boundary
+name: principle-effect-boundary
 description: Decides where Effect belongs in a TypeScript codebase and how to write, test, and review it as functional code with services provided through layers and no Effect classes. Use when writing, reviewing, or migrating code that imports the effect package, or when deciding whether async orchestration such as network calls, retries, timeouts, cancellation, scheduled jobs, or release steps should move to Effect.
 ---
 

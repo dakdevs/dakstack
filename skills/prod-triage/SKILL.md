@@ -30,7 +30,7 @@ For each issue the user wants fixed:
    and is not already fixed or caused by a bot or attack. If an automated
    fix PR (for example, Sentry Seer) exists, judge whether it is the right
    fix and whether it is needed at all.
-2. **Reproduce locally.** Build a fast loop that shows the failure (a
+2. **Reproduce locally** with `replicate-issue`. Build a fast loop that shows the failure (a
    failing test, a script, or a request), then narrow it until one cause
    remains. Use sandbox keys and test data.
    Never use production data, assets, or accounts to test.

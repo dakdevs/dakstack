@@ -44,9 +44,9 @@ old and new compiled output catches what your eye misses.
 - Write the script, run it, and keep its output so a reviewer can rerun it
   instead of taking your word.
 - Keep the artifact visible to the user. Most work needs only that.
-- Keep it in the repo only for large or complex work whose trail must be
-  auditable later, such as a big port or migration, and only when you are
-  allowed to write it there. Committing needs its own permission.
+- Publish reviewable before/after evidence for every PR through `pr-proof`.
+  Refresh after proof whenever the change moves. Commit supporting artifacts
+  only when useful and within the task's authorization; avoid generated bulk.
 
 **The test:** Can you point to something you observed in this session, not
 something you inferred, that shows the feature working? If not, you have not

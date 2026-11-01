@@ -13,20 +13,20 @@ Many are rewrites of other people's skills; see [CREDITS.md](CREDITS.md).
 
 ## Workflows
 
-| Skill         | Say                           | What it does                                                                                                                                                    |
-| ------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ship`        | "ship it", "get it merged"    | Takes a change to merged and deployed with nobody watching: proves it, passes the bar, files the PR, babysits it, merges, and confirms the deploy.              |
-| `ship-to-pr`  | "ship to PR"                  | Same as `ship`, but stops when the PR is ready for me to merge.                                                                                                 |
-| `bar`         | "make sure it passes the bar" | Reviews with one delegate per review skill per model, relays findings between them, fixes through Opus, and re-reviews until all of them approve the same head. |
-| `show-me`     | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL.                                   |
-| `design-loop` | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                                                           |
-| `taste`       | (automatic)                   | My standing code, UI, copy, and operations rules.                                                                                                               |
-| `fanout`      | "use Opus delegates"          | One delegate, worktree, and PR per independent unit, stacked when dependent.                                                                                    |
-| `status`      | "what's next?"                | Checks git, PRs, deploys, and threads, then answers with the next action.                                                                                       |
-| `prod-triage` | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one in its own PR.                                                                                |
-| `scaffold`    | "set up a new repo"           | Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.                                                                                            |
-| `sweep`       | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                                                  |
-| `film`        | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                                                          |
+| Skill          | Say                           | What it does                                                                                                                    |
+| -------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `ship`         | "ship it", "get it merged"    | Finishes verified commits, publishes proof and the PR, reviews and validates findings, then merges and checks deployment.       |
+| `ship-to-pr`   | "ship to PR"                  | Same as `ship`, but stops when the PR is ready for me to merge.                                                                 |
+| `bar`          | "make sure it passes the bar" | Reviews a finished PR through skill lenses, posts findings, independently validates them, and checks fixes on the current head. |
+| `show-me`      | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL.   |
+| `design-loop`  | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                           |
+| `fanout`       | "use Opus delegates"          | One delegate, worktree, and PR per independent unit, stacked when dependent.                                                    |
+| `status`       | "what's next?"                | Checks git, PRs, deploys, and threads, then answers with the next action.                                                       |
+| `prod-triage`  | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one in its own PR.                                                |
+| `scaffold`     | "set up a new repo"           | Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.                                                            |
+| `sweep`        | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                  |
+| `film`         | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                          |
+| `kitchen-mode` | "kitchen mode"                | Coordinates implementation, review, comment review, and independent finding validation using bundled agent prompts.             |
 
 ## Commands
 
@@ -36,9 +36,11 @@ Many are rewrites of other people's skills; see [CREDITS.md](CREDITS.md).
 | `babysit-pr`                         | Watches a PR through CI and review bots, fixing real failures and real findings at their cause.                      |
 | `thermo-nuclear-review`              | Audits a branch for bugs, broken behavior, security holes, developer-experience regressions, and feature-gate leaks. |
 | `thermo-nuclear-code-quality-review` | Reviews a branch against a very strict maintainability bar.                                                          |
-| `effect-boundary`                    | Decides where Effect belongs and how to write, test, and review it as functional code with layers and no classes.    |
 | `best-practices`                     | Researches current, version-specific docs and the codebase's conventions before writing code.                        |
 | `unslop`                             | Removes AI-writing patterns from prose while keeping meaning, evidence, and formats.                                 |
+| `no-comments`                        | Reviews comments and hidden workarounds through a separate Grok 4.7 agent after the PR is published.                 |
+| `replicate-issue`                    | Reproduces bugs and findings, checks product intent, and guides verified fixes and thread dispositions.              |
+| `pr-proof`                           | Captures before/after evidence for every PR and refreshes the after record whenever work changes.                    |
 
 ## Principles
 
@@ -52,6 +54,7 @@ agents doing the work.
 | `principle-boundary-discipline`                      | Validates at system boundaries, trusts typed data inside, and keeps business logic pure.             |
 | `principle-build-the-lever`                          | Builds the smallest tool that does or proves the work, when it beats existing tools.                 |
 | `principle-encode-lessons-in-structure`              | Turns recurring corrections into types, lint rules, checks, or scripts.                              |
+| `principle-effect-boundary`                          | Decides where Effect belongs and keeps its use functional, injectable, and tested.                   |
 | `principle-exhaust-the-design-space`                 | Compares two or three prototypes of an unprecedented design before committing.                       |
 | `principle-experience-first`                         | Resolves tradeoffs in favor of the user's experience.                                                |
 | `principle-fix-root-causes`                          | Fixes each bug where it starts instead of guarding over the symptom.                                 |
@@ -72,16 +75,24 @@ agents doing the work.
 | `principle-sequence-verifiable-units`                | Splits work into phases that each end with checks green.                                             |
 | `principle-subtract-before-you-add`                  | Removes dead weight before building anything new.                                                    |
 | `principle-test-behavior-not-implementation`         | Makes tests assert what users can observe.                                                           |
+| `principle-taste`                                    | Applies standing code, UI, copy, and operations preferences.                                         |
 | `principle-type-system-discipline`                   | Uses the type checker to rule out impossible states.                                                 |
 
 ## How they connect
 
 ```text
-design-loop ──> fanout ──> bar ──> ship / ship-to-pr ──> status
-                  │         │            │
-                taste    principles   pr-this, babysit-pr, show-me
-                         thermo-nuclear-*
+kitchen-mode / ship / ship-to-pr
+  → before proof → working commits + tests → after proof → published PR
+  → bar + Grok comment reviewer → posted findings → independent validation
+  → main-thread fixes + commits → refreshed after proof → replies/resolution
+  → current-head review + CI → merge (ship) or open PR (ship-to-pr)
 ```
+
+Reviews begin after the entire implementation is finished and published.
+Each commit is a complete, working version with its tests. Every PR includes
+inspectable before and after proof; any later change refreshes the after
+record. The main thread owns fixes and thread outcomes. Unclear product
+intent returns to the user before a dependent fix or resolution.
 
 ## Install
 
@@ -111,9 +122,47 @@ These replace any installed skills with the same names.
 ## Develop
 
 ```bash
+bun install
+bun run lint
+bun run prettier
 bun test
+bun run test:e2e
 ```
 
 The test checks that every skill has valid frontmatter, stays under 100
 lines, has Codex metadata, is listed in this README, and refers only to
-skills in this stack.
+skills in this stack. The installation E2E copies only the distributed
+skills into a temporary directory and checks their Markdown dependencies.
+It proves packaging, not agent behavior or hosted execution.
+
+## Naming audit
+
+All 45 existing skills were classified by their job. Durable decision rules
+use the `principle-` prefix; commands that produce an artifact or run a
+workflow keep an action name. The 26 existing principles keep their names.
+The standing preferences formerly called taste become `principle-taste`,
+and the Effect architecture rules become `principle-effect-boundary`.
+
+The remaining 17 commands keep their names: `ship`, `ship-to-pr`, `bar`,
+`pr-this`, `babysit-pr`, `thermo-nuclear-review`,
+`thermo-nuclear-code-quality-review`, `best-practices`, `unslop`,
+`show-me`, `design-loop`, `fanout`, `status`, `prod-triage`, `scaffold`,
+`sweep`, and `film`. Their output is a review, research, edited prose,
+evidence, design, delivery, status, investigation, project, cleanup, or film.
+New commands follow the same distinction.
+
+Remove the old taste and effect-boundary skill directories after installing
+this version; installers may leave renamed directories behind. Update any
+personal instructions or shortcuts that invoke those old names.
+
+## Portable agents
+
+Agent prompts ship inside the kitchen-mode skill's agents directory, beside
+its Codex metadata. Read [kitchen-mode](skills/kitchen-mode/SKILL.md) for the
+role links and delegation contract. Installing skills copies the prompts as
+well. They are portable briefs, not automatic native agent registrations;
+the orchestrator supplies their absolute paths and verifies the model used.
+
+The main thread owns product intent, fixes, PR replies, and resolution.
+Review agents inspect completed published work and post findings. Independent
+validators reproduce those findings before the main thread accepts them.

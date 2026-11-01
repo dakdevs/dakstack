@@ -22,10 +22,8 @@ const parseFrontmatter = (source: string) => {
   return { fields };
 };
 
-// Hyphenated names in backticks that are not skills.
 const notSkills = new Set(["dak-engineering", "the-web-team", "yt-dlp"]);
 
-// Skills are named as `$name` or as a hyphenated name in backticks.
 const skillReferences = (text: string) =>
   [
     ...text.matchAll(
@@ -42,6 +40,10 @@ test("the stack has skills", () => {
 describe.each(names)("%s", (name) => {
   const source = readFileSync(join(skillsDir, name, "SKILL.md"), "utf8");
   const frontmatter = parseFrontmatter(source);
+
+  test("uses a portable kebab-case directory name", () => {
+    expect(name).toMatch(/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/);
+  });
 
   test("has frontmatter whose name matches its directory", () => {
     expect(frontmatter?.fields.get("name")).toBe(name);

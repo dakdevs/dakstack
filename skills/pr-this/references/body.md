@@ -81,6 +81,26 @@ Optional. See [diagrams.md](diagrams.md).
 Optional. Include only for tricky areas, known limits, or decisions worth a
 second look.
 
+## Before and after proof
+
+Required for every PR, including documentation, configuration, tests, and
+internal work. Use `pr-proof` and map this record into the repository template:
+
+| State  | Revision            | Scenario and observed result                          | Evidence                                                |
+| ------ | ------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+| Before | Pinned starting SHA | Original failure, missing capability, or contract gap | Capture, log, reproducer, or source permalink           |
+| After  | Current PR head SHA | Same scenario after the completed change              | Fresh capture, actual check output, or source permalink |
+
+Include checks actually run and their scope. Attach visual proof inline;
+local-only paths are not accessible to a PR reviewer. For a skill rewrite,
+source text proves the instruction changed; packaging tests prove the
+resource ships; neither proves a model follows it. Label any behavioral
+evaluation separately.
+
+Any change invalidates the after record until it is refreshed. Keep useful
+before evidence, replace affected after captures, and update the head and
+coverage after fixes, rebases, amendments, or test edits.
+
 ## Voice
 
 Casual, direct, professional, like explaining it to a senior engineer. No

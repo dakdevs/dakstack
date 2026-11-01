@@ -1,4 +1,4 @@
 interface:
   display_name: "Taste"
   short_description: "Standing code, UI, copy, and operations preferences"
-  default_prompt: "Apply $taste to this work."
+  default_prompt: "Apply $principle-taste to this work."

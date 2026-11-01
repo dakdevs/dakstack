@@ -11,8 +11,9 @@ one that already exists.
 
 ## Rules
 
-- Never read the existing PR's title or body. It describes an older branch and
-  will leak stale claims into the new text. Fetch only its number and URL.
+- Derive the title and claims from the full current diff. Read old proof only
+  to recover valid baseline evidence and uploaded asset URLs; revalidate it
+  before reuse. Never carry forward stale after claims.
 - Open a draft. Leave out `--draft` only when the user says "do not draft".
 - Never add AI-authorship lines to the title, body, or commits, even when a
   template asks for one.
@@ -26,11 +27,11 @@ one that already exists.
 
 ## Steps
 
-1. **Commit everything.** Run `git status`. Files that may not belong (`.env`,
-   credentials, large binaries, build output, editor or OS files) go to the
-   user in one question through the harness question tool. Stage the rest plus
-   whatever the user approves, and commit with a message that describes the
-   work. Skip this when the tree is clean.
+1. **Verify task commits.** Inspect `git status` and ownership. Commit only
+   complete, checked task units with their tests, following
+   `principle-sequence-verifiable-units`. Never sweep user work, secrets,
+   generated bulk, or unrelated files into a catch-all commit. Ask only when
+   ownership is ambiguous and necessary; preserve everything else.
 2. **Gather context in parallel.** The base branch
    (`gh repo view --json defaultBranchRef,nameWithOwner`), then
    `git log --oneline <base>..HEAD`, `git diff --stat <base>...HEAD`, the full
@@ -43,23 +44,29 @@ one that already exists.
 4. **Analyze.** From the diff and the user's answer, name the problem, what
    changed, who benefits, how behavior changes, and the parts that deserve a
    close look.
-5. **Write the title** (below) and **the body** with
-   [references/body.md](references/body.md). Add before and after diagrams only
+5. **Refresh `pr-proof`.** Include inspectable before and current after
+   evidence for every change, with revisions, scenarios, observed results,
+   and limits. Write the title and body with
+   [references/body.md](references/body.md). Add diagrams only
    when they explain the change faster than the bullets; see
    [references/diagrams.md](references/diagrams.md).
-6. **Push.** `git push -u origin HEAD`.
+6. **Push.** `git push -u origin HEAD`. For an existing PR, link its full URL
+   with the harness as the next call after pushing.
 7. **Create or update.** `gh pr view --json number,url` tells you which.
    Write the body to a temp file and pass it with `--body-file`.
    - New: `gh pr create --base <base> --draft --title "<title>" --body-file <file>`
    - Existing: `gh pr edit <n> --title "<title>" --body-file <file>`
-8. **Embed UI proof.** For any change a user can see, capture screenshots or a
-   short video (`show-me` can produce them). Reference each file in the body,
+     Link a new or taken-over PR with the harness as the next call.
+8. **Embed proof.** Use comparable before/after UI captures from `show-me`,
+   and durable logs, tests, or source permalinks for nonvisual changes.
+   Reference each visual file in the body,
    such as `![Empty cart state](./empty-cart.png)`, then run
    `gh pr edit <n> --repo <owner/repo> --body-file <file> --attach ./empty-cart.png`
    (repeat `--attach` per file). `gh` uploads each file and rewrites the
    reference. Uploads render inline, videos as players; never link to files
    instead. A non-zero exit means some uploads failed, so check and retry those.
-9. Print the PR URL.
+9. Print the PR URL and verified head. Every later change requires
+   refreshed after proof and a rewritten current body before handoff.
 
 ## Title
 

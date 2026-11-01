@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kitchen mode"
+  short_description: "Coordinate verified commits, reviews, and issue validation"
+  default_prompt: "Use $kitchen-mode to complete this task through the agent factory."

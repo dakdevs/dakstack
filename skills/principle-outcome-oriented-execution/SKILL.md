@@ -29,8 +29,9 @@ declared boundaries.
 
 ## Hard limit: published boundaries
 
-Breakage never crosses a deploy boundary. Every merged or deployed state must
-work. Do not delete an API that an independently deployed consumer still
+Breakage never crosses a commit, PR, or deploy boundary. Every committed,
+merged, or deployed state must work. Temporary breakage stays in the working
+tree until the phase is complete and verified. Do not delete an API that an independently deployed consumer still
 needs. Follow the repo's PR and deploy rules. If they conflict with the
 plan, change the plan.
 

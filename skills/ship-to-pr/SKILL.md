@@ -1,45 +1,53 @@
 ---
 name: ship-to-pr
-description: Does everything ship does - finish, prove, pass the bar, file, babysit - but stops with the PR ready for the user to merge. Never merges. Use when the user says "ship to PR", "$ship-to-pr", "get it ready to merge", "PR it but don't merge", or "I'll merge it".
+description: Completes a task in working commits, opens its PR with current before/after proof, runs post-PR reviews and independent finding validation, and stops ready for the user to merge. Use when the user says "ship to PR", "$ship-to-pr", "get it ready to merge", "PR it but don't merge", or "I'll merge it". Invocation requests review comments, replies, and resolutions; never merging.
 ---
 
 # Ship to PR
 
-Follow `ship` exactly, with its proof, `bar`, filing, and babysitting steps,
-and its testing permission. Change only what this skill changes: you never
-merge.
+Follow `ship` through implementation, verification, publication, post-PR
+review, finding validation, and CI. Replace its merge/deploy step with this
+handoff. The order is mandatory: complete working commits and proof, publish
+PR, then review. Do not review unfinished local work as the final PR review.
+
+## Commit and evidence contract
+
+Every commit is a logical, working, testable project version. Tests belong
+with the behavior they verify. Temporary red states stay uncommitted. Before
+opening review, all task implementation is committed and required checks have
+run. Every PR includes before and after proof through `pr-proof`. Any later
+change requires refreshed after evidence and a current PR body.
+
+Reviewers post findings on the published PR. The main thread independently
+validates them through `replicate-issue`, checks product decisions, owns
+fixes, and replies/resolves as each outcome is verified. No automatic fixes
+from unvalidated findings and no resolution of unanswered product questions.
 
 ## No merging
 
-You may commit, push, rebase, resolve conflicts, and push this task's branch
-with `--force-with-lease`. You may not merge, enable auto-merge, add the PR
-to a merge queue, push to the default branch, use `--admin`, or ask a
-delegate to do any of these.
+Commit, push, and rebase only this task's branch under the session's rules.
+Never merge, enable auto-merge, enter a merge queue, push to the default
+branch, use administrator merge, or delegate these actions.
 
-If the PR already has auto-merge on, or sits in a merge queue, turn that off
-before you start and check again before each push. Say that you did. If you
-cannot stop an automatic merge, report that before doing anything else.
+If auto-merge or a merge queue is already armed, disable it before starting
+and recheck before pushes. Report that change. If it cannot be disabled,
+stop before pushing and report the risk of an automatic merge.
 
-## Stop at the gate
+## Handoff gate
 
-Use `ship`'s merge gate as the readiness check, then hand off instead of
-merging. Proof and `bar` must cover the final diff. Recheck behavior after
-any meaningful conflict fix.
+Use `ship`'s current-head gate except merge authorization. Fetch the base and
+read the live PR: head, base, checks, coverage, thread dispositions, draft
+state, mergeability, and automatic merge settings. Verify that all fixes are
+pushed and proof matches the final SHA. Mark the PR ready after its review
+cycle. It stays open and unmerged. If someone else merged it, say so.
 
-Before the handoff, fetch the base branch and read the live PR: head, base,
-checks, reviews, mergeability. It must be open, not a draft, and not set to
-merge on its own. If someone else merged it, say so.
-
-End in one of three states:
-
-- **Ready to merge.** The gate passes. The PR stays open and unmerged.
-- **Waiting on approval.** Only a human approval remains, and you checked
-  that this is the real blocker.
-- **Blocked.** Say what blocks it, what you tried, and what is needed. Ask
-  the way `ship` says to.
+End as ready to merge, waiting only on a verified human approval requirement,
+or blocked with the precise evidence/access/product decision needed.
+Pending checks or delegated reviews are ongoing work: follow the harness
+watcher/completion protocol rather than pretending the gate passed.
 
 ## Report
 
-PR link, final head SHA, which state it is in, the proof, the `bar` result,
-and remaining risks. Say plainly that the PR is open and unmerged. In T3
-Code, call `unwatch_pull_request` before the handoff or a question.
+PR URL, final head, state, before/after proof, checks run, review coverage,
+thread outcomes, and remaining questions. State that the PR is open and
+unmerged. In T3, unwatch before handoff or a blocking user question.

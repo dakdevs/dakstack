@@ -1,0 +1,4 @@
+interface:
+  display_name: "Replicate issue"
+  short_description: "Reproduce findings and verify product intent before fixing"
+  default_prompt: "Use $replicate-issue to validate and address this issue with evidence."

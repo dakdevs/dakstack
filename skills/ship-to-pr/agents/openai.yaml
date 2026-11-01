@@ -1,4 +1,4 @@
 interface:
   display_name: "Ship to PR"
-  short_description: "Everything ship does, stopping at a ready PR"
+  short_description: "Working commits and validated PR reviews, stopping before merge"
   default_prompt: "Use $ship-to-pr to get this ready to merge without merging it."

@@ -10,6 +10,10 @@ by reading a summary. Show the real thing.
 
 ## Capture
 
+- For PR work, follow `pr-proof`: capture both the pinned before revision
+  and current after revision with matching state, data, and viewport. Label
+  each capture with its revision. Any subsequent change requires refreshed
+  after proof; never resend an old capture as the current result.
 - Run the real app or page. Never show mocked data, a demo route, or a
   fragment when the user asked for the whole thing.
 - Capture desktop (1440 wide) and mobile (390 wide) unless the user named a
