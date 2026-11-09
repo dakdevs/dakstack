@@ -1,0 +1,4 @@
+interface:
+  display_name: "Improve"
+  short_description: "Audit codebases and write executable improvement plans"
+  default_prompt: "Use $improve to investigate improvement opportunities and write self-contained plans for another agent to execute."

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import provenance from "./upstream-skills.json";
+import { upstreamFiles } from "./scripts/verify-upstream";
 
 const root = import.meta.dir;
 const skillsDir = join(root, "skills");
@@ -41,7 +41,7 @@ test("the stack has skills", () => {
 describe.each(names)("%s", (name) => {
   const source = readFileSync(join(skillsDir, name, "SKILL.md"), "utf8");
   const frontmatter = parseFrontmatter(source);
-  const upstream = provenance.skills.some((skill) => skill.name === name);
+  const upstream = upstreamFiles.some((skill) => skill.name === name);
 
   test("uses a portable kebab-case directory name", () => {
     expect(name).toMatch(/^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/);
@@ -76,7 +76,12 @@ describe.each(names)("%s", (name) => {
     const files = readdirSync(join(skillsDir, name), { recursive: true })
       .map(String)
       .filter((file) => /\.(md|yaml)$/.test(file))
-      .filter((file) => !(upstream && file === "SKILL.md"));
+      .filter(
+        (file) =>
+          !upstreamFiles.some(
+            (entry) => entry.path === `skills/${name}/${file}`,
+          ),
+      );
     const outside = files.flatMap((file) =>
       skillReferences(readFileSync(join(skillsDir, name, file), "utf8"))
         .filter((reference) => !names.includes(reference))

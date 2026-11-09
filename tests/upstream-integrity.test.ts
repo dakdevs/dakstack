@@ -8,7 +8,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { verifyUpstream } from "../scripts/verify-upstream";
+import { upstreamFiles, verifyUpstream } from "../scripts/verify-upstream";
 import provenance from "../upstream-skills.json";
 
 const root = join(import.meta.dir, "..");
@@ -58,5 +58,31 @@ test("formatting excludes exactly the imported originals", () => {
     .trim()
     .split("\n")
     .sort();
-  expect(excluded).toEqual(provenance.skills.map((skill) => skill.path).sort());
+  expect(excluded).toEqual(upstreamFiles.map((skill) => skill.path).sort());
+});
+
+test("improve entrypoint, references, and license are pinned", () => {
+  expect(
+    upstreamFiles
+      .filter((file) => file.repository === "shadcn/improve")
+      .map((file) => file.path)
+      .sort(),
+  ).toEqual([
+    "skills/improve/SKILL.md",
+    "skills/improve/license.md",
+    "skills/improve/references/audit-playbook.md",
+    "skills/improve/references/closing-the-loop.md",
+    "skills/improve/references/plan-template.md",
+  ]);
+});
+
+test("changing an improve reference fails integrity verification", () => {
+  const directory = mkdtempSync(join(tmpdir(), "dakstack-improve-"));
+  scratch.push(directory);
+  cpSync(join(root, "skills"), join(directory, "skills"), { recursive: true });
+  const file = join(directory, "skills/improve/references/plan-template.md");
+  writeFileSync(file, readFileSync(file, "utf8") + "\n");
+  expect(verifyUpstream({ root: directory })).toEqual([
+    "skills/improve/references/plan-template.md: content differs",
+  ]);
 });

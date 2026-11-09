@@ -12,6 +12,9 @@ Original workflows call skills in this repository. Borrowed principles and
 both thermonuclear reviews retain exact upstream text, including any external
 references. See [CREDITS.md](CREDITS.md) and
 [the provenance manifest](upstream-skills.json).
+The upstream `improve` advisor and references are pinned in
+[improve-skills.json](improve-skills.json). Kitchen mode uses it to plan
+improvements before execution; the advisor leaves source files unchanged.
 
 ## Workflows
 
@@ -34,6 +37,7 @@ references. See [CREDITS.md](CREDITS.md) and
 
 | Skill                                | What it does                                                                                                         |
 | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `improve`                            | Audits codebases and writes self-contained improvement plans for other agents to execute.                            |
 | `pr-this`                            | Creates or updates the PR for the current branch, with a fresh title and body from the full diff on every run.       |
 | `babysit-pr`                         | Watches a PR through CI and review bots, fixing real failures and real findings at their cause.                      |
 | `thermo-nuclear-review`              | Audits a branch for bugs, broken behavior, security holes, developer-experience regressions, and feature-gate leaks. |
