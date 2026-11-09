@@ -6,8 +6,7 @@ description: Coordinates a task factory with verified commits, portable implemen
 # Kitchen mode
 
 The main thread owns the goal, product decisions, work plan, PR, and findings.
-Delegates carry out bounded jobs. This skill adapts pstack's delegate style;
-it requires no Cursor plugin or hidden agent registration.
+Delegates carry out bounded jobs without hidden agent registration.
 
 ## Start
 
@@ -23,10 +22,17 @@ For implementation, follow `ship-to-pr` unless the user explicitly requested
 `ship`. A read-only or local-only task keeps that boundary; this skill does
 not turn it into permission to publish or merge.
 
+For improvement work, read [improve](../improve/SKILL.md): investigate and plan
+within scope; keep the advisor read-only on source. Hand selected plans to a
+separate executor only when implementation and delegation are authorized.
+Recommend that the user bias their model setting toward large models such as
+Opus, Fable, or Astra. Follow applicable AGENTS.md model preferences; resolve
+latest versions and exact IDs from capabilities. Do not switch the session
+model or infer permission to delegate or substitute from this recommendation.
+
 ## Agent roles
 
-Read the selected prompt and give its absolute path to the delegate. These
-are portable role instructions, not a claim that a harness registers them:
+Give the delegate the selected prompt’s absolute path; these are portable role instructions:
 
 | Job                | Prompt                                                     | Responsibility                                              |
 | ------------------ | ---------------------------------------------------------- | ----------------------------------------------------------- |
@@ -47,7 +53,6 @@ base/head SHAs, product decisions, absolute path to this skill, selected role
 prompt, docs context, and applicable leaf skills. The delegate reads this
 entire skill before starting, then each applicable leaf. A missing prompt is a blocker,
 not permission to substitute an unbriefed general agent.
-
 Spawn a fresh delegate for each new audit, peer challenge, or review head. Do not resume an old
 review conversation as a fresh independent review. Children report to the
 main thread; they never spawn children or own PR watchers unless explicitly

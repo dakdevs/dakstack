@@ -1,0 +1,36 @@
+{
+  "repository": "shadcn/improve",
+  "revision": "cac56e1ebd3c279aa9153616cfeac7b174ab90f9",
+  "skills": [
+    {
+      "name": "improve",
+      "path": "skills/improve/SKILL.md",
+      "sourcePath": "skills/improve/SKILL.md",
+      "sha256": "1599aa29e9b16424cb767779efac53fa56e3f38be92dff4ac587393a1ad5070a"
+    },
+    {
+      "name": "skills/improve/references/audit-playbook.md",
+      "path": "skills/improve/references/audit-playbook.md",
+      "sourcePath": "skills/improve/references/audit-playbook.md",
+      "sha256": "587c1b927070f3c28139ad95ac34cc21a7da32618cfeb966cb774e58a865d4c8"
+    },
+    {
+      "name": "skills/improve/references/closing-the-loop.md",
+      "path": "skills/improve/references/closing-the-loop.md",
+      "sourcePath": "skills/improve/references/closing-the-loop.md",
+      "sha256": "5d526bb378e1783bbeb68d7af527776cbe98cde27a1aeccbd13e818e5b73b454"
+    },
+    {
+      "name": "skills/improve/references/plan-template.md",
+      "path": "skills/improve/references/plan-template.md",
+      "sourcePath": "skills/improve/references/plan-template.md",
+      "sha256": "7be76dd3c29442288fa7cee4432fc6e95c2fdbf748c9b356344bf647c5f8722e"
+    },
+    {
+      "name": "skills/improve/license.md",
+      "path": "skills/improve/license.md",
+      "sourcePath": "LICENSE.md",
+      "sha256": "00ff8408e93e2ecc4d90c0edeabdf434100c3aff50acc5d330e17eccd4a3faa5"
+    }
+  ]
+}

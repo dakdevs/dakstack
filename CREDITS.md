@@ -5,6 +5,13 @@ principles and both thermonuclear reviews are preserved byte-for-byte. Thank you
 
 ## Sources
 
+The `improve` skill and all three references retain exact upstream bytes from
+[shadcn/improve](https://github.com/shadcn/improve) at revision
+`cac56e1ebd3c279aa9153616cfeac7b174ab90f9`. Its MIT license is included at
+[skills/improve/license.md](skills/improve/license.md);
+[improve-skills.json](improve-skills.json) records source paths and SHA-256 hashes.
+Codex metadata is local.
+
 The 23 borrowed principles and both thermonuclear skills use the exact files
 from cursor/plugins at revision `ae5650febf4320793844c12c4adaa937f417f8da`.
 [upstream-skills.json](upstream-skills.json) records each source path and

@@ -181,3 +181,20 @@ test.each([
     );
   },
 );
+
+test("kitchen improvement planning has a portable advisor and detects a missing template", () => {
+  const installation = install();
+  const kitchen = readFileSync(
+    join(installation, "kitchen-mode/SKILL.md"),
+    "utf8",
+  );
+  const links = [...kitchen.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) =>
+    resolve(installation, "kitchen-mode", match[1]),
+  );
+  expect(links).toContain(join(installation, "improve/SKILL.md"));
+  expect(brokenLinks(installation)).toEqual([]);
+  rmSync(join(installation, "improve/references/plan-template.md"));
+  expect(brokenLinks(installation)).toContain(
+    "improve/SKILL.md: references/plan-template.md",
+  );
+});

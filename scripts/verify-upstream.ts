@@ -1,10 +1,19 @@
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import provenance from "../upstream-skills.json";
+import original from "../upstream-skills.json";
+import improve from "../improve-skills.json";
+
+export const upstreamFiles = [original, improve].flatMap((source) =>
+  source.skills.map((skill) => ({
+    ...skill,
+    repository: source.repository,
+    revision: source.revision,
+  })),
+);
 
 export const verifyUpstream = ({ root }: { root: string }) =>
-  provenance.skills.flatMap((skill) => {
+  upstreamFiles.flatMap((skill) => {
     try {
       const actual = createHash("sha256")
         .update(readFileSync(join(root, skill.path)))
@@ -19,8 +28,8 @@ if (import.meta.main) {
   const root = join(import.meta.dir, "..");
   const errors = verifyUpstream({ root });
   if (process.argv.includes("--online")) {
-    for (const skill of provenance.skills) {
-      const url = `https://raw.githubusercontent.com/${provenance.repository}/${provenance.revision}/${skill.sourcePath}`;
+    for (const skill of upstreamFiles) {
+      const url = `https://raw.githubusercontent.com/${skill.repository}/${skill.revision}/${skill.sourcePath}`;
       const response = await fetch(url);
       if (!response.ok)
         throw new Error(`${skill.name}: HTTP ${response.status}`);
@@ -34,6 +43,6 @@ if (import.meta.main) {
     throw new Error(errors.join("\n"));
   }
   console.log(
-    `${provenance.skills.length} upstream skills match ${provenance.repository}@${provenance.revision}${process.argv.includes("--online") ? " (remote byte comparison)" : " (SHA-256)"}`,
+    `${upstreamFiles.length} upstream files match pinned sources${process.argv.includes("--online") ? " (remote byte comparison)" : " (SHA-256)"}`,
   );
 }
