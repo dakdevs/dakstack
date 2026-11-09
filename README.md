@@ -120,20 +120,41 @@ explicitly approve the same base/head and agree on finding dispositions.
 One dissent, missing reviewer, or blocked verification keeps the gate closed;
 there is no majority vote, stale approval, or fixed-round shortcut.
 
-## Install
+## Install or update
 
-```bash
-bunx skills add dakdevs/dakstack
+Copy this prompt into an agent with filesystem and network access:
+
+```text
+Install or update dakstack from https://github.com/dakdevs/dakstack using the
+latest merged main revision. Discover every installed provider and its actual
+global skill paths, including Codex, Claude Code, Cursor, Grok, and providers
+used by T3 Code. Read their applicable instructions before changing anything.
+
+Fetch a clean copy of that revision and verify its pinned upstream manifests.
+Install every directory under skills/, including all references, agent prompts,
+and metadata, into ~/.agents/skills as the canonical shared copy. Update
+existing dakstack skills; preserve unrelated skills, provider configuration,
+credentials, and personal AGENTS.md model preferences. Back up differing
+installed dakstack files before replacement so local customizations remain
+recoverable. Do not delete unrelated or renamed skills without checking ownership.
+
+Point each provider's supported discovery path at the shared skills. Reuse
+existing links; where a provider needs its own skill directory, link individual
+dakstack skills without replacing that directory or its unrelated contents.
+Discover support instead of guessing paths or claiming an unavailable provider
+is configured. T3 uses its underlying providers' discovery paths.
+
+Verify every installed dakstack file against the fetched revision, check links
+and bundled dependencies for every provider, and check provider discovery where
+available. Report the installed revision, providers verified, backups, and any
+unsupported or unverified providers. Explain which sessions need restarting to
+refresh their skill catalog. Do not merge or publish anything for this install.
 ```
 
-Or copy them in by hand:
-
-```bash
-cp -R skills/* ~/.agents/skills/   # Codex and skills.sh
-cp -R skills/* ~/.claude/skills/   # Claude Code
-```
-
-These replace any installed skills with the same names.
+For a skills.sh install, use `bunx skills add dakdevs/dakstack`. Check the
+installer's current provider options when targeting multiple providers; the
+prompt above also covers existing shared installations and local customizations.
+Provider support and paths vary. Restart existing agent sessions after updating.
 
 ## Requirements
 
