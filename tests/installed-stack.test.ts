@@ -198,3 +198,27 @@ test("kitchen improvement planning has a portable advisor and detects a missing 
     "improve/SKILL.md: references/plan-template.md",
   );
 });
+
+test("kitchen thread completion is readable in a skills-only install and detects its removal", () => {
+  const installation = install();
+  const kitchen = readFileSync(
+    join(installation, "kitchen-mode/SKILL.md"),
+    "utf8",
+  );
+  const completion = join(
+    installation,
+    "kitchen-mode/references/thread-completion.md",
+  );
+  const links = [...kitchen.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) =>
+    resolve(installation, "kitchen-mode", match[1]),
+  );
+  expect(links).toContain(completion);
+  expect(readFileSync(completion, "utf8")).toContain(
+    "# Thread ownership and completion\n",
+  );
+  expect(brokenLinks(installation)).toEqual([]);
+  rmSync(completion);
+  expect(brokenLinks(installation)).toContain(
+    "kitchen-mode/SKILL.md: references/thread-completion.md",
+  );
+});

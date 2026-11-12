@@ -5,8 +5,8 @@ description: Coordinates a task factory with verified commits, portable implemen
 
 # Kitchen mode
 
-The main thread owns the goal, product decisions, work plan, PR, and findings.
-Delegates carry out bounded jobs without hidden agent registration.
+The starting thread owns the goal, product decisions, plan, PR, and findings through completion.
+Follow [thread completion](references/thread-completion.md) from start to finish.
 
 ## Start
 
@@ -95,5 +95,5 @@ replies, and resolution. Report PR/head, checks actually run, current proof,
 unanimous review coverage, and unresolved product questions. Every required
 model and the comment specialist re-review the full diff after every change
 round and must explicitly agree on the same final base/head after challenging
-their peers. Never call an incomplete
-review matrix, unreplicated concern, or stale artifact approval.
+their peers. Never call an incomplete review matrix, unreplicated concern,
+or stale artifact approval.

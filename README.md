@@ -102,6 +102,10 @@ inspectable before and after proof; any later change refreshes the after
 record. The main thread owns fixes and thread outcomes. Unclear product
 intent returns to the user before a dependent fix or resolution.
 
+Kitchen mode finishes in the thread where it started. Once the PR is ready,
+it removes task-owned background waits and settles with the handoff; an explicit
+merge request carries it through merge and deployment verification first.
+
 `docs-context` runs throughout this flow. Understand the observed incident or
 desired capability, read the relevant product/architecture/runbook docs and
 version-matched official references, then verify that they apply to the
