@@ -1,4 +1,4 @@
 interface:
   display_name: "No comments"
-  short_description: "Run a separate Grok 4.7 comment review after PR publication"
+  short_description: "Inspect source comments within one review pass"
   default_prompt: "Use $no-comments to review the completed PR and validate findings."

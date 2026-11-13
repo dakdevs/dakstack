@@ -198,3 +198,60 @@ test("kitchen improvement planning has a portable advisor and detects a missing 
     "improve/SKILL.md: references/plan-template.md",
   );
 });
+
+test("installed review workflows reject restored comment posting and panel loops", () => {
+  const installation = install();
+  const workspace = mkdtempSync(join(tmpdir(), "dakstack-review-policy-"));
+  installations.push(workspace);
+  cpSync(installation, join(workspace, "skills"), { recursive: true });
+  const checker = join(import.meta.dir, "../scripts/verify-review-policy.ts");
+  const run = () => Bun.spawnSync([process.execPath, checker, workspace]);
+  expect(run().exitCode).toBe(0);
+
+  const role = join(workspace, "skills/kitchen-mode/agents/reviewer-agent.md");
+  writeFileSync(
+    role,
+    readFileSync(role, "utf8") +
+      "\nReviewers post findings on the published PR.\n",
+  );
+  const posting = run();
+  expect(posting.exitCode).toBe(1);
+  expect(posting.stderr.toString()).toContain(
+    "kitchen-mode/agents/reviewer-agent.md",
+  );
+  expect(posting.stderr.toString()).toContain("post findings");
+
+  const workflow = join(workspace, "skills/ship-to-pr/SKILL.md");
+  writeFileSync(
+    workflow,
+    readFileSync(workflow, "utf8") +
+      "\nAfter every change round, the entire multi-model panel re-reviews the full diff.\n",
+  );
+  const repeated = run();
+  expect(repeated.exitCode).toBe(1);
+  expect(repeated.stderr.toString()).toContain("ship-to-pr/SKILL.md");
+});
+
+test("kitchen thread completion is readable in a skills-only install and detects its removal", () => {
+  const installation = install();
+  const kitchen = readFileSync(
+    join(installation, "kitchen-mode/SKILL.md"),
+    "utf8",
+  );
+  const completion = join(
+    installation,
+    "kitchen-mode/references/thread-completion.md",
+  );
+  const links = [...kitchen.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) =>
+    resolve(installation, "kitchen-mode", match[1]),
+  );
+  expect(links).toContain(completion);
+  expect(readFileSync(completion, "utf8")).toContain(
+    "# Thread ownership and completion\n",
+  );
+  expect(brokenLinks(installation)).toEqual([]);
+  rmSync(completion);
+  expect(brokenLinks(installation)).toContain(
+    "kitchen-mode/SKILL.md: references/thread-completion.md",
+  );
+});

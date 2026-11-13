@@ -22,7 +22,7 @@ improvements before execution; the advisor leaves source files unchanged.
 | -------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `ship`         | "ship it", "get it merged"    | Finishes verified commits, publishes proof and the PR, reviews and validates findings, then merges and checks deployment.     |
 | `ship-to-pr`   | "ship to PR"                  | Same as `ship`, but stops when the PR is ready for me to merge.                                                               |
-| `bar`          | "make sure it passes the bar" | Runs adversarial multi-model audits and peer challenges after every change round until everyone approves the same head.       |
+| `bar`          | "make sure it passes the bar" | Runs one focused review pass, validates findings, and turns repeatable checks into lint rules.                                |
 | `show-me`      | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL. |
 | `design-loop`  | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                         |
 | `fanout`       | "use Opus delegates"          | One delegate, worktree, and PR per independent unit, stacked when dependent.                                                  |
@@ -31,7 +31,7 @@ improvements before execution; the advisor leaves source files unchanged.
 | `scaffold`     | "set up a new repo"           | Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.                                                          |
 | `sweep`        | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                |
 | `film`         | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                        |
-| `kitchen-mode` | "kitchen mode"                | Coordinates implementation, review, comment review, and independent finding validation using bundled agent prompts.           |
+| `kitchen-mode` | "kitchen mode"                | Coordinates implementation, one review pass, verified fixes, and lint follow-through using bundled agent prompts.             |
 
 ## Commands
 
@@ -45,7 +45,7 @@ improvements before execution; the advisor leaves source files unchanged.
 | `best-practices`                     | Researches current, version-specific docs and the codebase's conventions before writing code.                        |
 | `docs-context`                       | Grounds investigation, implementation, review, and validation in applicable docs and observed evidence.              |
 | `unslop`                             | Removes AI-writing patterns from prose while keeping meaning, evidence, and formats.                                 |
-| `no-comments`                        | Reviews comments and hidden workarounds through a separate Grok 4.7 agent after the PR is published.                 |
+| `no-comments`                        | Inspects source comments and hidden workarounds within the same review pass.                                         |
 | `replicate-issue`                    | Reproduces bugs and findings, checks product intent, and guides verified fixes and thread dispositions.              |
 | `pr-proof`                           | Captures before/after evidence for every PR and refreshes the after record whenever work changes.                    |
 
@@ -91,15 +91,14 @@ agents doing the work.
 kitchen-mode / ship / ship-to-pr
   → situation + relevant docs → before proof → working commits + tests
   → docs-backed expectations + after proof → published PR
-  → independent multi-model audits → peer challenges → independent validation
-  → main-thread fixes + commits → refreshed after proof → replies/resolution
-  → repeat full panel → unanimous current-head approval + CI → merge or handoff
+  → one focused review pass → main-thread validation → fixes + lint rules
+  → focused fix verification → refreshed proof + CI → merge or handoff
 ```
 
 Reviews begin after the entire implementation is finished and published.
 Each commit is a complete, working version with its tests. Every PR includes
 inspectable before and after proof; any later change refreshes the after
-record. The main thread owns fixes and thread outcomes. Unclear product
+record. The main thread owns fixes and finding dispositions. Unclear product
 intent returns to the user before a dependent fix or resolution.
 
 `docs-context` runs throughout this flow. Understand the observed incident or
@@ -112,13 +111,24 @@ Reviewers verify the sources independently; documentation alone does not
 establish working behavior. Missing docs and conflicts are recorded with
 their limits, and unresolved product decisions return to the main thread.
 
-The review coordinator launches separate Claude Opus 5.5, GPT-6.1 Sol, and
-Grok 4.7 reviewers plus a dedicated Grok comment reviewer. Each first audits
-independently, then challenges the other reports. After every change round,
-the entire panel reviews the full diff again. Every required reviewer must
-explicitly approve the same base/head and agree on finding dispositions.
-One dissent, missing reviewer, or blocked verification keeps the gate closed;
-there is no majority vote, stale approval, or fixed-round shortcut.
+Review defaults to one focused pass, combining correctness, maintainability,
+tests, proof, and source-comment inspection. The main thread may review and
+validate directly. Extra models or exhaustive coverage require an explicit
+request; model preferences alone do not require a panel. After fixes, verify
+affected paths and interactions, broadening only for a concrete new risk.
+Report reviewed/final SHAs honestly and preserve unresolved blockers.
+
+Never post, edit, reply to, or resolve GitHub PR comments or submit GitHub
+reviews. This applies to all delegates and nested skills. Findings and
+validated dispositions stay in the originating conversation; shipping or
+skill invocation never grants comment permission. PR publication and body
+updates remain part of authorized shipping.
+
+After every pass, assess findings and recurring instructions for deterministic
+lint rules. Extend existing rules first; implement safe in-scope checks with
+violating and valid fixtures and wire them into lint/CI. Use tests or types
+for runtime constraints. Report proposed rules, enforcement points, and
+specific reasons for deferral when judgment or additional scope is needed.
 
 ## Install or update
 
@@ -160,8 +170,8 @@ Provider support and paths vary. Restart existing agent sessions after updating.
 
 - An authenticated GitHub CLI (`gh`), with the `gh stack` extension for
   stacked PRs.
-- `bar` and `fanout` need delegates on other providers' models. T3 Code does
-  this with `delegate_task`.
+- `fanout` and explicitly requested cross-provider reviews need compatible
+  delegates. T3 Code supports these through `delegate_task`.
 - Executor connectors for `prod-triage` (Sentry, PostHog, Axiom) and `film`
   (Seedance, Suno, ElevenLabs).
 - Tailscale for `show-me`, `film`, and `sweep` on remote Macs.
@@ -211,12 +221,11 @@ role links and delegation contract. Installing skills copies the prompts as
 well. They are portable briefs, not automatic native agent registrations;
 the orchestrator supplies their absolute paths and verifies the model used.
 
-The main thread owns product intent, fixes, PR replies, and resolution.
-The coordinator can spawn reviewers when explicitly delegated that authority;
-otherwise the main thread launches its panel. Individual reviewers inspect
-completed published work, post findings, and challenge peers without spawning
-children. Independent validators reproduce findings before the main thread
-accepts them. The five bundled role prompts travel with a skills-only install.
+The main thread owns product intent, validation, fixes, and finding dispositions.
+The coordinator may use an authorized reviewer or perform the pass itself.
+Reviewers return evidence and lint candidates without editing GitHub comments
+or spawning children. Independent validators are optional for difficult
+disputes. All five role prompts travel with a skills-only install.
 
 ## Exact upstream sources
 
