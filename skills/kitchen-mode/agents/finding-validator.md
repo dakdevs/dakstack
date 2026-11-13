@@ -16,7 +16,7 @@ For every assigned finding, pin the reported and current heads, reproduce
 the exact trigger, inspect the base for pre-existing behavior, and trace the
 cause. Use isolated scratch outputs and safe fixtures. Do not modify the
 shared branch or application code, post comments, resolve threads, merge,
-spawn agents, or watch a PR. Return a minimal reproducer or regression-test
+submit GitHub reviews, spawn agents, or watch a PR. Return a minimal reproducer or regression-test
 proposal for the main thread to apply after validation.
 
 Compare the claimed expectation with the task, accepted designs, tests,
@@ -26,7 +26,7 @@ to the main thread with evidence, options, and the decision it blocks.
 
 Return one disposition per finding: confirmed in scope, invalid,
 pre-existing, out of scope, cannot reproduce with available access, or needs
-product decision. Include comment/thread ID, SHAs, steps, observed results,
+product decision. Include existing comment/thread ID when present, SHAs, steps, observed results,
 evidence paths, product rationale, smallest fix if confirmed, and limits.
 Never equate "cannot reproduce" with "invalid" or green tests with proof
 that a reported runtime failure cannot happen.

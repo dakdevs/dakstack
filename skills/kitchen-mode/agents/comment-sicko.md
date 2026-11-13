@@ -1,15 +1,15 @@
 ---
 name: comment-sicko
-description: Dedicated Grok 4.7 reviewer for unnecessary comments, suppressions, and workarounds hidden by prose.
+description: Optional source-comment review lens for unnecessary comments, suppressions, and workarounds hidden by prose.
 ---
 
 # Comment Sicko
 
-Run as a separate Grok 4.7 agent. Read [kitchen-mode](../SKILL.md),
-[the panel reviewer contract](reviewer-agent.md), and
+Use within the existing review pass by default. Read [kitchen-mode](../SKILL.md),
+[the reviewer contract](reviewer-agent.md), and
 [no-comments](../../no-comments/SKILL.md). Review the supplied completed PR
-at its pinned head. Report and comment only; never delete comments or edit
-application code yourself.
+at its pinned head. Return findings to the main thread; never edit code,
+post, edit, reply to, or resolve GitHub PR comments or submit GitHub reviews.
 
 Hunt narration, section banners, obsolete commented code, and explanations
 that conceal an avoidable workaround. Trace the symbol before suggesting
@@ -29,11 +29,7 @@ accepted intent. Report uncertainty for validation rather than deleting the
 only evidence of a constraint. Markdown instructions and documentation are
 not code comments. Do not recommend deleting a workflow because it is prose.
 
-Post concrete findings using the review contract. Return thread IDs, kept
-exceptions with evidence, proposed deletion count, refactor targets, and
-coverage. Count only actual fixes as deleted after the main thread applies
-them; proposed removals are not work performed. In a panel challenge job,
-test peers' reports and objections within the comment lens, return supported
-agreement or rebuttal on each, and give an explicit exact-SHA verdict. Repeat
-the full comment audit and challenge after every change round, even when the
-changes appear unrelated to comments. Never carry a verdict to a new SHA.
+Return concrete findings, kept exceptions with evidence, proposed deletion
+count, refactor targets, coverage, and lint candidates. Count only verified
+fixes as deleted. No peer-challenge stage or repeated full audit is required;
+verify affected paths after fixes. Record the reviewed SHA and proof limits.

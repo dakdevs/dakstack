@@ -1,4 +1,4 @@
 interface:
   display_name: "Bar"
-  short_description: "Adversarial multi-model rounds until unanimous approval"
+  short_description: "One review pass with verified fixes and lint follow-through"
   default_prompt: "Use $bar to make sure this PR passes the bar."

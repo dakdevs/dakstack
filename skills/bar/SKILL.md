@@ -1,99 +1,67 @@
 ---
 name: bar
-description: Coordinates adversarial multi-model PR reviews, peer challenges, independently validated findings, and fresh rounds until every required reviewer approves the same head. Use when the user says "pass the bar", requests collaborative adversarial reviews, asks for a skill/model matrix, or wants review repeated until everyone agrees. Invocation requests PR comments, replies, and validated resolutions.
+description: Reviews completed work in one focused pass, validates findings, and converts repeatable checks into lint rules. Use when the user says "pass the bar" or requests a code review. Findings stay in the originating conversation; this skill never writes GitHub PR comments.
 ---
 
 # Bar
 
-The [review coordinator](../kitchen-mode/agents/review-agent.md) runs a
-multi-model adversarial panel. The main thread owns product decisions,
-independent finding validation, fixes, replies, and resolution. The
-coordinator may be the main thread or an explicitly delegated agent.
+Run one review pass over the completed diff. The main thread owns scope,
+product decisions, validation, fixes, and the final report.
 
-## Entry gate
+## Entry
 
-Record PR URL, task scope and product decisions, base and head SHAs, checks,
-[docs context](../docs-context/SKILL.md), and current `pr-proof`. Require finished implementation, committed task
-work, a pushed head, and inspectable before/after evidence before launching
-reviews. Missing publication returns to the caller's `pr-this` step; a
-review request alone does not authorize creating a PR. Explicit local-only
-reviews may report locally, but cannot satisfy this published-PR gate.
+Record scope, accepted decisions, pinned base/head, checks, and current
+`pr-proof`. Follow [docs context](../docs-context/SKILL.md). Shipping workflows
+review the completed published PR; explicit local-only and read-only tasks
+keep their boundaries. Review alone never authorizes publication or merge.
 
-## Required panel
+## One pass
 
-Inventory every skill on disk using [kitchen-mode's leaf-loading rule](../kitchen-mode/SKILL.md#principles-to-route),
-including hidden imports. Read absolute leaf paths, not the model catalog.
-Mark each applicable or excluded with a concrete reason. Review applicable
-principles plus `thermo-nuclear-review` and
-`thermo-nuclear-code-quality-review`. Inspect workflow skills for relevant
-contract failures without executing their operational steps. Include tests,
-product/UI behavior, proof freshness, and commit boundaries as applicable.
+Read [the review-pass protocol](references/review-pass.md). Default to one
+reviewer, which may be the main thread. Use applicable principles and both
+thermonuclear skills as lenses where required by repository rules. Inspect
+correctness, maintainability, tests, product behavior, proof, and source
+comments together. Do not launch a separate comment specialist, peer
+challenge jobs, or repeated full panels by default.
 
-Use the user's requested lenses, models, and partitioning. Defaults: one
-[panel reviewer](../kitchen-mode/agents/reviewer-agent.md) each on Claude Opus
-5.5, GPT-6.1 Sol, and Grok 4.7 at medium reasoning, each scanning all applicable
-lenses. For an explicitly requested lens-by-model matrix, launch one fresh
-job per cell. Always include `no-comments` through a separate Grok 4.7
-Comment Sicko job every round. Require multiple distinct model families;
-several instances of one model do not satisfy a multi-model review.
+If the user explicitly requests multiple models or exhaustive review, honor
+that scope in a single coordinated pass. Follow applicable model preferences
+when selecting delegates; preferences alone do not authorize delegation.
+Verify available models before launch and report unavailable requested roles.
 
-Discover providers and check the recorded models. Missing required roles
-block approval; report them and ask before substituting. Batch launches
-under the harness cap. Follow completion notices, never poll delegates.
+Never post, edit, reply to, or resolve GitHub PR comments or submit GitHub
+reviews. Skill invocation, shipping, and addressing feedback grant none of
+those actions. Return findings and dispositions in the originating conversation.
+This prohibition also applies to every delegate and nested skill.
 
-## Adversarial rounds
+## Address and prevent
 
-Read [the round protocol](references/adversarial-round.md) before launch.
+Validate candidates using [replicate-issue](../replicate-issue/SKILL.md).
+The main thread can validate findings directly; a separate validator is
+optional for a difficult disputed finding when delegation is authorized.
+Confirm scope and product intent before fixing. Keep uncertain intent explicit.
 
-1. Give each fresh reviewer its absolute role/leaf paths, repo rules, pinned
-   diff, product decisions, evidence, and authorized PR-comment actions.
-2. **Independent audit.** Reviewers first scan without peer conclusions,
-   seeking counterexamples, boundary cases, failure paths, and evidence that
-   disproves the change or its proof. They trace candidates and post distinct
-   actionable findings on the pinned PR head. Return comment/thread IDs,
-   URLs, proof limits, and coverage. Deduplicate against open findings.
-3. **Peer challenge.** Share every report, finding, rebuttal, and disagreement
-   with every reviewer through fresh challenge jobs. Each tests the strongest
-   opposing argument and explicitly agrees or rebuts with evidence. Isolated
-   reports without this exchange do not constitute collaboration.
-4. The main thread inspects reports and groups overlaps, preserving
-   every original thread. For every finding, launch a fresh independent
-   [validator](../kitchen-mode/agents/finding-validator.md) through
-   `replicate-issue`. The finding's reviewer/author cannot validate it.
-5. Verify reproduction, scope, base behavior, and product intent from the
-   validator's artifacts. Do not count votes. Ask the user through the main
-   thread when intent is underdetermined; leave the affected thread open.
-6. The main thread owns confirmed fixes and can assign bounded implementation
-   to a kitchen agent. Never weaken an assertion or test to silence a review.
-   Verify and commit each complete fix, push, and refresh `pr-proof` and the
-   PR body before replying with the fix SHA and resolving the thread.
-7. Reply to invalid, pre-existing, and out-of-scope findings with validated
-   reasons. Resolve only supported dispositions under repository permissions.
-   Leave unreproduced reports and unresolved disagreements open.
-8. Share validator artifacts and proposed dispositions with every reviewer.
-   Every model must accept or dispute them; never drop an objection silently.
-9. **Repeat after every change round.** Any code, test, documentation, metadata,
-   rebase, or amendment requires every required reviewer and the comment
-   specialist to audit the full current base-to-head diff and challenge peers
-   again through fresh jobs. Revalidate all still-open older findings. Do not
-   re-review only affected lenses or carry approvals across SHAs.
+Fix confirmed issues, add regression coverage, run required checks, and
+refresh proof after changes. Check the affected paths and interactions after
+fixes; do not restart the full review for every commit, rebase, or docs edit.
+Broaden only when a specific new risk warrants it or the user requests it.
+Record which SHA the pass covered and how later changes were verified;
+never present old approval as review of unseen code.
 
-Continue until everyone agrees on the current base/head. No majority vote,
-partial panel, silence, elapsed time, fixed round count, or coordinator
-override counts as satisfaction. Missing access/models or uncertain product
-intent are explicit blockers; report evidence and resume once resolved.
-Never force agreement or loop without new evidence. A reviewer cannot
-change product scope to make its preferred design a requirement.
+After every pass, assess each finding and recurring instruction for lint
+coverage. Prefer extending an existing rule. Implement safe, deterministic,
+in-scope rules with violating and valid fixtures, wire them into lint/CI,
+and run them. For checks needing runtime behavior, use tests or types.
+For each unautomated candidate, report the proposed rule, enforcement point,
+and concrete reason it needs judgment, a product decision, or follow-up scope.
+Keep pursuing useful lint candidates in subsequent passes; a prose reminder
+alone does not close a mechanically enforceable finding.
 
 ## Finish
 
-Re-fetch the live base/head. Every required model/lens cell and the comment
-specialist must explicitly return APPROVE after peer challenge on those same
-SHAs, with complete coverage and agreement on all validated dispositions.
-CHANGES_REQUIRED or BLOCKED from any cell fails the gate. Changed inputs
-restart the round. Agent verdicts are not fabricated GitHub approvals.
-
-Report the per-round verdict ledger, SHAs, coverage/exclusions, findings,
-rebuttals, thread dispositions, proof, checks, and missing roles/questions.
-The bar passes only with unanimity and no unresolved blocking issue.
-Return to the calling ship workflow; a standalone review never grants merge.
+Report reviewed base/head, coverage, validated findings and dispositions,
+checks, current proof, focused fix verification, and lint rules added or
+proposed. Use APPROVE, CHANGES_REQUIRED, or BLOCKED with evidence. Passing
+means no unresolved blocking issue and required checks pass; it does not
+require unanimous model votes. Missing evidence remains a stated limitation.
+Return to the caller's merge or handoff boundary.

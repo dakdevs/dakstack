@@ -49,25 +49,24 @@ checks with `gh api repos/<owner>/<repo>/commits/<sha>/check-runs`.
 Inspect new checks and comments plus every unresolved older thread. A push
 does not dispose of a finding. For each one:
 
-1. **Validate independently.** Use `replicate-issue` and a fresh finding
-   validator for review findings. Reproduce, inspect the base, and compare
+1. **Validate evidence.** Use `replicate-issue`; the main thread can validate
+   findings directly. Use a separate validator only when useful and authorized. Reproduce, inspect the base, and compare
    with accepted product decisions. Return unclear intent to the main thread
    for the user. For red checks, distinguish code defects from verified flakes.
 2. **Pre-existing or new.** A problem that already exists on the base branch is
    out of scope. Note it as a follow-up instead of fixing it here.
 3. **Fix confirmed issues at the cause.** Read [fix root causes](../principle-fix-root-causes/SKILL.md),
    verify a working commit, push, refresh `pr-proof` and the PR body, and
-   obtain unanimous current-head panel approval after full-diff re-review and
-   peer challenge. Never weaken tests to turn checks green.
-4. **Re-run the bot** on the new head so it can confirm the fix. Most rerun on
-   push. If one needs a comment to rerun, that comment needs the user's
-   permission like any other.
-5. **Reply and resolve within authorization.** Explicit `ship`, `ship-to-pr`,
-   `bar`, or `kitchen-mode` invocation requests their review comment cycle.
-   Otherwise require the user's explicit comment request. Reply on original
-   threads with evidence and fix SHAs; resolve only verified fixes or validated
-   dismissals. Keep product questions and disagreements open. Without comment
-   authorization, report dispositions and draft replies instead.
+   verify affected paths and interactions under [bar](../bar/SKILL.md).
+   Assess each finding for lint automation; add safe in-scope rules and report
+   proposals needing judgment or additional scope. Never weaken tests.
+4. **Observe the bot** on the new head. Most rerun on push. If rerunning
+   requires a PR comment, report that limitation without posting it.
+5. **Report dispositions in the originating conversation.** Never post, edit,
+   reply to, or resolve GitHub PR comments or submit GitHub reviews, including
+   through delegates or nested skills. Skill invocation never grants those
+   actions. Read existing threads as evidence and keep unresolved blockers
+   visible in the report.
 
 Bot specifics:
 
@@ -90,9 +89,9 @@ choose the one that deletes or narrows code.
   ready.
 - If another PR makes this one obsolete, stop watching, tell the user, and ask
   before closing it unless they already authorized closing.
-- Ready requires passing checks, completed bot review, validated finding
-  dispositions, and every required panel reviewer/comment specialist's APPROVE
-  on the same current base/head after full-diff review and peer challenge.
+- Ready requires passing checks, required bot review, validated findings,
+  one completed review pass, and focused verification of later fixes. Record
+  reviewed/final SHAs and lint changes/proposals; no repeated panel is required.
 - Merge only if the user explicitly asked. Otherwise report that it is ready.
 - Right before merging, `git fetch` and check the PR again. Never merge when it
   is BEHIND or DIRTY, or when base commits that landed after the last green run

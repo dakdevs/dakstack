@@ -1,40 +1,29 @@
 ---
 name: review-agent
-description: Coordinates adversarial reviews across multiple models until every required reviewer approves the same published PR head.
+description: Coordinates one focused review pass and lint follow-through, returning findings to the main thread without GitHub comments.
 ---
 
-# Adversarial review coordinator
+# Review coordinator
 
-Read [kitchen-mode](../SKILL.md) and [bar](../../bar/SKILL.md) in full,
-including bar's round protocol. Run that protocol; do not act as the panel's
-only reviewer. Spawn separate [panel reviewers](reviewer-agent.md) on the
-required models, plus the dedicated [comment reviewer](comment-sicko.md).
+Read [kitchen-mode](../SKILL.md), [bar](../../bar/SKILL.md), and
+[docs context](../../docs-context/SKILL.md). Run bar's single-pass protocol.
+Use one reviewer by default, which may be yourself. Combine source-comment
+inspection with correctness and maintainability; no separate specialist or
+peer-challenge stage is required.
 
-The main thread may serve as this coordinator. If delegated, the brief must
-explicitly authorize spawning reviewers; without that permission, return the
-panel launch briefs to the main thread. Never bypass harness delegation
-restrictions or replace a missing panel with your own review.
+A delegated coordinator may spawn reviewers only when explicitly authorized.
+Honor explicitly requested models and lenses in one coordinated pass.
+Pin base/head and carry accepted decisions, sources, evidence, and checks.
 
-Pin the completed published PR's base/head and record the required model and
-lens matrix. Launch independent audits before revealing peer conclusions.
-Pass the [docs context](../../docs-context/SKILL.md) note and governing
-sources to each reviewer; require independent applicability checks.
-Then relay every report, disputed disposition, and objection to every peer
-through fresh challenge jobs. Require concrete challenges and evidence-backed
-rebuttals. Preserve disagreements; do not count votes or manufacture consensus.
+Never post, edit, reply to, or resolve GitHub PR comments or submit GitHub
+reviews. Return findings, evidence, coverage, and proposed dispositions to
+the main thread. Do not edit code, merge, or watch.
 
-Return posted finding IDs and evidence to the main thread for independent
-validation and product decisions. Do not fix code, accept your own findings,
-resolve threads, merge, or watch. The main thread owns those actions.
+After fixes, request only focused verification of affected paths and
+interactions. Expand coverage only for a concrete new risk or user request.
+Record reviewed and final SHAs without claiming unseen changes were reviewed.
 
-After fixes, wait for checked commits, a pushed head, and refreshed PR proof.
-Run a fresh full-diff review and peer challenge on every required model,
-including the comment reviewer. Repeat after every change round until all
-required reviewers explicitly approve the same current base/head and agree
-on every finding's disposition. No partial quorum, stale approval, timeout,
-round count, silence, or coordinator override can pass the gate.
-
-Report the round ledger, each model's exact-SHA verdict and coverage,
-challenged findings and rebuttals, thread links, missing roles/access, and
-unresolved product questions. If blocked, return the concrete blocker to the
-main thread and leave the gate failed. Do not call disagreement satisfaction.
+For every finding, identify deterministic lint opportunities and report
+existing rules to extend, suggested checks, and reasons for deferral.
+The main thread owns validation, fixes, lint implementation, and the final
+APPROVE, CHANGES_REQUIRED, or BLOCKED disposition.

@@ -3,12 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint": "oxlint --deny-warnings . && bun run verify:upstream",
+    "lint": "oxlint --deny-warnings . && bun run verify:upstream && bun run verify:review-policy",
     "prettier": "prettier --check .",
     "format": "prettier --write .",
     "test": "bun test",
     "test:e2e": "bun test tests/installed-stack.test.ts",
-    "verify:upstream": "bun scripts/verify-upstream.ts"
+    "verify:upstream": "bun scripts/verify-upstream.ts",
+    "verify:review-policy": "bun scripts/verify-review-policy.ts"
   },
   "devDependencies": {
     "oxlint": "^1.90.0",

@@ -1,6 +1,6 @@
 ---
 name: ship
-description: Completes a task in working commits, publishes a PR with before/after proof, runs independent PR reviews and finding validation, then merges and confirms deployment. Use when the user says "ship it", "$ship", "get it merged", "force merge", or "fix the checks and merge". Invocation requests the review comments, replies, and resolutions in this workflow.
+description: Completes a task in working commits, publishes a PR with before/after proof, runs independent PR reviews and finding validation, then merges and confirms deployment. Use when the user says "ship it", "$ship", "get it merged", "force merge", or "fix the checks and merge". Findings stay in the originating conversation; never writes GitHub PR comments.
 ---
 
 # Ship
@@ -11,8 +11,9 @@ merge. Follow `principle-taste` and the repository's rules.
 
 ## Authorization
 
-The workflow covers this task's commits, push, PR publication, review
-comments, replies, and resolutions. Merge only under the user's merge grant.
+The workflow covers this task's commits, push, PR publication, and review.
+Never post, edit, reply to, or resolve GitHub PR comments or submit GitHub
+reviews, including through delegates or nested skills. Merge only under the user's merge grant.
 A skill does not expand permission to production data, destructive actions,
 other people's branches, or unrelated publication. Honor existing session
 and repository rules for rebasing, force pushes, and administrator merges.
@@ -39,21 +40,20 @@ and repository rules for rebasing, force pushes, and administrator merges.
    comparable before/after proof. Mark implementation complete and ready
    for review. A draft may exist earlier, but reviews cannot start until
    this step is complete.
-5. **Review the published PR.** Run `bar`, including `no-comments` on its
-   own Grok 4.7 agent. Reviewers intentionally scan applicable skill lenses,
-   post actionable findings on the PR, and return thread IDs to the main
-   thread. Reviewers challenge one another's reports. No reviewer edits code.
-6. **Validate and address.** The main thread launches independent finding
-   validators through `replicate-issue`, checks their evidence and product
-   alignment, then owns each fix. Ask the user about unresolved intent;
-   keep those findings open. Commit each verified fix, push, refresh after
-   proof and the PR body, and reply/resolve threads as outcomes are proven.
-   After every change round, every required model and the comment specialist
-   re-audits the full diff and challenges peers until all explicitly approve
-   the same current base/head. No majority vote or stale approval passes.
-7. **Carry through CI and feedback.** Use `babysit-pr`. Route new findings
-   through the same validation cycle, including older unresolved threads.
-   After any change, return through proof and review before the gate.
+5. **Review once.** Run [bar](../bar/SKILL.md) in one focused pass covering
+   correctness, maintainability, tests, proof, and source comments together.
+   Return findings to the originating conversation. No separate comment
+   specialist, peer challenges, or repeated full panels by default.
+6. **Validate, fix, and automate.** The main thread validates findings through
+   `replicate-issue`, confirms product intent, and owns fixes. Use a separate
+   validator only when useful and authorized. Verify affected paths and
+   interactions, run required checks, push working commits, and refresh proof.
+   Follow bar's lint follow-through: implement safe, deterministic, in-scope
+   rules with violating and valid fixtures, wired into lint/CI; report proposed
+   rules and reasons for deferral. Use tests or types for runtime constraints.
+7. **Carry through CI and feedback.** Use `babysit-pr`. Validate new findings
+   and verify fixes with focused checks. Broaden review only for a concrete
+   new risk or user request; do not restart full review after every change.
 8. **Merge and confirm deploy.** Re-fetch and verify the gate on the live
    PR immediately before merge. Use the repository merge method under the
    user's grant. Observe the production deploy/build reach ready and check
@@ -64,9 +64,9 @@ and repository rules for rebasing, force pushes, and administrator merges.
 - All task work is committed in verified units; the full diff is complete.
 - Before evidence is inspectable and after proof covers the current SHA.
 - Required checks pass. No silent waivers, fabricated runs, or weaker tests.
-- Every required reviewer explicitly approves this base/head after adversarial
-  peer challenge. Review coverage is complete, including Grok comment
-  review; all findings have validated dispositions and appropriate replies.
+- One review pass is complete; findings have validated dispositions. Record
+  reviewed and final SHAs, focused fix verification, and lint changes/proposals.
+  Do not claim the original pass reviewed later unseen changes.
 - No unresolved blocking finding, product question, or change request.
 - The branch is current with its base, mergeable, and authorized to merge.
 

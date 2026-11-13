@@ -1,6 +1,6 @@
 ---
 name: ship-to-pr
-description: Completes a task in working commits, opens its PR with current before/after proof, runs post-PR reviews and independent finding validation, and stops ready for the user to merge. Use when the user says "ship to PR", "$ship-to-pr", "get it ready to merge", "PR it but don't merge", or "I'll merge it". Invocation requests review comments, replies, and resolutions; never merging.
+description: Completes a task in working commits, opens its PR with current before/after proof, runs post-PR reviews and independent finding validation, and stops ready for the user to merge. Use when the user says "ship to PR", "$ship-to-pr", "get it ready to merge", "PR it but don't merge", or "I'll merge it". Never writes GitHub PR comments or merges.
 ---
 
 # Ship to PR
@@ -19,14 +19,14 @@ opening review, all task implementation is committed and required checks have
 run. Every PR includes before and after proof through `pr-proof`. Any later
 change requires refreshed after evidence and a current PR body.
 
-Reviewers post findings on the published PR. The main thread independently
-validates them through `replicate-issue`, checks product decisions, owns
-fixes, and replies/resolves as each outcome is verified. No automatic fixes
-from unvalidated findings and no resolution of unanswered product questions.
-After every change round, the entire multi-model panel re-reviews the full
-diff and challenges peers. Ready means every required reviewer, including
-the comment specialist, explicitly approves the same current base/head.
-Disagreement or a missing reviewer blocks readiness; a majority is insufficient.
+Follow [bar](../bar/SKILL.md): one focused review pass with source-comment
+inspection included, main-thread validation, verified fixes, and lint
+follow-through. Return findings in the originating conversation. Never post,
+edit, reply to, or resolve GitHub PR comments or submit GitHub reviews,
+including through delegates and nested skills. After fixes, verify affected
+paths and interactions; broaden only for a concrete new risk or user request.
+Readiness requires passing checks and no unresolved blocking issue, with
+reviewed/final SHAs and lint changes/proposals reported honestly.
 
 ## No merging
 
@@ -44,7 +44,7 @@ Use `ship`'s current-head gate except merge authorization. Fetch the base and
 read the live PR: head, base, checks, coverage, thread dispositions, draft
 state, mergeability, and automatic merge settings. Verify that all fixes are
 pushed and proof matches the final SHA. Mark the PR ready after its review
-cycle. It stays open and unmerged. If someone else merged it, say so.
+pass and fix verification. It stays open and unmerged. If someone else merged it, say so.
 
 End as ready to merge, waiting only on a verified human approval requirement,
 or blocked with the precise evidence/access/product decision needed.

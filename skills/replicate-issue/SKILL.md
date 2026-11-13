@@ -27,10 +27,10 @@ before changing code. Use safe fixtures and the actual affected surface.
    pre-existing, out of scope, cannot reproduce with available access, or
    needs product decision. Missing credentials or fixtures prove no verdict.
 
-For PR findings, the main thread launches a fresh
-[finding validator](../kitchen-mode/agents/finding-validator.md), independent
-of the author and reviewer. The validator reports only. The main thread
-inspects its evidence and owns every final disposition.
+The main thread can validate PR findings directly. A separate
+[finding validator](../kitchen-mode/agents/finding-validator.md) is optional
+for difficult disputes when delegation is authorized; it is independent of
+the author and reviewer and reports only. The main thread owns dispositions.
 
 ## Product questions
 
@@ -49,12 +49,14 @@ after the fix where possible, then run repository completion checks. Keep
 each fix and its tests in a working commit, and refresh `pr-proof` after
 every change. Reproduce again against the pushed head.
 
-When PR comment actions are authorized, reply on each original thread with
-the disposition, evidence, and fix SHA where relevant. Resolve a fixed thread
-only after verification; resolve a dismissed thread only with a documented
-validated reason and repository permission. Leave disagreements, unknowns,
-and product questions unresolved. Without that authorization, return draft
-replies and unresolved IDs to the main thread.
+Never post, edit, reply to, or resolve GitHub PR comments or submit GitHub
+reviews. Return dispositions, evidence, fix SHAs, and existing thread IDs to
+the originating conversation. Apply this prohibition to delegates and nested
+skills. Keep disagreements, unknowns, and product questions explicit.
+Assess recurring failures for deterministic lint rules under
+[bar](../bar/SKILL.md); implement safe in-scope checks or report a concrete
+proposal and reason for deferral. Verify affected paths without restarting
+a full review by default.
 
 Never drop an open finding because it predates the latest push. Revalidate
 it on the new head. Return all dispositions, exact checks, proof limits,
