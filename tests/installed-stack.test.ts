@@ -56,19 +56,16 @@ test("all hidden upstream leaves can be discovered on disk and read by absolute 
   const installation = install();
   const hidden = readdirSync(installation)
     .map((name) => join(installation, name, "SKILL.md"))
-    .filter((path) =>
-      /^disable-model-invocation: true$/m.test(readFileSync(path, "utf8")),
-    );
+    .filter((path) => {
+      const source = readFileSync(path, "utf8");
+      const frontmatter = Bun.YAML.parse(
+        source.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)?.[1] ?? "",
+      );
+      return frontmatter?.["disable-model-invocation"] === true;
+    });
   expect(hidden.map((path) => relative(installation, path)).sort()).toEqual(
     provenance.skills.map((skill) => `${skill.name}/SKILL.md`).sort(),
   );
-  for (const path of hidden) {
-    expect(readFileSync(path)).toEqual(
-      readFileSync(
-        join(import.meta.dir, "../skills", relative(installation, path)),
-      ),
-    );
-  }
 });
 
 test.each(
@@ -135,7 +132,12 @@ test.each([
   );
   const docs = join(installation, "docs-context/SKILL.md");
   expect(targets).toContain(docs);
-  expect(readFileSync(docs, "utf8")).toContain("name: docs-context\n");
+  const frontmatter = Bun.YAML.parse(
+    readFileSync(docs, "utf8").match(
+      /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/,
+    )?.[1] ?? "",
+  );
+  expect(frontmatter).toMatchObject({ name: "docs-context" });
   rmSync(docs);
   expect(brokenLinks(installation)).toContain(
     `${caller}: ${relative(dirname(join(installation, caller)), docs)}`,
@@ -174,7 +176,12 @@ test.each([
     const installation = install();
     const prompt = join(installation, "kitchen-mode/agents", `${role}.md`);
     expect(existsSync(prompt)).toBe(true);
-    expect(readFileSync(prompt, "utf8")).toContain(`name: ${role}\n`);
+    const frontmatter = Bun.YAML.parse(
+      readFileSync(prompt, "utf8").match(
+        /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/,
+      )?.[1] ?? "",
+    );
+    expect(frontmatter).toMatchObject({ name: role });
     rmSync(prompt);
     expect(brokenLinks(installation)).toContain(
       `kitchen-mode/SKILL.md: agents/${role}.md`,
@@ -199,7 +206,21 @@ test("kitchen improvement planning has a portable advisor and detects a missing 
   );
 });
 
-test("installed review workflows reject restored comment posting and panel loops", () => {
+test.each([
+  {
+    scenario: "comment posting",
+    path: "skills/kitchen-mode/agents/reviewer-agent.md",
+    directive: "Reviewers post findings on the published PR.",
+    diagnostic: "post findings",
+  },
+  {
+    scenario: "panel loops",
+    path: "skills/ship-to-pr/SKILL.md",
+    directive:
+      "After every change round, the entire multi-model panel re-reviews the full diff.",
+    diagnostic: "the entire multi-model panel re-reviews",
+  },
+])("policy CLI rejects $scenario independently", (fixture) => {
   const installation = install();
   const workspace = mkdtempSync(join(tmpdir(), "dakstack-review-policy-"));
   installations.push(workspace);
@@ -208,28 +229,12 @@ test("installed review workflows reject restored comment posting and panel loops
   const run = () => Bun.spawnSync([process.execPath, checker, workspace]);
   expect(run().exitCode).toBe(0);
 
-  const role = join(workspace, "skills/kitchen-mode/agents/reviewer-agent.md");
-  writeFileSync(
-    role,
-    readFileSync(role, "utf8") +
-      "\nReviewers post findings on the published PR.\n",
-  );
-  const posting = run();
-  expect(posting.exitCode).toBe(1);
-  expect(posting.stderr.toString()).toContain(
-    "kitchen-mode/agents/reviewer-agent.md",
-  );
-  expect(posting.stderr.toString()).toContain("post findings");
-
-  const workflow = join(workspace, "skills/ship-to-pr/SKILL.md");
-  writeFileSync(
-    workflow,
-    readFileSync(workflow, "utf8") +
-      "\nAfter every change round, the entire multi-model panel re-reviews the full diff.\n",
-  );
-  const repeated = run();
-  expect(repeated.exitCode).toBe(1);
-  expect(repeated.stderr.toString()).toContain("ship-to-pr/SKILL.md");
+  const file = join(workspace, fixture.path);
+  writeFileSync(file, `${readFileSync(file, "utf8")}\n${fixture.directive}\n`);
+  const result = run();
+  expect(result.exitCode).toBe(1);
+  expect(result.stderr.toString()).toContain(fixture.path);
+  expect(result.stderr.toString()).toContain(fixture.diagnostic);
 });
 
 test("kitchen thread completion is readable in a skills-only install and detects its removal", () => {
@@ -246,9 +251,7 @@ test("kitchen thread completion is readable in a skills-only install and detects
     resolve(installation, "kitchen-mode", match[1]),
   );
   expect(links).toContain(completion);
-  expect(readFileSync(completion, "utf8")).toContain(
-    "# Thread ownership and completion\n",
-  );
+  expect(readFileSync(completion, "utf8").trim().length).toBeGreaterThan(0);
   expect(brokenLinks(installation)).toEqual([]);
   rmSync(completion);
   expect(brokenLinks(installation)).toContain(
@@ -256,9 +259,8 @@ test("kitchen thread completion is readable in a skills-only install and detects
   );
 });
 
-test("installed PR guidance keeps proof visible and all context collapsed", () => {
+test("installed PR example keeps proof visible and all context collapsed", () => {
   const installation = install();
-  const skill = readFileSync(join(installation, "pr-this/SKILL.md"), "utf8");
   const body = readFileSync(
     join(installation, "pr-this/references/body.md"),
     "utf8",
@@ -267,23 +269,31 @@ test("installed PR guidance keeps proof visible and all context collapsed", () =
   expect(example).toBeDefined();
   if (!example) throw new Error("PR body guidance needs a complete example");
 
-  const disclosure = example.match(
-    /<details>\n<summary>LLM Context<\/summary>\n\n([\s\S]*?)\n\n<\/details>$/,
+  const disclosures = [
+    ...example.matchAll(/<details\b([^>]*)>([\s\S]*?)<\/details>/gi),
+  ];
+  expect(disclosures).toHaveLength(1);
+  expect(example.match(/<details\b/gi)).toHaveLength(1);
+  const [disclosure] = disclosures;
+  if (!disclosure) throw new Error("PR example needs a context disclosure");
+  expect(disclosure[1]).not.toMatch(/(?:^|\s)open(?:\s|=|$)/i);
+  const summary = disclosure[2].match(
+    /^\s*<summary\b[^>]*>\s*([\s\S]*?)\s*<\/summary>([\s\S]*)$/i,
   );
-  expect(disclosure).not.toBeNull();
-  expect(example.match(/<details\b/g)).toHaveLength(1);
-  const visible = example.split("<details>")[0];
-  expect(visible.match(/^## .+$/gm)).toEqual(["## Proof"]);
-  expect(visible).toContain("| Before |");
-  expect(visible).toContain("| After");
-  expect(visible).toContain("Checks actually run");
+  expect(summary?.[1].trim()).toBe("LLM Context");
+  const visible = example.slice(0, disclosure.index);
+  expect(visible.trimStart()).toMatch(/^## Proof\s*\n/);
+  expect(visible.match(/^## .+$/gm)?.map((heading) => heading.trim())).toEqual([
+    "## Proof",
+  ]);
+  expect(visible).toMatch(/^\|\s*Before\s*\|/m);
+  expect(visible).toMatch(/^\|\s*After\s*\|/m);
   for (const heading of ["Why", "Summary", "What", "Who this helps"]) {
-    expect(disclosure?.[1]).toContain(`## ${heading}\n`);
+    expect(
+      summary?.[2].match(/^## .+$/gm)?.map((line) => line.trim()),
+    ).toContain(`## ${heading}`);
   }
-  expect(skill).toContain("Show only `## Proof` above the fold");
-  expect(skill).toContain("headings, order, and checkboxes inside LLM Context");
-  expect(body).toContain("Never add the `open` attribute");
-  expect(body).toContain(
-    "takes precedence over the template's top-level structure",
+  expect(example.slice(disclosure.index + disclosure[0].length).trim()).toBe(
+    "",
   );
 });

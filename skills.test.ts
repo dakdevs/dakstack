@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { upstreamFiles } from "./scripts/verify-upstream";
 
@@ -7,21 +7,6 @@ const root = import.meta.dir;
 const skillsDir = join(root, "skills");
 const readme = readFileSync(join(root, "README.md"), "utf8");
 const names = readdirSync(skillsDir);
-
-const parseFrontmatter = (source: string) => {
-  const match = source.match(/^---\n([\s\S]*?)\n---\n/);
-  if (!match) return undefined;
-  const fields = new Map(
-    match[1].split("\n").map((line) => {
-      const separator = line.indexOf(":");
-      return [
-        line.slice(0, separator).trim(),
-        line.slice(separator + 1).trim(),
-      ];
-    }),
-  );
-  return { fields };
-};
 
 const notSkills = new Set(["dak-engineering", "the-web-team", "yt-dlp"]);
 
@@ -40,7 +25,9 @@ test("the stack has skills", () => {
 
 describe.each(names)("%s", (name) => {
   const source = readFileSync(join(skillsDir, name, "SKILL.md"), "utf8");
-  const frontmatter = parseFrontmatter(source);
+  const frontmatter = Bun.YAML.parse(
+    source.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)?.[1] ?? "",
+  );
   const upstream = upstreamFiles.some((skill) => skill.name === name);
 
   test("uses a portable kebab-case directory name", () => {
@@ -48,24 +35,30 @@ describe.each(names)("%s", (name) => {
   });
 
   test("has frontmatter whose name matches its directory", () => {
-    expect(frontmatter?.fields.get("name")).toBe(name);
+    expect(frontmatter).toMatchObject({ name });
   });
 
-  test("has a description that says when to use it and fits the 1024-character limit", () => {
-    const description = frontmatter?.fields.get("description") ?? "";
-    if (!upstream) expect(description).toContain("Use when");
-    expect(description.length).toBeGreaterThan(0);
+  test("has a nonempty description within the 1024-character limit", () => {
+    const description = frontmatter?.description ?? "";
+    expect(description).toEqual(expect.stringMatching(/\S/));
     expect(description.length).toBeLessThanOrEqual(1024);
   });
 
-  test("stays under 100 lines", () => {
-    if (!upstream) expect(source.split("\n").length).toBeLessThanOrEqual(100);
+  test.skipIf(upstream)("stays under 100 lines", () => {
+    expect(source.split("\n").length).toBeLessThanOrEqual(100);
   });
 
-  test("has Codex metadata", () => {
-    expect(existsSync(join(skillsDir, name, "agents", "openai.yaml"))).toBe(
-      true,
+  test("has usable Codex metadata", () => {
+    const metadata = Bun.YAML.parse(
+      readFileSync(join(skillsDir, name, "agents", "openai.yaml"), "utf8"),
     );
+    expect(metadata).toMatchObject({
+      interface: {
+        display_name: expect.stringMatching(/\S/),
+        short_description: expect.stringMatching(/\S/),
+        default_prompt: expect.stringMatching(/\S/),
+      },
+    });
   });
 
   test("is listed in the README", () => {

@@ -86,3 +86,48 @@ test("changing an improve reference fails integrity verification", () => {
     "skills/improve/references/plan-template.md: content differs",
   ]);
 });
+
+test.each([
+  { scenario: "unchanged", exitCode: 0, diagnostic: "" },
+  {
+    scenario: "modified",
+    exitCode: 1,
+    diagnostic: "thermo-nuclear-review: content differs",
+  },
+  {
+    scenario: "missing",
+    exitCode: 1,
+    diagnostic: "thermo-nuclear-review: source file unavailable",
+  },
+])("integrity CLI exits $exitCode for $scenario upstream input", (fixture) => {
+  const directory = mkdtempSync(join(tmpdir(), "dakstack-integrity-cli-"));
+  scratch.push(directory);
+  for (const entry of [
+    "skills",
+    "scripts",
+    "upstream-skills.json",
+    "improve-skills.json",
+  ]) {
+    cpSync(join(root, entry), join(directory, entry), { recursive: true });
+  }
+  const file = join(directory, "skills/thermo-nuclear-review/SKILL.md");
+  if (fixture.scenario === "modified") {
+    writeFileSync(file, readFileSync(file, "utf8") + "\n");
+  } else if (fixture.scenario === "missing") {
+    rmSync(file);
+  }
+
+  const result = Bun.spawnSync([
+    process.execPath,
+    join(directory, "scripts/verify-upstream.ts"),
+  ]);
+  expect(result.exitCode).toBe(fixture.exitCode);
+  if (fixture.exitCode === 0) {
+    expect(result.stderr.toString()).toBe("");
+    expect(result.stdout.toString()).toContain(
+      "upstream files match pinned sources",
+    );
+  } else {
+    expect(result.stderr.toString()).toContain(fixture.diagnostic);
+  }
+});
