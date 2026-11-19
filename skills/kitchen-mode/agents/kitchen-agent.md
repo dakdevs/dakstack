@@ -27,3 +27,4 @@ Return commit SHA, files changed, check commands and observed outcomes,
 before/after artifact paths, docs context, limitations, and unresolved intent.
 A summary without artifacts is not proof. Leave PR publication and review to the main
 thread unless the brief explicitly assigns publication.
+If assigned PR work, follow [delivery requirements](../references/delivery.md).

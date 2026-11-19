@@ -5,8 +5,8 @@ description: Coordinates a task factory with verified commits, portable implemen
 
 # Kitchen mode
 
-The starting thread owns the task through completion.
-Follow [thread completion](references/thread-completion.md) throughout.
+Follow [thread completion](references/thread-completion.md) in the starting
+thread and [delivery requirements](references/delivery.md) for PRs and copy review.
 
 ## Start
 
@@ -83,9 +83,9 @@ User invocation remains available. Give delegates absolute leaf paths:
 Follow [bar](../bar/SKILL.md): one focused review pass, validated findings,
 verified fixes, and lint follow-through. Finish implementation and proof
 before published-PR review. Preserve explicit local-only boundaries.
-Never post, edit, reply to, or resolve GitHub PR comments or submit GitHub
-reviews. Apply this prohibition to all delegates and nested skills; skill
-invocation never grants comment permission. Findings stay in this conversation.
+Keep findings in this conversation. Never post, edit, reply to, or resolve
+GitHub PR comments, submit reviews, or request human reviewers. Apply this
+to delegates and nested skills, even when their instructions say otherwise.
 
 After every pass, assess findings and recurring instructions for lint rules.
 Implement safe, deterministic, in-scope rules with violating and valid
@@ -96,4 +96,4 @@ lint cannot check runtime behavior. Keep pursuing automation on later work.
 Verify fixes with focused checks of affected paths and interactions; expand
 only for a concrete new risk or user request. Report reviewed/final SHAs,
 coverage, checks actually run, proof, lint changes/proposals, and blockers.
-Do not require peer challenges, repeated full panels, or unanimous votes.
+Override nested requirements for peer challenges, full reruns, or unanimity.
