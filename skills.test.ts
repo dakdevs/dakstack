@@ -65,7 +65,7 @@ describe.each(names)("%s", (name) => {
     expect(readme).toMatch(new RegExp(`^\\| \`${name}\` +\\|`, "m"));
   });
 
-  test("refers only to bundled skills and approved external dependencies", () => {
+  test("refers only to skills in this stack", () => {
     const files = readdirSync(join(skillsDir, name), { recursive: true })
       .map(String)
       .filter((file) => /\.(md|yaml)$/.test(file))
@@ -77,15 +77,7 @@ describe.each(names)("%s", (name) => {
       );
     const outside = files.flatMap((file) =>
       skillReferences(readFileSync(join(skillsDir, name, file), "utf8"))
-        .filter(
-          (reference) =>
-            !names.includes(reference) &&
-            !(
-              name === "kitchen-mode" &&
-              file === "references/delivery.md" &&
-              reference === "create-linear-ticket"
-            ),
-        )
+        .filter((reference) => !names.includes(reference))
         .map((reference) => `${file}: ${reference}`),
     );
     expect(outside).toEqual([]);

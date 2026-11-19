@@ -1,27 +1,26 @@
 # Delivery requirements
 
-## PRs and Linear tickets
+## PR delivery
 
-Before creating or updating a PR, including each layer of a stack, resolve the
-user's currently installed `create-linear-ticket/SKILL.md` and
-`pr-this/SKILL.md` to absolute paths, read both, and pass those paths to any
+Before creating or updating a PR, including each layer of a stack, read the
+installed `pr-this/SKILL.md` and any applicable home and repository
+`AGENTS.md` instructions. Follow their ticketing requirements when present.
+Pass the absolute `pr-this/SKILL.md` path and those requirements to any
 delegate assigned PR work. The starting thread owns publication unless it
 explicitly assigns it.
 
-Use `create-linear-ticket` to reuse a matching ticket or create one. Honor
-any requested Linear project and verify the saved ticket before publication.
-Use `pr-this` to create or update the PR, and prefix its title with the saved
-ticket ID in brackets. Once the PR URL exists, link it to the ticket. Verify
-the saved ticket link, project, and title prefix before handing off the PR.
-Apply these requirements when a linked workflow treats ticketing as optional.
+## Copy and PR descriptions
 
-## Copy review
+Use the copy model and provider configured in the user's home `AGENTS.md`.
+If no preference is set, default to Gemini Neon through Cursor. Resolve the
+exact model ID from provider capabilities; if it is unavailable, report that
+instead of substituting another. Follow the harness's delegation rules.
 
-At each review stage, use Gemini Neon through Cursor to review and directly
-edit all copy in scope, including UI text, error messages, docs, and PR
-prose. Resolve the exact model ID from Cursor capabilities; if unavailable,
-report that before proposing a substitute. Follow the harness's delegation
-rules.
+Have that model write every PR description before creating or updating a PR,
+including each layer of a stack. Give it the installed `pr-this` path, the
+branch diff, and current proof. At each review stage, have the same model
+review and directly edit all copy in scope, including UI text, error
+messages, docs, and PR descriptions.
 
 Give the copy editor explicit ownership of the files or draft text and
 sequence its edits with other writers. Edits must preserve meaning and
