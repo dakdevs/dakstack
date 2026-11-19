@@ -1,10 +1,83 @@
 # PR body
 
-Write `## Why` first. Every other section exists to support it. Readers are
-engineers: a reviewer should know what is wrong and why this fixes it within
-about 15 seconds.
+Show only `## Proof` above the fold. Follow it with one collapsed disclosure
+labeled `LLM Context`, containing all rationale and implementation context.
+Keep proof, check results, limits, and inline visual evidence outside the
+collapse so reviewers can inspect them immediately.
 
-If the repo has a PR template, its structure wins. Map these sections onto it.
+Use this layout. Replace placeholders with actual evidence and context; omit
+optional context sections when they add nothing. Keep blank lines after the
+summary and before the closing tag so GitHub renders Markdown inside it.
+Never add the `open` attribute.
+
+```md
+## Proof
+
+| State  | Revision            | Scenario and observed result | Evidence |
+| ------ | ------------------- | ---------------------------- | -------- |
+| Before | Pinned starting SHA | Original behavior            | Link     |
+| After  | Current PR head SHA | Current behavior             | Link     |
+
+Checks actually run, their scope, and limits. Inline visual evidence if relevant.
+
+<details>
+<summary>LLM Context</summary>
+
+## Why
+
+Problem, checkable evidence, and fix.
+
+## Summary
+
+What this delivers.
+
+## What
+
+- Concrete change.
+
+## Who this helps
+
+Affected audience and experience.
+
+## Notes for reviewers
+
+Tricky areas or decisions worth a second look, if any.
+
+</details>
+```
+
+If the repo has a PR template, preserve its headings, order, and checkboxes
+inside LLM Context in place of the default context sections below. Extract
+proof and check results into the visible Proof section; reference that section
+from any template proof section instead of duplicating it. This outer layout
+takes precedence over the template's top-level structure.
+
+## Proof
+
+Required for every PR, including documentation, configuration, tests, and
+internal work. Use `pr-proof` and keep this record visible before LLM Context:
+
+| State  | Revision            | Scenario and observed result                          | Evidence                                                |
+| ------ | ------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+| Before | Pinned starting SHA | Original failure, missing capability, or contract gap | Capture, log, reproducer, or source permalink           |
+| After  | Current PR head SHA | Same scenario after the completed change              | Fresh capture, actual check output, or source permalink |
+
+Include checks actually run and their scope. Attach visual proof inline;
+local-only paths are not accessible to a PR reviewer. For a skill rewrite,
+source text proves the instruction changed; packaging tests prove the
+resource ships; neither proves a model follows it. Label any behavioral
+evaluation separately.
+
+Any change invalidates the after record until it is refreshed. Keep useful
+before evidence, replace affected after captures, and update the head and
+coverage after fixes, rebases, amendments, or test edits.
+
+## LLM Context
+
+Everything after Proof belongs inside the single collapsed `<details>` block.
+The following sections are the default context structure, unless a repository
+template supplies one. Keep the Why tight enough to explain the problem and
+fix within about 15 seconds after expansion.
 
 ## Why
 
@@ -80,26 +153,6 @@ Optional. See [diagrams.md](diagrams.md).
 
 Optional. Include only for tricky areas, known limits, or decisions worth a
 second look.
-
-## Before and after proof
-
-Required for every PR, including documentation, configuration, tests, and
-internal work. Use `pr-proof` and map this record into the repository template:
-
-| State  | Revision            | Scenario and observed result                          | Evidence                                                |
-| ------ | ------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-| Before | Pinned starting SHA | Original failure, missing capability, or contract gap | Capture, log, reproducer, or source permalink           |
-| After  | Current PR head SHA | Same scenario after the completed change              | Fresh capture, actual check output, or source permalink |
-
-Include checks actually run and their scope. Attach visual proof inline;
-local-only paths are not accessible to a PR reviewer. For a skill rewrite,
-source text proves the instruction changed; packaging tests prove the
-resource ships; neither proves a model follows it. Label any behavioral
-evaluation separately.
-
-Any change invalidates the after record until it is refreshed. Keep useful
-before evidence, replace affected after captures, and update the head and
-coverage after fixes, rebases, amendments, or test edits.
 
 ## Voice
 

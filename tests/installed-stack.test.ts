@@ -255,3 +255,35 @@ test("kitchen thread completion is readable in a skills-only install and detects
     "kitchen-mode/SKILL.md: references/thread-completion.md",
   );
 });
+
+test("installed PR guidance keeps proof visible and all context collapsed", () => {
+  const installation = install();
+  const skill = readFileSync(join(installation, "pr-this/SKILL.md"), "utf8");
+  const body = readFileSync(
+    join(installation, "pr-this/references/body.md"),
+    "utf8",
+  );
+  const example = body.match(/```md\n([\s\S]*?)\n```/)?.[1];
+  expect(example).toBeDefined();
+  if (!example) throw new Error("PR body guidance needs a complete example");
+
+  const disclosure = example.match(
+    /<details>\n<summary>LLM Context<\/summary>\n\n([\s\S]*?)\n\n<\/details>$/,
+  );
+  expect(disclosure).not.toBeNull();
+  expect(example.match(/<details\b/g)).toHaveLength(1);
+  const visible = example.split("<details>")[0];
+  expect(visible.match(/^## .+$/gm)).toEqual(["## Proof"]);
+  expect(visible).toContain("| Before |");
+  expect(visible).toContain("| After");
+  expect(visible).toContain("Checks actually run");
+  for (const heading of ["Why", "Summary", "What", "Who this helps"]) {
+    expect(disclosure?.[1]).toContain(`## ${heading}\n`);
+  }
+  expect(skill).toContain("Show only `## Proof` above the fold");
+  expect(skill).toContain("headings, order, and checkboxes inside LLM Context");
+  expect(body).toContain("Never add the `open` attribute");
+  expect(body).toContain(
+    "takes precedence over the template's top-level structure",
+  );
+});

@@ -20,10 +20,14 @@ one that already exists.
 - Never post, edit, or reply to PR comments. This skill writes the title and
   body only.
 - No em dashes in titles, bodies, or commit messages. Use a hyphen or rewrite.
+- Show only `## Proof` above the fold. Put all remaining content inside one
+  collapsed `<details>` block with `<summary>LLM Context</summary>` after proof.
+  Never add the `open` attribute. Follow [references/body.md](references/body.md).
 - If the repo has a PR template (`.github/pull_request_template.md`,
-  `.github/PULL_REQUEST_TEMPLATE/`, or one in `docs/` or the root), follow it
-  exactly: its headings, order, and checkboxes. Put the content below into its
-  sections. Content with no matching section goes where it reads best.
+  `.github/PULL_REQUEST_TEMPLATE/`, or one in `docs/` or the root), preserve its
+  headings, order, and checkboxes inside LLM Context. Put before/after evidence
+  and check results in the visible Proof section; reference it from any template
+  proof section instead of duplicating it. The proof-first layout takes precedence.
 
 ## Steps
 
