@@ -56,8 +56,9 @@ does not dispose of a finding. For each one:
 2. **Pre-existing or new.** A problem that already exists on the base branch is
    out of scope. Note it as a follow-up instead of fixing it here.
 3. **Fix confirmed issues at the cause.** Read [fix root causes](../principle-fix-root-causes/SKILL.md),
-   verify a working commit, push, refresh `pr-proof` and the PR body, and
-   verify affected paths and interactions under [bar](../bar/SKILL.md).
+   verify affected paths under [bar](../bar/SKILL.md), rerun
+   [break UI](../break-ui/SKILL.md) for UI fixes, then push the verified
+   commit and refresh `pr-proof` and the PR body.
    Assess each finding for lint automation; add safe in-scope rules and report
    proposals needing judgment or additional scope. Never weaken tests.
 4. **Observe the bot** on the new head. Most rerun on push. If rerunning

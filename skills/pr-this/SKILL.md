@@ -50,14 +50,14 @@ one that already exists.
 4. **Analyze.** From the diff and the user's answer, name the problem, what
    changed, who benefits, how behavior changes, and the parts that deserve a
    close look.
-5. **Refresh `pr-proof`.** Include inspectable before and current after
+5. **Verify and refresh `pr-proof`.** For UI changes, run
+   [break UI](../break-ui/SKILL.md) if current coverage is missing. Never mark
+   blocked UI review-ready. Include inspectable before and current after
    evidence for every change, with revisions, scenarios, observed results,
    and limits. Write the title and body with
-   [references/body.md](references/body.md). Add diagrams only
-   when they explain the change faster than the bullets; see
+   [references/body.md](references/body.md). If a diagram helps, see
    [references/diagrams.md](references/diagrams.md).
-6. **Push.** `git push -u origin HEAD`. For an existing PR, link its full URL
-   with the harness as the next call after pushing.
+6. **Push.** `git push -u origin HEAD`; link an existing PR with the harness.
 7. **Create or update.** `gh pr view --json number,url` tells you which.
    Write the body to a temp file and pass it with `--body-file`.
    - New: `gh pr create --base <base> --draft --title "<title>" --body-file <file>`

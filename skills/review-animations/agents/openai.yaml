@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Animations"
+  short_description: "Review implemented motion against concrete interaction standards."
+  default_prompt: "Use $review-animations for the applicable part of this task."

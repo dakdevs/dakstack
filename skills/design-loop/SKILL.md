@@ -35,11 +35,14 @@ revisit the affected sources and checks when the design changes.
    page and move discarded work to an "Archive" page.
 7. **Build** only after approval. Match the design 1:1, using the repo's
    components (shadcn, or StyleX where the repo uses it). Gate risky changes
-   behind a feature flag when the repo has flags. Then `show-me` the built
-   version next to the design.
+   behind a feature flag when the repo has flags. Use
+   [Emil design engineering](../emil-design-eng/SKILL.md) to choose relevant
+   specialists. Run [break UI](../break-ui/SKILL.md) before calling the built
+   version verified or presenting it as ready. Then `show-me` it next to the design.
 
 If Paper is not available, prototype as static pages in the repo on a scratch
-route, and say so.
+route, and say so. Run break UI on runnable prototypes you create or change
+before presenting them as verified; Paper-only design exploration is exempt.
 
 ## Standing rules
 

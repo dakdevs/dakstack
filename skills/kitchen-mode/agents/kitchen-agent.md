@@ -20,7 +20,10 @@ recorded identity. Ask the parent when accepted requirements conflict.
 Capture the relevant before state, implement the smallest complete unit,
 and add the required tests. Follow
 [sequence verifiable units](../../principle-sequence-verifiable-units/SKILL.md).
-Run required checks and inspect the diff before each commit. Never commit
+For UI work, use [Emil design engineering](../../emil-design-eng/SKILL.md)
+to route specialists. Run required checks and inspect the diff before each
+commit. Run [break UI](../../break-ui/SKILL.md) on implemented UI before
+calling it verified, and return coverage and blockers to the parent. Never commit
 a failing intermediate state, a test-only red state, or another owner's work.
 
 Return commit SHA, files changed, check commands and observed outcomes,

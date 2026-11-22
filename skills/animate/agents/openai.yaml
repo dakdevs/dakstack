@@ -1,0 +1,4 @@
+interface:
+  display_name: "Animate"
+  short_description: "Build or tune one purposeful interaction animation."
+  default_prompt: "Use $animate for the applicable part of this task."

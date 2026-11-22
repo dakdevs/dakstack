@@ -67,14 +67,20 @@ Supplemental Codex metadata is local; the upstream SKILL.md bytes are untouched.
 These are not separate skills in dakstack. Their main steps are part of the
 skills listed.
 
-| Original skill                                                                                                                   | Source                                                              | Now part of                                                                                |
-| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| [`full-send`](https://github.com/t3dotgg/tstack/blob/main/skills/full-send/SKILL.md)                                             | [t3dotgg/tstack](https://github.com/t3dotgg/tstack) (MIT)           | `ship`, which follows its workflow, proof rules, merge gate, and rules for asking the user |
-| [`full-stop`](https://github.com/t3dotgg/tstack/blob/main/skills/full-stop/SKILL.md)                                             | [t3dotgg/tstack](https://github.com/t3dotgg/tstack) (MIT)           | `ship-to-pr`, which follows its no-merge rules and handoff states                          |
-| [`fix-merge-conflicts`](https://github.com/cursor/plugins/blob/main/cursor-team-kit/skills/fix-merge-conflicts/SKILL.md)         | [cursor/plugins](https://github.com/cursor/plugins)                 | Conflict rules in `ship`                                                                   |
-| [`diagnose`](https://github.com/mattpocock/skills/blob/main/skills/engineering/diagnosing-bugs/SKILL.md) (now `diagnosing-bugs`) | [mattpocock/skills](https://github.com/mattpocock/skills) (MIT)     | The reproduce-first loop in `prod-triage`                                                  |
-| [`handoff`](https://github.com/mattpocock/skills/blob/main/skills/productivity/handoff/SKILL.md)                                 | [mattpocock/skills](https://github.com/mattpocock/skills) (MIT)     | Handoff notes in `fanout` and `status`                                                     |
-| [`emil-design-eng`](https://github.com/emilkowalski/skills/blob/main/skills/emil-design-eng/SKILL.md)                            | [emilkowalski/skills](https://github.com/emilkowalski/skills) (MIT) | Interaction and motion checks in `design-loop`                                             |
+| Original skill                                                                                                                   | Source                                                          | Now part of                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [`full-send`](https://github.com/t3dotgg/tstack/blob/main/skills/full-send/SKILL.md)                                             | [t3dotgg/tstack](https://github.com/t3dotgg/tstack) (MIT)       | `ship`, which follows its workflow, proof rules, merge gate, and rules for asking the user |
+| [`full-stop`](https://github.com/t3dotgg/tstack/blob/main/skills/full-stop/SKILL.md)                                             | [t3dotgg/tstack](https://github.com/t3dotgg/tstack) (MIT)       | `ship-to-pr`, which follows its no-merge rules and handoff states                          |
+| [`fix-merge-conflicts`](https://github.com/cursor/plugins/blob/main/cursor-team-kit/skills/fix-merge-conflicts/SKILL.md)         | [cursor/plugins](https://github.com/cursor/plugins)             | Conflict rules in `ship`                                                                   |
+| [`diagnose`](https://github.com/mattpocock/skills/blob/main/skills/engineering/diagnosing-bugs/SKILL.md) (now `diagnosing-bugs`) | [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) | The reproduce-first loop in `prod-triage`                                                  |
+| [`handoff`](https://github.com/mattpocock/skills/blob/main/skills/productivity/handoff/SKILL.md)                                 | [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) | Handoff notes in `fanout` and `status`                                                     |
+
+## UI and motion skills
+
+The UI and motion skills adapt [emilkowalski/skills](https://github.com/emilkowalski/skills/tree/64eb3deb9a5fbfa041faf783e0bc3fd635872e9c), MIT, copyright 2026 Emil Kowalski.
+[emil-skills.json](emil-skills.json) maps adapted entry points and references
+to their pinned source paths and verifies the distributed MIT notices byte
+for byte. Dakstack owns the functional QA gate and task routing.
 
 ## Structure
 

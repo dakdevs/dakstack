@@ -1,0 +1,4 @@
+interface:
+  display_name: "Break UI"
+  short_description: "Verify implemented UI with realistic edge data and actual rendering."
+  default_prompt: "Use $break-ui for the applicable part of this task."

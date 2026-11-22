@@ -52,6 +52,8 @@ If another workflow owns PR completion, return the units and their evidence
 to it instead of running these delivery steps.
 
 Inspect each delegate's diff and evidence yourself; a summary is not proof.
+For UI units, require current [break UI](../break-ui/SKILL.md) coverage
+before readiness. Missing required coverage stays blocked in the handoff.
 Complete each unit, publish its PR with `pr-proof`, then run `bar` when the
 user requested review. Main-thread triage uses `replicate-issue`; reviewers
 never apply their own findings. For PRs the user explicitly authorized

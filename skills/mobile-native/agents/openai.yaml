@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mobile Native"
+  short_description: "Make mobile web interactions behave well on touch devices."
+  default_prompt: "Use $mobile-native for the applicable part of this task."

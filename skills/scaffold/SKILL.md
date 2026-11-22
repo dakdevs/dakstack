@@ -42,7 +42,9 @@ repo first and copy its setup instead of these defaults.
 6. Install first-party agent skills for each library you used into the repo
    (`bunx skills add ...`), plus an `AGENTS.md` with the run, test, and
    deploy commands.
-7. Commit, push, and deploy once, then confirm the deployed URL works.
+7. If the scaffold creates UI, run [break UI](../break-ui/SKILL.md) against
+   the implemented UI before calling it verified.
+8. Commit, push, and deploy once, then confirm the deployed URL works.
 
 ## Report
 

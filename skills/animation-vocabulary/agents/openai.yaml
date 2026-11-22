@@ -1,0 +1,4 @@
+interface:
+  display_name: "Animation Vocabulary"
+  short_description: "Name a motion effect and distinguish it from nearby terms."
+  default_prompt: "Use $animation-vocabulary for the applicable part of this task."

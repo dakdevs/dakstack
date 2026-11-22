@@ -3,8 +3,9 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import original from "../upstream-skills.json";
 import improve from "../improve-skills.json";
+import emil from "../emil-skills.json";
 
-export const upstreamFiles = [original, improve].flatMap((source) =>
+export const upstreamFiles = [original, improve, emil].flatMap((source) =>
   source.skills.map((skill) => ({
     ...skill,
     repository: source.repository,

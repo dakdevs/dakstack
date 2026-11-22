@@ -1,0 +1,4 @@
+interface:
+  display_name: "Remove Animations"
+  short_description: "Remove or reduce motion that slows or obscures an interaction."
+  default_prompt: "Use $remove-animations for the applicable part of this task."
