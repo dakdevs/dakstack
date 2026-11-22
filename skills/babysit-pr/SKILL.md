@@ -1,6 +1,6 @@
 ---
 name: babysit-pr
-description: Watches a pull request through CI and review, fixing real check failures and real review-bot findings at their cause until the PR is ready or blocked. Use when the user asks to monitor, watch, or babysit a PR, or when another workflow such as `ship` needs a PR carried through checks and bot review.
+description: Watches a pull request through CI and review, fixing real check failures and real review-bot findings at their cause until the PR is ready or blocked. Use when the user asks to monitor, watch, or babysit a PR, or when another workflow such as `kitchen-mode` needs a PR carried through checks and bot review.
 ---
 
 # Babysit PR

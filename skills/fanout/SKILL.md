@@ -48,9 +48,14 @@ delegates its relevant sources, expectations, and unresolved questions.
 
 ## Finish
 
+If another workflow owns PR completion, return the units and their evidence
+to it instead of running these delivery steps.
+
 Inspect each delegate's diff and evidence yourself; a summary is not proof.
 Complete each unit, publish its PR with `pr-proof`, then run `bar` when the
 user requested review. Main-thread triage uses `replicate-issue`; reviewers
-never apply their own findings. Run `ship` on the ones the
-user asked to merge. Settle or archive finished threads. Report every PR, its
-state, and anything still blocked.
+never apply their own findings. For PRs the user explicitly authorized
+merging, apply only [Kitchen Mode's merge stop](../kitchen-mode/references/shipping.md#merge-stop)
+and its authorization and readiness gates to the existing work. Do not
+restart the workflow. Settle or archive finished threads. Report every PR,
+its state, and anything still blocked.

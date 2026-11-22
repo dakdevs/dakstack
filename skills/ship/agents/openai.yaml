@@ -1,4 +1,4 @@
 interface:
   display_name: "Ship"
   short_description: "Working commits, PR proof, validated reviews, merge, deploy"
-  default_prompt: "Use $ship to get this merged and deployed."
+  default_prompt: "Use $ship to prepare this PR and merge only if I explicitly authorize this PR; verify deployment when applicable."
