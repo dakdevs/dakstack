@@ -3,7 +3,7 @@
 ## PR delivery
 
 Before creating or updating a PR, including each layer of a stack, read the
-installed `pr-this/SKILL.md` and any applicable home and repository
+installed [pr-this](../../pr-this/SKILL.md) and any applicable home and repository
 `AGENTS.md` instructions. Follow their ticketing requirements when present.
 Pass the absolute `pr-this/SKILL.md` path and those requirements to any
 delegate assigned PR work. The starting thread owns publication unless it
@@ -27,5 +27,4 @@ sequence its edits with other writers. Edits must preserve meaning and
 accepted product decisions. Only the starting thread applies edits to
 externally published artifacts, and only within the task's authorization.
 Keep review findings in the conversation. After edits, verify the affected
-copy and refresh proof using the focused checks in
-[kitchen-mode](../SKILL.md).
+copy with focused checks and refresh [pr-proof](../../pr-proof/SKILL.md).

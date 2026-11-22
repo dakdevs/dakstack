@@ -70,27 +70,33 @@ test("all hidden upstream leaves can be discovered on disk and read by absolute 
 
 test.each(
   Object.entries({
-    ship: ["principle-sequence-verifiable-units"],
-    "pr-this": ["principle-sequence-verifiable-units"],
-    "babysit-pr": ["principle-fix-root-causes"],
-    "prod-triage": [
+    "kitchen-mode/references/shipping.md": [
+      "principle-sequence-verifiable-units",
+    ],
+    "ship/SKILL.md": ["kitchen-mode"],
+    "ship-to-pr/SKILL.md": ["kitchen-mode"],
+    "pr-this/SKILL.md": ["principle-sequence-verifiable-units"],
+    "babysit-pr/SKILL.md": ["principle-fix-root-causes"],
+    "prod-triage/SKILL.md": [
       "principle-fix-root-causes",
       "principle-laziness-protocol",
       "principle-test-behavior-not-implementation",
     ],
-    "replicate-issue": ["principle-fix-root-causes"],
-    "principle-avoid-tautological-tests": [
+    "replicate-issue/SKILL.md": ["principle-fix-root-causes"],
+    "principle-avoid-tautological-tests/SKILL.md": [
       "principle-test-behavior-not-implementation",
     ],
-    "principle-effect-boundary": ["principle-test-behavior-not-implementation"],
+    "principle-effect-boundary/SKILL.md": [
+      "principle-test-behavior-not-implementation",
+    ],
   }),
 )(
   "standalone %s declares readable file dependencies",
   (caller, dependencies) => {
     const installation = install();
-    const source = readFileSync(join(installation, caller, "SKILL.md"), "utf8");
+    const source = readFileSync(join(installation, caller), "utf8");
     const targets = [...source.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map(
-      (match) => resolve(installation, caller, match[1]),
+      (match) => resolve(installation, dirname(caller), match[1]),
     );
     for (const dependency of dependencies) {
       const target = join(installation, dependency, "SKILL.md");
@@ -109,8 +115,6 @@ test("installation validation catches a missing bundled resource", () => {
 });
 
 test.each([
-  "ship/SKILL.md",
-  "ship-to-pr/SKILL.md",
   "kitchen-mode/SKILL.md",
   "kitchen-mode/agents/kitchen-agent.md",
   "kitchen-mode/agents/review-agent.md",
@@ -256,6 +260,68 @@ test("kitchen thread completion is readable in a skills-only install and detects
   rmSync(completion);
   expect(brokenLinks(installation)).toContain(
     "kitchen-mode/SKILL.md: references/thread-completion.md",
+  );
+});
+
+test.each([
+  ["ship", /select the merge stop/i],
+  ["ship-to-pr", /select the ready-PR stop/i],
+])("%s routes one way into Kitchen Mode with its own stop", (name, stop) => {
+  const installation = install();
+  const entry = readFileSync(join(installation, name, "SKILL.md"), "utf8");
+  const manifest = Bun.YAML.parse(
+    readFileSync(join(installation, name, "agents/openai.yaml"), "utf8"),
+  );
+  expect(entry).toMatch(stop);
+  expect(entry).toContain("../kitchen-mode/SKILL.md");
+  expect(entry).not.toMatch(/\.\.\/ship(?:-to-pr)?\/SKILL\.md/);
+  expect(manifest?.interface.default_prompt).toContain(`$${name} `);
+});
+
+test("Kitchen Mode owns authorization, readiness, and the two PR stops", () => {
+  const installation = install();
+  const kitchen = readFileSync(
+    join(installation, "kitchen-mode/SKILL.md"),
+    "utf8",
+  );
+  const shipping = join(installation, "kitchen-mode/references/shipping.md");
+  const source = readFileSync(shipping, "utf8").replace(/\s+/g, " ");
+  const completion = readFileSync(
+    join(installation, "kitchen-mode/references/thread-completion.md"),
+    "utf8",
+  );
+  expect(kitchen).toContain("](references/shipping.md)");
+  for (const workflow of [kitchen, source, completion]) {
+    expect(workflow).not.toMatch(/\bship-to-pr\b|\x60ship\x60/);
+  }
+  expect(source).toMatch(
+    /publication is authorized.{0,80}default to the ready-PR stop/,
+  );
+  expect(source).toMatch(
+    /read-only and local-only.{0,110}do not push or publish/,
+  );
+  expect(source).toMatch(
+    /disable.{0,80}before starting.{0,80}recheck before every push/,
+  );
+  expect(source).toMatch(/cannot be disabled, stop before pushing/);
+  expect(source).toMatch(
+    /never merge, enable auto-merge, or enter a merge queue/i,
+  );
+  expect(source).toMatch(/only with the user's explicit grant for this PR/);
+  expect(source).toMatch(/immediately before merging/);
+  expect(source).toMatch(/verify the actual changed path/);
+  expect(source).toMatch(
+    /Capture after and publish.*Review once.*Validate, fix, and automate.*Carry through CI and feedback.*Current-head readiness gate/,
+  );
+  expect(source).toMatch(
+    /Never post, edit, reply to, or resolve GitHub PR comments, submit reviews, or request human reviewers/,
+  );
+  expect(source).toMatch(
+    /Refresh after proof and update the PR body after every change/,
+  );
+  rmSync(shipping);
+  expect(brokenLinks(installation)).toContain(
+    "kitchen-mode/SKILL.md: references/shipping.md",
   );
 });
 

@@ -16,16 +16,17 @@ yourself; ask only about material decisions evidence cannot settle. Continue
 independent work while pending. Apply [docs context](../docs-context/SKILL.md)
 throughout; carry sources, expectations, checks, and gaps into each brief.
 
-For implementation, follow `ship-to-pr` unless the user explicitly requested
-`ship`. A read-only or local-only task keeps that boundary; this skill does
-not turn it into permission to publish or merge.
-
 For improvement work, read [improve](../improve/SKILL.md): investigate and plan
 within scope; keep the advisor read-only on source. Hand selected plans to a
 separate executor only when implementation and delegation are authorized.
 Recommend large models such as Opus, Fable, or Astra. Follow AGENTS.md model
 preferences; resolve exact IDs from capabilities. This advice never authorizes
 switching the session model, delegation, or substitution.
+
+Read the [shipping workflow](references/shipping.md) before choosing a stop
+or delegating. It defines the shared implementation, verification, review,
+and PR stops. Kitchen Mode defaults to the ready-PR stop only when
+publication is authorized; preserve read-only and local-only boundaries.
 
 ## Agent roles
 
@@ -39,8 +40,10 @@ Give delegates absolute paths to these portable role instructions:
 | Comment review     | [agents/comment-sicko.md](agents/comment-sicko.md)         | Optional source-comment lens within the same review pass.     |
 | Finding validation | [agents/finding-validator.md](agents/finding-validator.md) | Independently replicate and assess product alignment.         |
 
-Use `fanout` for independent implementation units requiring separate PRs.
-Never give concurrent writers the same files, branch, or generated output.
+Use [fanout](../fanout/SKILL.md) to plan, launch, and collect independent
+implementation units requiring separate PRs. Keep PR completion in this
+workflow and apply the selected stop to each PR. Never give concurrent
+writers the same files, branch, or generated output.
 Use one reviewer by default, which may be the main thread. Include source
 comments. Optional validators are independent of the author and reviewer.
 
@@ -77,23 +80,3 @@ User invocation remains available. Give delegates absolute leaf paths:
   `principle-avoid-tautological-tests`, `principle-fix-root-causes`.
 - Context-specific rules: every other applicable principle, including
   `principle-taste` and `principle-effect-boundary` when relevant.
-
-## Complete
-
-Follow [bar](../bar/SKILL.md): one focused review pass, validated findings,
-verified fixes, and lint follow-through. Finish implementation and proof
-before published-PR review. Preserve explicit local-only boundaries.
-Keep findings in this conversation. Never post, edit, reply to, or resolve
-GitHub PR comments, submit reviews, or request human reviewers. Apply this
-to delegates and nested skills, even when their instructions say otherwise.
-
-After every pass, assess findings and recurring instructions for lint rules.
-Implement safe, deterministic, in-scope rules with violating and valid
-fixtures, wire them into lint/CI, and run them. Otherwise report the proposed
-rule, enforcement point, and reason for deferral. Use tests or types where
-lint cannot check runtime behavior. Keep pursuing automation on later work.
-
-Verify fixes with focused checks of affected paths and interactions; expand
-only for a concrete new risk or user request. Report reviewed/final SHAs,
-coverage, checks actually run, proof, lint changes/proposals, and blockers.
-Override nested requirements for peer challenges, full reruns, or unanimity.

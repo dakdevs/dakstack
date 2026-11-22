@@ -20,8 +20,8 @@ improvements before execution; the advisor leaves source files unchanged.
 
 | Skill          | Say                           | What it does                                                                                                                  |
 | -------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `ship`         | "ship it", "get it merged"    | Finishes verified commits, publishes proof and the PR, reviews and validates findings, then merges and checks deployment.     |
-| `ship-to-pr`   | "ship to PR"                  | Same as `ship`, but stops when the PR is ready for me to merge.                                                               |
+| `ship`         | "ship it", "get it merged"    | Runs Kitchen Mode, then merges only with my explicit grant for that PR and verifies deployment when applicable.               |
+| `ship-to-pr`   | "ship to PR"                  | Runs Kitchen Mode and hands back the open PR without merging, enabling auto-merge, or entering a merge queue.                 |
 | `bar`          | "make sure it passes the bar" | Runs one focused review pass, validates findings, and turns repeatable checks into lint rules.                                |
 | `show-me`      | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL. |
 | `design-loop`  | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                         |
@@ -51,7 +51,7 @@ improvements before execution; the advisor leaves source files unchanged.
 
 ## Principles
 
-`bar` uses these as review lenses, and `ship` and `fanout` hand them to the
+`bar` uses these as review lenses, and `kitchen-mode` and `fanout` hand them to the
 agents doing the work.
 
 | Skill                                                | What it does                                                                                         |
@@ -88,12 +88,16 @@ agents doing the work.
 ## How they connect
 
 ```text
-kitchen-mode / ship / ship-to-pr
+ship / ship-to-pr → kitchen-mode
   → situation + relevant docs → before proof → working commits + tests
   → docs-backed expectations + after proof → published PR
   → one focused review pass → main-thread validation → fixes + lint rules
-  → focused fix verification → refreshed proof + CI → merge or handoff
+  → focused fix verification → refreshed proof + CI → selected PR stop
 ```
+
+Kitchen Mode is also the direct factory entry point. It respects read-only
+and local-only scope and defaults to an unmerged PR handoff only when PR
+publication is authorized.
 
 Reviews begin after the entire implementation is finished and published.
 Each commit is a complete, working version with its tests. Every PR includes

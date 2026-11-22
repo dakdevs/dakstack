@@ -8,10 +8,8 @@ report. Delegates return results to it; do not transfer completion to a child
 or create a replacement top-level thread. Separate conversations require an
 explicit user request and do not replace the starting thread's final report.
 
-For implementation, default to a ready PR under `ship-to-pr`. A current-task
-merge request selects `ship`: merge when its gates pass, then finish its
-deployment verification. Kitchen mode alone does not authorize merging,
-auto-merge, or a merge queue. Preserve read-only and local-only boundaries.
+Use the selected Kitchen Mode stop and its authorization limits. For
+read-only or local-only work, report the authorized result without a PR.
 
 ## Continue until the stopping point
 
@@ -37,7 +35,9 @@ Before the final report:
 - Remove task-owned PR watchers and scheduled follow-ups. Never cancel
   unrelated work or clear a real unresolved question merely to appear done.
 - Report the PR link, final head, verified checks/reviews, and whether the PR
-  is ready and open or merged, including deployment evidence when applicable.
+  is ready and open or merged, including the merge SHA and deploy URL or
+  build when applicable. Include before/after proof, lint changes or
+  proposals, finding dispositions, and any remaining blocker.
 
 Return the final response in the starting thread and let the harness settle
 it normally. Do not force settled state, archive the conversation, leave a

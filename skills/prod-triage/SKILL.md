@@ -42,8 +42,8 @@ For each issue the user wants fixed:
    Add a test that fails without the fix; read
    [test behavior](../principle-test-behavior-not-implementation/SKILL.md).
 4. **One issue, one PR.** Run independent fixes in parallel with `fanout`.
-5. **Ship** each with `ship` when the user asked to merge. After deploy,
-   check that the error stops.
+5. **Ship** with [ship](../ship/SKILL.md) only for PRs the user explicitly
+   authorized merging. After deploy, check that the error stops.
 
 For an active attack (for example, a DDoS), contain it first (rate limits,
 firewall rules) and tell the user what you changed. Then repair the
