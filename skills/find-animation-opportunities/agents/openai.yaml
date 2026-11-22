@@ -1,0 +1,4 @@
+interface:
+  display_name: "Find Animation Opportunities"
+  short_description: "Find useful motion opportunities without editing the UI."
+  default_prompt: "Use $find-animation-opportunities for the applicable part of this task."

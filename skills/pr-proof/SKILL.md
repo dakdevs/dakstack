@@ -28,7 +28,9 @@ Run the same scenario against the current result. Capture output and artifact
 paths, environment, checked SHA, and the required lint, format, typecheck,
 unit, E2E, build, or runtime results that actually ran. For visual changes,
 use `show-me` for comparable before/after captures with matching viewport,
-state, and data. Inspect every artifact yourself.
+state, and data. Inspect every artifact yourself. For tasks that create or
+change UI, include current [break UI](../break-ui/SKILL.md) results,
+coverage and blockers. Proof capture does not replace functional checks.
 
 Any change, including review fixes, test edits, conflict resolution, rebase,
 or amended commits, invalidates the after record until refreshed. Rerun the

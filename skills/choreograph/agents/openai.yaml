@@ -1,0 +1,4 @@
+interface:
+  display_name: "Choreograph"
+  short_description: "Coordinate leading, following and parallel motion across elements."
+  default_prompt: "Use $choreograph for the applicable part of this task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Emil Design Engineering"
+  short_description: "Apply shared interaction defaults and route focused UI and motion work."
+  default_prompt: "Use $emil-design-eng for the applicable part of this task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gestures"
+  short_description: "Build direct manipulation that follows input and can be interrupted."
+  default_prompt: "Use $gestures for the applicable part of this task."

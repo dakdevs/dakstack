@@ -1,0 +1,4 @@
+interface:
+  display_name: "Animation Performance"
+  short_description: "Diagnose and verify the cause of dropped frames."
+  default_prompt: "Use $animation-performance for the applicable part of this task."

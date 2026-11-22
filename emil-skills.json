@@ -1,0 +1,142 @@
+{
+  "repository": "emilkowalski/skills",
+  "revision": "64eb3deb9a5fbfa041faf783e0bc3fd635872e9c",
+  "skills": [
+    {
+      "name": "skills/break-ui/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/break-ui/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/emil-design-eng/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/emil-design-eng/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/review-animations/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/review-animations/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/animation-vocabulary/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/animation-vocabulary/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/find-animation-opportunities/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/find-animation-opportunities/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/animation-performance/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/animation-performance/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/choreograph/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/choreograph/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/remove-animations/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/remove-animations/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/gestures/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/gestures/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/animate/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/animate/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    },
+    {
+      "name": "skills/mobile-native/license.md",
+      "sourcePath": "LICENSE",
+      "path": "skills/mobile-native/license.md",
+      "sha256": "4ff5bdb7887ec1435c9cab0e8d1a7caee704d894d65c2a008ccc68b1cc2f260b"
+    }
+  ],
+  "adapted": [
+    {
+      "sourcePath": "skills/break-ui/SKILL.md",
+      "path": "skills/break-ui/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/emil-design-eng/SKILL.md",
+      "path": "skills/emil-design-eng/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/review-animations/SKILL.md",
+      "path": "skills/review-animations/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/animation-vocabulary/SKILL.md",
+      "path": "skills/animation-vocabulary/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/find-animation-opportunities/SKILL.md",
+      "path": "skills/find-animation-opportunities/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/animation-performance/SKILL.md",
+      "path": "skills/animation-performance/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/choreograph/SKILL.md",
+      "path": "skills/choreograph/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/remove-animations/SKILL.md",
+      "path": "skills/remove-animations/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/gestures/SKILL.md",
+      "path": "skills/gestures/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/animate/SKILL.md",
+      "path": "skills/animate/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/mobile-native/SKILL.md",
+      "path": "skills/mobile-native/SKILL.md"
+    },
+    {
+      "sourcePath": "skills/animate/RECIPES.md",
+      "path": "skills/animate/references/recipes.md"
+    },
+    {
+      "sourcePath": "skills/choreograph/RECIPES.md",
+      "path": "skills/choreograph/references/recipes.md"
+    },
+    {
+      "sourcePath": "skills/review-animations/STANDARDS.md",
+      "path": "skills/review-animations/references/standards.md"
+    },
+    {
+      "sourcePath": "skills/break-ui/CATALOG.md",
+      "path": "skills/break-ui/references/catalog.md"
+    },
+    {
+      "sourcePath": "skills/animation-vocabulary/SKILL.md",
+      "path": "skills/animation-vocabulary/references/glossary.md"
+    },
+    {
+      "sourcePath": "skills/mobile-native/SKILL.md",
+      "path": "skills/mobile-native/references/mobile-web.md"
+    }
+  ]
+}

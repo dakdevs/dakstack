@@ -13,7 +13,9 @@ both thermonuclear reviews retain exact upstream text, including any external
 references. See [CREDITS.md](CREDITS.md) and
 [the provenance manifest](upstream-skills.json).
 The upstream `improve` advisor and references are pinned in
-[improve-skills.json](improve-skills.json). Kitchen mode uses it to plan
+[improve-skills.json](improve-skills.json). The source and installed MIT
+notices for the adapted UI and motion skills are tracked in
+[emil-skills.json](emil-skills.json). Kitchen mode uses the advisor to plan
 improvements before execution; the advisor leaves source files unchanged.
 
 ## Workflows
@@ -48,6 +50,31 @@ improvements before execution; the advisor leaves source files unchanged.
 | `no-comments`                        | Inspects source comments and hidden workarounds within the same review pass.                                         |
 | `replicate-issue`                    | Reproduces bugs and findings, checks product intent, and guides verified fixes and thread dispositions.              |
 | `pr-proof`                           | Captures before/after evidence for every PR and refreshes the after record whenever work changes.                    |
+
+## UI and motion
+
+| Skill                          | What it does                                                                         |
+| ------------------------------ | ------------------------------------------------------------------------------------ |
+| `break-ui`                     | Verifies implemented UI with realistic edge data, actual rendering and interactions. |
+| `emil-design-eng`              | Applies shared UI rules and routes specialists by task.                              |
+| `review-animations`            | Reviews the purpose, feel and behavior of existing motion.                           |
+| `animation-vocabulary`         | Names an effect from a description.                                                  |
+| `find-animation-opportunities` | Suggests purposeful motion without editing the UI.                                   |
+| `animation-performance`        | Diagnoses jank and measures the affected motion.                                     |
+| `choreograph`                  | Coordinates several elements that move together.                                     |
+| `remove-animations`            | Removes or reduces motion that does not earn its place.                              |
+| `gestures`                     | Builds interruptible drag, swipe, hold and sheet interactions.                       |
+| `animate`                      | Builds one purposeful interaction animation.                                         |
+| `mobile-native`                | Checks and fixes native-feeling interactions on the mobile web.                      |
+
+Any task that creates or changes UI runs [break UI](skills/break-ui/SKILL.md)
+on the implementation before it is verified or review-ready, including
+local-only, new, responsive and mobile UI. Record actual coverage, fix
+in-scope findings and rerun affected cases. Missing required surfaces or
+devices are blockers, not passes. Non-UI work, read-only review and proof-only
+capture do not trigger the gate. Use [Emil design engineering](skills/emil-design-eng/SKILL.md)
+to choose only relevant specialists; a responsive change with no motion does
+not need an animation review. Routing grants no publication or merge rights.
 
 ## Principles
 
@@ -90,7 +117,7 @@ agents doing the work.
 ```text
 ship / ship-to-pr → kitchen-mode
   → situation + relevant docs → before proof → working commits + tests
-  → docs-backed expectations + after proof → published PR
+  → required checks + break UI for UI changes → after proof → published PR
   → one focused review pass → main-thread validation → fixes + lint rules
   → focused fix verification → refreshed proof + CI → selected PR stop
 ```

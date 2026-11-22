@@ -29,7 +29,9 @@ to delegates and nested skills, even when their instructions say otherwise.
    record product decisions and acceptance criteria, and start
    [pr-proof](../../pr-proof/SKILL.md). For bugs, use
    [replicate-issue](../../replicate-issue/SKILL.md) before implementation.
-   Apply `principle-taste` and carry docs context through fixes.
+   Apply `principle-taste` and carry docs context through fixes. For UI work,
+   use [Emil design engineering](../../emil-design-eng/SKILL.md) to route
+   the relevant specialists.
 2. **Implement in logical commits.** Follow
    [sequence verifiable units](../../principle-sequence-verifiable-units/SKILL.md).
    Each commit is one complete, working, testable unit with its tests and
@@ -40,6 +42,9 @@ to delegates and nested skills, even when their instructions say otherwise.
    fetch the base, resolve conflicts preserving both sides' intent,
    regenerate lockfiles as needed, and rerun affected checks. Do not start
    final review with unfinished or uncommitted PR work.
+   For every task that creates or changes UI, including local-only work,
+   run [break UI](../../break-ui/SKILL.md) against the implemented UI before
+   calling it verified or capturing final proof. Preserve coverage and blockers.
 4. **Capture after and publish.** Only for an authorized PR, refresh
    before/after proof for the finished, committed head and push and
    open/update the PR using the [delivery requirements](delivery.md).
@@ -53,7 +58,8 @@ to delegates and nested skills, even when their instructions say otherwise.
 6. **Validate, fix, and automate.** The main thread uses replicate-issue to
    validate findings, confirm product intent, and own fixes. Use a separate
    validator only when useful and authorized. Verify affected paths and
-   interactions and run required checks. After every pass, assess findings
+   interactions and run required checks. For UI fixes, rerun break UI on
+   affected UI before refreshing proof. After every pass, assess findings
    and recurring instructions for lint rules. Implement safe, deterministic,
    in-scope rules with violating and valid fixtures, wire them into lint/CI,
    and run them. Otherwise report the proposed rule, enforcement point, and
@@ -77,8 +83,9 @@ and after proof covers the final head. Required checks must pass without
 silent waivers, fabricated runs, or weaker tests. Finish one review pass,
 validate findings, and verify fixes. Record reviewed and final SHAs without
 claiming the pass covered later unseen changes. No unresolved blocking
-finding, product question, or change request may remain. Mark the PR ready
-after review and fix verification.
+finding, product question, or change request may remain. For UI changes,
+require passing break UI coverage for the current head before marking the PR
+ready. Rerun affected cases if a later change or base update changed the UI.
 
 ## Ready-PR stop
 

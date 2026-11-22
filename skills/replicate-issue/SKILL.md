@@ -45,9 +45,10 @@ vote, or implementation convenience invent the product decision.
 For confirmed in-scope issues, read and apply
 [fix root causes](../principle-fix-root-causes/SKILL.md). Add a regression check with an independent oracle
 (`principle-avoid-tautological-tests`). Observe failure before and success
-after the fix where possible, then run repository completion checks. Keep
-each fix and its tests in a working commit, and refresh `pr-proof` after
-every change. Reproduce again against the pushed head.
+after the fix where possible, then run repository completion checks. For
+fixes that change UI, run [break UI](../break-ui/SKILL.md) on the affected
+implemented UI, and report coverage or blockers. Keep each fix and its tests
+in a working commit, refresh `pr-proof`, and reproduce on the pushed head.
 
 Never post, edit, reply to, or resolve GitHub PR comments or submit GitHub
 reviews. Return dispositions, evidence, fix SHAs, and existing thread IDs to

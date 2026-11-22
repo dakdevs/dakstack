@@ -44,6 +44,8 @@ Confirm scope and product intent before fixing. Keep uncertain intent explicit.
 Fix confirmed issues, add regression coverage, run required checks, and
 refresh proof after changes. Check the affected paths and interactions after
 fixes; do not restart the full review for every commit, rebase, or docs edit.
+If this pass changes UI, rerun [break UI](../break-ui/SKILL.md) on the affected
+implementation before marking it verified; read-only review does not run it.
 Broaden only when a specific new risk warrants it or the user requests it.
 Record which SHA the pass covered and how later changes were verified;
 never present old approval as review of unseen code.

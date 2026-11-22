@@ -32,6 +32,10 @@ parses, and any template or format the repo or user requires.
 3. Make it sound written by a person (below).
 4. Reread and ask what still gives it away as AI-written. Fix that, then stop.
 
+If the task changes copy in an implemented UI, run
+[break UI](../break-ui/SKILL.md) before calling it verified. Prose drafts
+and non-UI edits don't trigger the gate.
+
 ## Sounding like a person
 
 Stripping patterns is only half the job. Flat, voiceless text is its own tell.

@@ -107,6 +107,7 @@ test.each([
     "scripts",
     "upstream-skills.json",
     "improve-skills.json",
+    "emil-skills.json",
   ]) {
     cpSync(join(root, entry), join(directory, entry), { recursive: true });
   }
