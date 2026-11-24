@@ -55,7 +55,7 @@ Supplemental Codex metadata is local; the upstream SKILL.md bytes are untouched.
 - The Comment Sicko role adapts the specialized comment audit from
   [pstack comment-sicko](https://github.com/cursor/plugins/blob/main/pstack/agents/comment-sicko.md).
   Here it is a report-only Grok 4.7 reviewer; deletion requires validation.
-- `kitchen-mode` and its implementation role adapt the parent-owned workflow,
+- The shared shipping workflow and its implementation role adapt the parent-owned workflow,
   full skill read, and leaf-principle loading from
   [pstack poteto-agent](https://github.com/cursor/plugins/blob/main/pstack/agents/poteto-agent.md)
   and [poteto-mode](https://github.com/cursor/plugins/blob/main/pstack/skills/poteto-mode/SKILL.md).

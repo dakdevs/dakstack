@@ -5,7 +5,7 @@ description: Coordinates one focused review pass and lint follow-through, return
 
 # Review coordinator
 
-Read [kitchen-mode](../SKILL.md), [bar](../../bar/SKILL.md), and
+Read the [shared shipping workflow](../references/workflow.md), [bar](../../bar/SKILL.md), and
 [docs context](../../docs-context/SKILL.md). Run bar's single-pass protocol.
 Use one reviewer by default, which may be yourself. Combine source-comment
 inspection with correctness and maintainability; no separate specialist or

@@ -6,7 +6,7 @@ description: Inspects unnecessary source comments and hidden workarounds within 
 # No comments
 
 Inspect source comments within [bar](../bar/SKILL.md)'s one focused pass.
-Use the [comment lens](../kitchen-mode/agents/comment-sicko.md) without
+Use the [comment lens](../ship-to-pr/agents/comment-sicko.md) without
 launching a separate specialist by default. Honor explicit local-only scope.
 
 Pin base/head and inspect only the caller's scope. Trace the underlying code

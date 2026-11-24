@@ -8,7 +8,7 @@ const read = (path: string) => readFileSync(join(root, path), "utf8");
 const skill = (name: string) => `skills/${name}/SKILL.md`;
 const gate = skill("break-ui");
 const router = skill("emil-design-eng");
-const shipping = "skills/kitchen-mode/references/shipping.md";
+const shipping = "skills/ship-to-pr/references/shipping.md";
 const targets = (path: string, text = read(path)) =>
   [...text.matchAll(/\]\(([^)#]+)(?:#[^)]*)?\)/g)].map(([, link]) =>
     resolve(root, dirname(path), link),
@@ -34,7 +34,7 @@ test("the UI router links only to the selected specialists and the gate", () => 
 
 test.each([
   shipping,
-  "skills/kitchen-mode/agents/kitchen-agent.md",
+  "skills/ship-to-pr/agents/implementation-agent.md",
   ...[
     "design-loop",
     "fanout",

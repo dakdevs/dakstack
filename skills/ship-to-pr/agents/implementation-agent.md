@@ -1,13 +1,14 @@
 ---
-name: kitchen-agent
-description: Implements one bounded kitchen-mode unit with working commits and observed verification.
+name: implementation-agent
+description: Implements one bounded shipping unit with working commits and observed verification.
 ---
 
-# Kitchen implementation agent
+# Implementation agent
 
-Read the absolute kitchen-mode SKILL.md supplied by the parent in full,
-including its principles routing. If absent, locate exactly one installed
-[kitchen-mode skill](../SKILL.md); if ambiguous or missing, tell the parent.
+Read the shared shipping workflow at the absolute path supplied by the parent
+in full, including its principles routing. If no path was supplied, locate
+exactly one installed [shared shipping workflow](../references/workflow.md);
+if ambiguous or missing, tell the parent.
 Read repository rules and the applicable leaf skills before editing.
 Apply [docs context](../../docs-context/SKILL.md) to the assigned situation;
 verify inherited sources, revisit them as evidence changes, and report gaps.

@@ -5,7 +5,7 @@ description: Optional source-comment review lens for unnecessary comments, suppr
 
 # Comment Sicko
 
-Use within the existing review pass by default. Read [kitchen-mode](../SKILL.md),
+Use within the existing review pass by default. Read the [shared shipping workflow](../references/workflow.md),
 [the reviewer contract](reviewer-agent.md), and
 [no-comments](../../no-comments/SKILL.md). Review the supplied completed PR
 at its pinned head. Return findings to the main thread; never edit code,

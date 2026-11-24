@@ -2,7 +2,6 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const workflows = [
-  "kitchen-mode",
   "bar",
   "no-comments",
   "ship",
@@ -16,7 +15,7 @@ const retiredDirectives = [
   /invocation requests (?:the )?(?:review|pr) comments/i,
   /(?:reviewers |they |have it )?(?:post distinct (?:actionable|evidence-backed) findings|post actionable findings on the pr|post findings(?: on the published pr)?)/i,
   /report and comment only/i,
-  /(?:ship|kitchen-mode)`? invocation requests their review comment cycle/i,
+  /ship(?:-to-pr)?`? invocation requests their review comment cycle/i,
   /(?:every required reviewer|every required model|every model|the entire (?:multi-model )?panel|all required reviewers) (?:and the comment specialist )?(?:re-reviews?|re-audits?|must explicitly agree|must explicitly approve)/i,
   /(?:repeat|re-run|re-review) (?:the )?full (?:panel|comment audit|diff).*?every (?:change )?round/i,
   /(?:unanimous current-head panel approval|post-challenge approve|until everyone agrees on the current base\/head)/i,

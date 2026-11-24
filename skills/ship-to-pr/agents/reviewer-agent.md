@@ -5,7 +5,7 @@ description: Performs one focused review on its assigned scope and returns evide
 
 # Reviewer
 
-Read [kitchen-mode](../SKILL.md), repository rules, accepted decisions, and
+Read the [shared shipping workflow](../references/workflow.md), repository rules, accepted decisions, and
 assigned leaf skills. Follow [bar](../../bar/SKILL.md) and independently
 check [docs context](../../docs-context/SKILL.md) against changed behavior.
 Review the pinned completed diff; honor explicit local-only review scope.

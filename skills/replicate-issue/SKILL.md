@@ -28,7 +28,7 @@ before changing code. Use safe fixtures and the actual affected surface.
    needs product decision. Missing credentials or fixtures prove no verdict.
 
 The main thread can validate PR findings directly. A separate
-[finding validator](../kitchen-mode/agents/finding-validator.md) is optional
+[finding validator](../ship-to-pr/agents/finding-validator.md) is optional
 for difficult disputes when delegation is authorized; it is independent of
 the author and reviewer and reports only. The main thread owns dispositions.
 

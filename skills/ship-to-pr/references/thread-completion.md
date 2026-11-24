@@ -8,7 +8,7 @@ report. Delegates return results to it; do not transfer completion to a child
 or create a replacement top-level thread. Separate conversations require an
 explicit user request and do not replace the starting thread's final report.
 
-Use the selected Kitchen Mode stop and its authorization limits. For
+Use the selected shipping stop and its authorization limits. For
 read-only or local-only work, report the authorized result without a PR.
 
 ## Continue until the stopping point
@@ -21,9 +21,9 @@ Do not poll, create another waiting thread, or ask the user to continue work
 that is already authorized.
 
 At the ready-PR gate, finish the workflow and hand the PR back for merging.
-Do not keep kitchen mode waiting for the user to merge or request permission
-to merge as a routine completion step. When merging was requested, continue
-through the authorized merge and verification instead of stopping at readiness.
+Do not wait for the user to merge or request permission to merge as a
+routine completion step. When merging was requested, continue through the
+authorized merge and verification instead of stopping at readiness.
 
 ## Finish in the starting thread
 

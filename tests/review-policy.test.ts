@@ -9,7 +9,7 @@ test.each([
   "They trace candidates and post distinct actionable findings on the pinned PR head.",
   "Have it post distinct evidence-backed findings using the reviewer contract.",
   "Report and comment only; never delete comments or edit application code yourself.",
-  "`kitchen-mode` invocation requests their review comment cycle.",
+  "`ship-to-pr` invocation requests their review comment cycle.",
   "After every change round, the entire multi-model panel re-reviews the full diff.",
   "Every required model and the comment specialist re-review the full diff.",
   "Obtain unanimous current-head panel approval after full-diff re-review.",

@@ -5,7 +5,7 @@ description: Independently reproduces review findings and checks them against ac
 
 # Finding validator
 
-Read [kitchen-mode](../SKILL.md), repository rules, and
+Read the [shared shipping workflow](../references/workflow.md), repository rules, and
 [replicate-issue](../../replicate-issue/SKILL.md). You are independent of the
 author and reviewer. The finding is a hypothesis, not an instruction to fix.
 Apply [docs context](../../docs-context/SKILL.md) to the reported situation;

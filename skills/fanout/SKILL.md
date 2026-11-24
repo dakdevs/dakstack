@@ -24,7 +24,7 @@ delegates its relevant sources, expectations, and unresolved questions.
 - **Execution delegates:** Claude Opus 5.5 at medium reasoning unless the user
   names another model. Each gets its unit, its owned files, its acceptance
   checks, the repo's rules, `principle-taste`, and the absolute
-  [kitchen implementation prompt](../kitchen-mode/agents/kitchen-agent.md).
+  [implementation prompt](../ship-to-pr/agents/implementation-agent.md).
   Require logical working commits with tests and before/after proof.
 - **One unit, one checkout.** Use `delegate_task` with
   `isolation: "worktree"`, or a new T3 thread with a worktree when the user
@@ -57,7 +57,7 @@ before readiness. Missing required coverage stays blocked in the handoff.
 Complete each unit, publish its PR with `pr-proof`, then run `bar` when the
 user requested review. Main-thread triage uses `replicate-issue`; reviewers
 never apply their own findings. For PRs the user explicitly authorized
-merging, apply only [Kitchen Mode's merge stop](../kitchen-mode/references/shipping.md#merge-stop)
+merging, apply only [the shared merge stop](../ship-to-pr/references/shipping.md#merge-stop)
 and its authorization and readiness gates to the existing work. Do not
 restart the workflow. Settle or archive finished threads. Report every PR,
 its state, and anything still blocked.

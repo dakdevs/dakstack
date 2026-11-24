@@ -49,7 +49,11 @@ const brokenLinks = (installation: string) =>
     });
 
 test("a skills-only install preserves every bundled Markdown dependency", () => {
-  expect(brokenLinks(install())).toEqual([]);
+  const installation = install();
+  expect(brokenLinks(installation)).toEqual([]);
+  expect(existsSync(join(installation, "kitchen-mode", "SKILL.md"))).toBe(
+    false,
+  );
 });
 
 test("all hidden upstream leaves can be discovered on disk and read by absolute path", () => {
@@ -70,11 +74,9 @@ test("all hidden upstream leaves can be discovered on disk and read by absolute 
 
 test.each(
   Object.entries({
-    "kitchen-mode/references/shipping.md": [
+    "ship-to-pr/references/shipping.md": [
       "principle-sequence-verifiable-units",
     ],
-    "ship/SKILL.md": ["kitchen-mode"],
-    "ship-to-pr/SKILL.md": ["kitchen-mode"],
     "pr-this/SKILL.md": ["principle-sequence-verifiable-units"],
     "babysit-pr/SKILL.md": ["principle-fix-root-causes"],
     "prod-triage/SKILL.md": [
@@ -115,11 +117,11 @@ test("installation validation catches a missing bundled resource", () => {
 });
 
 test.each([
-  "kitchen-mode/SKILL.md",
-  "kitchen-mode/agents/kitchen-agent.md",
-  "kitchen-mode/agents/review-agent.md",
-  "kitchen-mode/agents/reviewer-agent.md",
-  "kitchen-mode/agents/finding-validator.md",
+  "ship-to-pr/references/workflow.md",
+  "ship-to-pr/agents/implementation-agent.md",
+  "ship-to-pr/agents/review-agent.md",
+  "ship-to-pr/agents/reviewer-agent.md",
+  "ship-to-pr/agents/finding-validator.md",
   "replicate-issue/SKILL.md",
   "prod-triage/SKILL.md",
   "bar/SKILL.md",
@@ -169,7 +171,7 @@ test("literal Markdown examples do not require files in the installation", () =>
 });
 
 test.each([
-  "kitchen-agent",
+  "implementation-agent",
   "review-agent",
   "reviewer-agent",
   "comment-sicko",
@@ -178,7 +180,7 @@ test.each([
   "a skills-only installation includes the %s role and detects its removal",
   (role) => {
     const installation = install();
-    const prompt = join(installation, "kitchen-mode/agents", `${role}.md`);
+    const prompt = join(installation, "ship-to-pr/agents", `${role}.md`);
     expect(existsSync(prompt)).toBe(true);
     const frontmatter = Bun.YAML.parse(
       readFileSync(prompt, "utf8").match(
@@ -188,19 +190,19 @@ test.each([
     expect(frontmatter).toMatchObject({ name: role });
     rmSync(prompt);
     expect(brokenLinks(installation)).toContain(
-      `kitchen-mode/SKILL.md: agents/${role}.md`,
+      `ship-to-pr/references/workflow.md: ../agents/${role}.md`,
     );
   },
 );
 
-test("kitchen improvement planning has a portable advisor and detects a missing template", () => {
+test("shipping improvement planning has a portable advisor and detects a missing template", () => {
   const installation = install();
-  const kitchen = readFileSync(
-    join(installation, "kitchen-mode/SKILL.md"),
+  const workflow = readFileSync(
+    join(installation, "ship-to-pr/references/workflow.md"),
     "utf8",
   );
-  const links = [...kitchen.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) =>
-    resolve(installation, "kitchen-mode", match[1]),
+  const links = [...workflow.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) =>
+    resolve(installation, "ship-to-pr/references", match[1]),
   );
   expect(links).toContain(join(installation, "improve/SKILL.md"));
   expect(brokenLinks(installation)).toEqual([]);
@@ -213,7 +215,7 @@ test("kitchen improvement planning has a portable advisor and detects a missing 
 test.each([
   {
     scenario: "comment posting",
-    path: "skills/kitchen-mode/agents/reviewer-agent.md",
+    path: "skills/ship-to-pr/agents/reviewer-agent.md",
     directive: "Reviewers post findings on the published PR.",
     diagnostic: "post findings",
   },
@@ -241,58 +243,63 @@ test.each([
   expect(result.stderr.toString()).toContain(fixture.diagnostic);
 });
 
-test("kitchen thread completion is readable in a skills-only install and detects its removal", () => {
+test("shipping thread completion is readable in a skills-only install and detects its removal", () => {
   const installation = install();
-  const kitchen = readFileSync(
-    join(installation, "kitchen-mode/SKILL.md"),
+  const workflow = readFileSync(
+    join(installation, "ship-to-pr/references/workflow.md"),
     "utf8",
   );
   const completion = join(
     installation,
-    "kitchen-mode/references/thread-completion.md",
+    "ship-to-pr/references/thread-completion.md",
   );
-  const links = [...kitchen.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) =>
-    resolve(installation, "kitchen-mode", match[1]),
+  const links = [...workflow.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map((match) =>
+    resolve(installation, "ship-to-pr/references", match[1]),
   );
   expect(links).toContain(completion);
   expect(readFileSync(completion, "utf8").trim().length).toBeGreaterThan(0);
   expect(brokenLinks(installation)).toEqual([]);
   rmSync(completion);
   expect(brokenLinks(installation)).toContain(
-    "kitchen-mode/SKILL.md: references/thread-completion.md",
+    "ship-to-pr/references/workflow.md: thread-completion.md",
   );
 });
 
 test.each([
   ["ship", /select the merge stop/i],
   ["ship-to-pr", /select the ready-PR stop/i],
-])("%s routes one way into Kitchen Mode with its own stop", (name, stop) => {
+])("%s loads the shared workflow and selects its own stop", (name, stop) => {
   const installation = install();
   const entry = readFileSync(join(installation, name, "SKILL.md"), "utf8");
   const manifest = Bun.YAML.parse(
     readFileSync(join(installation, name, "agents/openai.yaml"), "utf8"),
   );
   expect(entry).toMatch(stop);
-  expect(entry).toContain("../kitchen-mode/SKILL.md");
+  const targets = [...entry.matchAll(/\]\(([^)]+)\)/g)].map(([, path]) =>
+    resolve(installation, name, path),
+  );
+  expect(targets).toContain(
+    join(installation, "ship-to-pr/references/workflow.md"),
+  );
   expect(entry).not.toMatch(/\.\.\/ship(?:-to-pr)?\/SKILL\.md/);
   expect(manifest?.interface.default_prompt).toContain(`$${name} `);
 });
 
-test("Kitchen Mode owns authorization, readiness, and the two PR stops", () => {
+test("the shared workflow owns authorization, readiness, and the two PR stops", () => {
   const installation = install();
-  const kitchen = readFileSync(
-    join(installation, "kitchen-mode/SKILL.md"),
+  const workflow = readFileSync(
+    join(installation, "ship-to-pr/references/workflow.md"),
     "utf8",
   );
-  const shipping = join(installation, "kitchen-mode/references/shipping.md");
+  const shipping = join(installation, "ship-to-pr/references/shipping.md");
   const source = readFileSync(shipping, "utf8").replace(/\s+/g, " ");
   const completion = readFileSync(
-    join(installation, "kitchen-mode/references/thread-completion.md"),
+    join(installation, "ship-to-pr/references/thread-completion.md"),
     "utf8",
   );
-  expect(kitchen).toContain("](references/shipping.md)");
-  for (const workflow of [kitchen, source, completion]) {
-    expect(workflow).not.toMatch(/\bship-to-pr\b|\x60ship\x60/);
+  expect(workflow).toContain("](shipping.md)");
+  for (const file of [workflow, source, completion]) {
+    expect(file).not.toMatch(/\bship-to-pr\b|\x60ship\x60/);
   }
   expect(source).toMatch(
     /publication is authorized.{0,80}default to the ready-PR stop/,
@@ -321,7 +328,7 @@ test("Kitchen Mode owns authorization, readiness, and the two PR stops", () => {
   );
   rmSync(shipping);
   expect(brokenLinks(installation)).toContain(
-    "kitchen-mode/SKILL.md: references/shipping.md",
+    "ship-to-pr/references/workflow.md: shipping.md",
   );
 });
 

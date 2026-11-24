@@ -15,25 +15,24 @@ references. See [CREDITS.md](CREDITS.md) and
 The upstream `improve` advisor and references are pinned in
 [improve-skills.json](improve-skills.json). The source and installed MIT
 notices for the adapted UI and motion skills are tracked in
-[emil-skills.json](emil-skills.json). Kitchen mode uses the advisor to plan
-improvements before execution; the advisor leaves source files unchanged.
+[emil-skills.json](emil-skills.json). The shipping workflow uses the advisor
+to plan improvements. The advisor leaves source files unchanged.
 
 ## Workflows
 
-| Skill          | Say                           | What it does                                                                                                                  |
-| -------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `ship`         | "ship it", "get it merged"    | Runs Kitchen Mode, then merges only with my explicit grant for that PR and verifies deployment when applicable.               |
-| `ship-to-pr`   | "ship to PR"                  | Runs Kitchen Mode and hands back the open PR without merging, enabling auto-merge, or entering a merge queue.                 |
-| `bar`          | "make sure it passes the bar" | Runs one focused review pass, validates findings, and turns repeatable checks into lint rules.                                |
-| `show-me`      | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL. |
-| `design-loop`  | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                         |
-| `fanout`       | "use Opus delegates"          | One delegate, worktree, and PR per independent unit, stacked when dependent.                                                  |
-| `status`       | "what's next?"                | Checks git, PRs, deploys, and threads, then answers with the next action.                                                     |
-| `prod-triage`  | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one in its own PR.                                              |
-| `scaffold`     | "set up a new repo"           | Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.                                                          |
-| `sweep`        | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                |
-| `film`         | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                        |
-| `kitchen-mode` | "kitchen mode"                | Coordinates implementation, one review pass, verified fixes, and lint follow-through using bundled agent prompts.             |
+| Skill         | Say                           | What it does                                                                                                                                       |
+| ------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ship`        | "ship it", "get it merged"    | Coordinates implementation, verification, and review, then merges only with my explicit grant for that PR and verifies deployment when applicable. |
+| `ship-to-pr`  | "ship to PR"                  | Coordinates implementation, verification, and review, then hands back the open PR without merging, enabling auto-merge, or entering a merge queue. |
+| `bar`         | "make sure it passes the bar" | Runs one focused review pass, validates findings, and turns repeatable checks into lint rules.                                                     |
+| `show-me`     | "show me"                     | Captures real screenshots and video at desktop and mobile sizes, and sends them to the PR, my phone, Dia, or a Tailscale URL.                      |
+| `design-loop` | "design it in Paper"          | Studies references, prototypes in Paper, applies my notes literally, and builds only after I approve.                                              |
+| `fanout`      | "use Opus delegates"          | One delegate, worktree, and PR per independent unit, stacked when dependent.                                                                       |
+| `status`      | "what's next?"                | Checks git, PRs, deploys, and threads, then answers with the next action.                                                                          |
+| `prod-triage` | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one in its own PR.                                                                   |
+| `scaffold`    | "set up a new repo"           | Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.                                                                               |
+| `sweep`       | "free up space"               | Audits disk use, proves what is unused, and deletes only that.                                                                                     |
+| `film`        | "make a launch video"         | Plans, generates, edits, and critiques a product film, and sends each cut to my phone.                                                             |
 
 ## Commands
 
@@ -78,8 +77,8 @@ not need an animation review. Routing grants no publication or merge rights.
 
 ## Principles
 
-`bar` uses these as review lenses, and `kitchen-mode` and `fanout` hand them to the
-agents doing the work.
+`bar` uses these as review lenses. The shipping workflow and `fanout` pass
+them to implementation agents.
 
 | Skill                                                | What it does                                                                                         |
 | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -115,16 +114,16 @@ agents doing the work.
 ## How they connect
 
 ```text
-ship / ship-to-pr → kitchen-mode
+ship / ship-to-pr → shared shipping workflow
   → situation + relevant docs → before proof → working commits + tests
   → required checks + break UI for UI changes → after proof → published PR
   → one focused review pass → main-thread validation → fixes + lint rules
   → focused fix verification → refreshed proof + CI → selected PR stop
 ```
 
-Kitchen Mode is also the direct factory entry point. It respects read-only
-and local-only scope and defaults to an unmerged PR handoff only when PR
-publication is authorized.
+Use `ship-to-pr` to prepare an open PR or `ship` to finish through merge and
+deployment when explicitly authorized. Both respect read-only and local-only
+scope. PR publication requires authorization.
 
 Reviews begin after the entire implementation is finished and published.
 Each commit is a complete, working version with its tests. Every PR includes
@@ -196,6 +195,9 @@ For a skills.sh install, use `bunx skills add dakdevs/dakstack`. Check the
 installer's current provider options when targeting multiple providers; the
 prompt above also covers existing shared installations and local customizations.
 Provider support and paths vary. Restart existing agent sessions after updating.
+When upgrading from a version with the old Kitchen Mode command, install and
+verify `ship` and `ship-to-pr` first, then back up and remove the old skill
+directory and its discovery links.
 
 ## Requirements
 
@@ -246,9 +248,9 @@ personal instructions or shortcuts that invoke those old names.
 
 ## Portable agents
 
-Agent prompts ship inside the kitchen-mode skill's agents directory, beside
-its Codex metadata. Read [kitchen-mode](skills/kitchen-mode/SKILL.md) for the
-role links and delegation contract. Installing skills copies the prompts as
+Both shipping commands load the [shared shipping workflow](skills/ship-to-pr/references/workflow.md)
+for role links and the delegation contract. The prompts live under
+`skills/ship-to-pr/agents/`. Installing skills copies the prompts as
 well. They are portable briefs, not automatic native agent registrations;
 the orchestrator supplies their absolute paths and verifies the model used.
 

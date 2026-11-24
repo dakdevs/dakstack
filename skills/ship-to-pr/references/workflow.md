@@ -1,46 +1,41 @@
----
-name: kitchen-mode
-description: Coordinates a task factory with verified commits, portable implementation and review agents, PR proof, and one focused review pass with lint follow-through. Use when the user says "kitchen mode", "$kitchen-mode", or asks this stack to build and review a task through agents.
----
+# Coordinate shipping
 
-# Kitchen mode
-
-Follow [thread completion](references/thread-completion.md) in the starting
-thread and [delivery requirements](references/delivery.md) for PRs and copy review.
+Follow [thread completion](thread-completion.md) in the starting
+thread and [delivery requirements](delivery.md) for PRs and copy review.
 
 ## Start
 
 Read task and repository instructions; state the intended result and scope.
 Record accepted decisions, checks, and unknowns. Investigate observable facts
 yourself; ask only about material decisions evidence cannot settle. Continue
-independent work while pending. Apply [docs context](../docs-context/SKILL.md)
+independent work while pending. Apply [docs context](../../docs-context/SKILL.md)
 throughout; carry sources, expectations, checks, and gaps into each brief.
 
-For improvement work, read [improve](../improve/SKILL.md): investigate and plan
+For improvement work, read [improve](../../improve/SKILL.md): investigate and plan
 within scope; keep the advisor read-only on source. Hand selected plans to a
 separate executor only when implementation and delegation are authorized.
 Recommend large models such as Opus, Fable, or Astra. Follow AGENTS.md model
 preferences; resolve exact IDs from capabilities. This advice never authorizes
 switching the session model, delegation, or substitution.
 
-Read the [shipping workflow](references/shipping.md) before choosing a stop
-or delegating. It defines the shared implementation, verification, review,
-and PR stops. Kitchen Mode defaults to the ready-PR stop only when
-publication is authorized; preserve read-only and local-only boundaries.
+Read the [shipping workflow](shipping.md) before delegating. It defines
+implementation, verification, review, and authorization for the selected
+stop. Preserve read-only and local-only boundaries; PR stops apply only when
+publication is authorized.
 
 ## Agent roles
 
 Give delegates absolute paths to these portable role instructions:
 
-| Job                | Prompt                                                     | Responsibility                                                |
-| ------------------ | ---------------------------------------------------------- | ------------------------------------------------------------- |
-| Implementation     | [agents/kitchen-agent.md](agents/kitchen-agent.md)         | Complete one owned unit and verify its commit.                |
-| Review coordinator | [agents/review-agent.md](agents/review-agent.md)           | Coordinate one focused review pass.                           |
-| Reviewer           | [agents/reviewer-agent.md](agents/reviewer-agent.md)       | Review the diff once and return evidence and lint candidates. |
-| Comment review     | [agents/comment-sicko.md](agents/comment-sicko.md)         | Optional source-comment lens within the same review pass.     |
-| Finding validation | [agents/finding-validator.md](agents/finding-validator.md) | Independently replicate and assess product alignment.         |
+| Job                | Prompt                                                              | Responsibility                                                |
+| ------------------ | ------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Implementation     | [agents/implementation-agent.md](../agents/implementation-agent.md) | Complete one owned unit and verify its commit.                |
+| Review coordinator | [agents/review-agent.md](../agents/review-agent.md)                 | Coordinate one focused review pass.                           |
+| Reviewer           | [agents/reviewer-agent.md](../agents/reviewer-agent.md)             | Review the diff once and return evidence and lint candidates. |
+| Comment review     | [agents/comment-sicko.md](../agents/comment-sicko.md)               | Optional source-comment lens within the same review pass.     |
+| Finding validation | [agents/finding-validator.md](../agents/finding-validator.md)       | Independently replicate and assess product alignment.         |
 
-Use [fanout](../fanout/SKILL.md) to plan, launch, and collect independent
+Use [fanout](../../fanout/SKILL.md) to plan, launch, and collect independent
 implementation units requiring separate PRs. Keep PR completion in this
 workflow and apply the selected stop to each PR. Never give concurrent
 writers the same files, branch, or generated output.
@@ -50,7 +45,8 @@ comments. Optional validators are independent of the author and reviewer.
 ## Delegate contract
 
 Each brief includes goal, owned files, permitted actions, checks, base/head,
-accepted decisions, docs context, and absolute skill, role, and leaf paths.
+accepted decisions, docs context, and absolute workflow, skill, role, and leaf
+paths.
 Delegates read these before starting; missing prompts block that role.
 Use fresh review jobs only when needed and authorized. Do not present an
 old conversation as a fresh independent audit. Children report to the main
