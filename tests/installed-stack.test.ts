@@ -338,6 +338,11 @@ test("installed PR example keeps proof visible and all context collapsed", () =>
     join(installation, "pr-this/references/body.md"),
     "utf8",
   );
+  const visual = body.match(/^```md\n([\s\S]*?)\n```$/m)?.[1];
+  expect(visual?.replace(/[ \t]+/g, " ")).toMatch(
+    /^\| Before \| After \|\n\| -+ \| -+ \|\n\| !\[Before[^\]]*\]\(https:\/\/[^)]+\) \| !\[After[^\]]*\]\(https:\/\/[^)]+\) \|$/m,
+  );
+
   const example = body.match(/^````md\n([\s\S]*?)\n````$/m)?.[1];
   expect(example).toBeDefined();
   if (!example) throw new Error("PR body guidance needs a complete example");

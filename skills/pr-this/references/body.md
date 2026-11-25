@@ -11,7 +11,12 @@ Show only `## Proof` above the fold. Put everything else inside one closed
   `Before` and `After`, and optional descriptive human links that help a
   reviewer inspect or verify the proof. Do not put summaries, check tables,
   SHAs, or narrative prose above the fold.
-- Embed screenshots and videos inline with short `Before` and `After` labels.
+- Put visual proof (screenshots or videos) in a two-column `Before | After`
+  table, one row per matching scenario or viewport, with each artifact embedded
+  inline in its cell. Never fabricate a baseline; if no real baseline exists,
+  label the `Before` cell honestly (for example, `Not present before` or
+  `Unavailable`) and record the limit in `LLM Context`. Verify every artifact
+  renders inline in the published PR.
 - When the visible outcome is genuinely identical or there is no visible
   outcome, use one clear, minimal fenced pseudocode `diff`.
 - Rarely, add matching `Before` and `After` diagrams for a substantial
@@ -37,7 +42,18 @@ instead of duplicating it. Never add the `open` attribute, and keep blank lines
 after `</summary>` and before `</details>` so GitHub renders the Markdown
 inside.
 
-## Example
+## Examples
+
+For visual proof, put screenshots or videos in a `Before | After` table above
+`LLM Context`, one row per matching scenario or viewport:
+
+```md
+## Proof
+
+| Before                                             | After                                            |
+| -------------------------------------------------- | ------------------------------------------------ |
+| ![Before, desktop](https://example.com/before.png) | ![After, desktop](https://example.com/after.png) |
+```
 
 For a change whose visible outcome stays the same:
 

@@ -33,8 +33,8 @@ required outcome, report the missing environment, access, or product decision.
    before editing, or reproduce it from that base in an isolated checkout
    without disturbing the user's working tree. Record the scenario, inputs, and
    environment. Use [docs context](../docs-context/SKILL.md) to confirm what
-   should happen. Never manufacture a failure; label unavailable or historical
-   evidence honestly.
+   should happen. Never fabricate a baseline or failure; label unavailable or
+   historical evidence honestly.
 2. **Capture after.** Reproduce the same scenario at the finished head. Use
    [show-me](../show-me/SKILL.md) for UI captures with matching viewport, data,
    and starting state. For UI changes, run [break UI](../break-ui/SKILL.md) and
@@ -53,7 +53,8 @@ required outcome, report the missing environment, access, or product decision.
 
 ## Put proof in the PR
 
-Follow [the PR body format](../pr-this/references/body.md). Embed screenshots
-and videos inline, link supporting evidence at URLs reviewers can open, and put
-verified context, checks, and implementation details inside the collapsed
-LLM Context section.
+Follow [the PR body format](../pr-this/references/body.md). Put visual proof in
+a `Before | After` table of screenshots or videos, one row per matching
+scenario or viewport, without fabricating a baseline. Link supporting evidence
+at URLs reviewers can open, and put verification and implementation context
+inside collapsed `LLM Context`.
