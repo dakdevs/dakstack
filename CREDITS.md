@@ -91,6 +91,9 @@ and the README's "Say / What it does" table follow
 ## Licenses
 
 t3dotgg/tstack, mattpocock/skills, and emilkowalski/skills are MIT licensed.
-cursor/plugins publishes no license. Its imported files retain their original
-content and attribution; the manifest records their exact provenance. Other
-adaptations remain identified above.
+The Cursor plugins used here have individual MIT licenses. The notices from the
+pinned revision are included for [pstack](licenses/pstack-license.txt),
+[thermos](licenses/thermos-license.txt), and
+[cursor-team-kit](licenses/cursor-team-kit-license.txt). Imported files retain
+their original content and attribution; the manifest records their exact
+provenance.

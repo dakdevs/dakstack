@@ -169,6 +169,35 @@ specific reasons for deferral when judgment or additional scope is needed.
 
 ## Install or update
 
+### Local MCP from GitHub
+
+Configure your MCP client to launch this command over **stdio** (Node.js 22+
+and npm required):
+
+```bash
+npx -y git+https://github.com/dakdevs/dakstack.git
+```
+
+In Capy, add a **STDIO** server with command `npx` and arguments `-y` and
+`git+https://github.com/dakdevs/dakstack.git`. The command runs on the thread's
+machine. Agents can ask to use Dakstack by name and load its instructions and
+supporting files using `list_skills` and `get_skill`. For example, ask the agent
+to load `ship-to-pr` and read its `references/workflow.md`. MCP tool access is
+independent of the client's native skill picker.
+
+The command above uses GitHub's default branch. To use a specific release,
+append `#<commit-sha>` or `#<tag>` to the URL in your client configuration.
+After changing the revision, restart the MCP process or start a new session.
+For a machine-wide install, run the install command below and configure your
+client to launch the resulting executable. Rerun the install to update it.
+
+```bash
+npm install -g git+https://github.com/dakdevs/dakstack.git
+dakstack-mcp
+```
+
+### Native skills
+
 Copy this prompt into an agent with filesystem and network access:
 
 ```text
