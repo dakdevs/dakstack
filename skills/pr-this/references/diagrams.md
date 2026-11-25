@@ -1,8 +1,9 @@
 # Before and after diagrams
 
-Include diagrams only if they help a reviewer understand the PR faster than the
-bullets do. Skip them for config tweaks, renames, and one-line changes. When
-you include them, always show two Mermaid diagrams: Before and After.
+Use diagrams rarely, only for a substantial change in high-level architecture
+when they make the changed flow easier to understand. Show matching Before and
+After diagrams in `## Proof` alongside the required outcome artifacts. Render
+Mermaid diagrams to images before embedding them.
 
 ## Pick a type
 
@@ -48,23 +49,14 @@ end
 
 ## Layout
 
-````markdown
-### Before
+Keep only short `Before` and `After` labels with the diagrams in `## Proof`.
+Put architectural explanation inside `LLM Context`.
 
-<One sentence saying what the reader is looking at.>
+```md
+![Before](https://example.com/before.png)
 
-```mermaid
-<old structure, no colors>
+![After](https://example.com/after.png)
 ```
-
-### After
-
-<One sentence saying what changed.>
-
-```mermaid
-<new structure, green for added, amber for changed>
-```
-````
 
 ## Syntax check
 

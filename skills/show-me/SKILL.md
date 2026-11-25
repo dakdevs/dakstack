@@ -11,8 +11,8 @@ by reading a summary. Show the real thing.
 ## Capture
 
 - For PR work, follow `pr-proof`: capture both the pinned before revision
-  and current after revision with matching state, data, and viewport. Label
-  each capture with its revision. Any subsequent change requires refreshed
+  and current after revision with matching state, data, and viewport. Record
+  revisions in the capture notes and in the collapsed PR context. Any subsequent change requires refreshed
   after proof; never resend an old capture as the current result.
 - Run the real app or page. Never show mocked data, a demo route, or a
   fragment when the user asked for the whole thing.
@@ -31,9 +31,9 @@ by reading a summary. Show the real thing.
 Use the route the user asked for. If they did not ask, pick the first that
 fits:
 
-1. **In the PR:** `gh pr edit <n> --repo <owner/repo> --attach <file>`, so
-   images and video render inline. Private-repo image links break, so attach
-   files instead.
+1. **In the PR:** Follow the [PR body format](../pr-this/references/body.md).
+   Upload the artifacts using the workspace instructions and verify that
+   screenshots and videos render inline.
 2. **To the phone:** `tailscale file cp <file> kirphone:`.
 3. **Live:** `tailscale serve` the dev server in a tmux session, and give the
    `https://<host>.<tailnet>.ts.net` URL.

@@ -20,14 +20,15 @@ one that already exists.
 - Never post, edit, or reply to PR comments. This skill writes the title and
   body only.
 - No em dashes in titles, bodies, or commit messages. Use a hyphen or rewrite.
-- Show only `## Proof` above the fold. Put all remaining content inside one
-  collapsed `<details>` block with `<summary>LLM Context</summary>` after proof.
-  Never add the `open` attribute. Follow [references/body.md](references/body.md).
+- Show only `## Proof` above the fold: proof artifacts, short labels, and
+  optional descriptive links. Put everything else in one closed `<details>`
+  block with `<summary>LLM Context</summary>`; never add `open`. Follow
+  [references/body.md](references/body.md).
 - If the repo has a PR template (`.github/pull_request_template.md`,
-  `.github/PULL_REQUEST_TEMPLATE/`, or one in `docs/` or the root), preserve its
-  headings, order, and checkboxes inside LLM Context. Put before/after evidence
-  and check results in the visible Proof section; reference it from any template
-  proof section instead of duplicating it. The proof-first layout takes precedence.
+  `.github/PULL_REQUEST_TEMPLATE/`, `docs/`, or root), preserve its headings,
+  order, and checkboxes inside LLM Context. Keep artifacts in `## Proof` and
+  checks in LLM Context; point any template proof section to `## Proof`. The
+  proof-first layout takes precedence.
 
 ## Steps
 
@@ -47,30 +48,24 @@ one that already exists.
    is real. If the branch name, commits, and diff do not make both clear, ask
    the user one specific question: what broke or was blocked, and what shows it
    (ticket, metric, incident, date range). Never invent evidence.
-4. **Analyze.** From the diff and the user's answer, name the problem, what
-   changed, who benefits, how behavior changes, and the parts that deserve a
-   close look.
+4. **Analyze.** From the diff and the user's answer, gather why, what changed,
+   how it works, and only decisions or errors needed to continue the work.
 5. **Verify and refresh `pr-proof`.** For UI changes, run
-   [break UI](../break-ui/SKILL.md) if current coverage is missing. Never mark
-   blocked UI review-ready. Include inspectable before and current after
-   evidence for every change, with revisions, scenarios, observed results,
-   and limits. Write the title and body with
-   [references/body.md](references/body.md). If a diagram helps, see
-   [references/diagrams.md](references/diagrams.md).
+   [break UI](../break-ui/SKILL.md) if coverage is missing; never mark blocked
+   UI review-ready. Include before and current after proof, and record
+   revisions, scenarios, checks, and limits in LLM Context. Write the title and
+   body with [references/body.md](references/body.md). For substantial
+   architecture diagrams, see [references/diagrams.md](references/diagrams.md).
 6. **Push.** `git push -u origin HEAD`; link an existing PR with the harness.
 7. **Create or update.** `gh pr view --json number,url` tells you which.
    Write the body to a temp file and pass it with `--body-file`.
    - New: `gh pr create --base <base> --draft --title "<title>" --body-file <file>`
    - Existing: `gh pr edit <n> --title "<title>" --body-file <file>`
      Link a new or taken-over PR with the harness as the next call.
-8. **Embed proof.** Use comparable before/after UI captures from `show-me`,
-   and durable logs, tests, or source permalinks for nonvisual changes.
-   Reference each visual file in the body,
-   such as `![Empty cart state](./empty-cart.png)`, then run
-   `gh pr edit <n> --repo <owner/repo> --body-file <file> --attach ./empty-cart.png`
-   (repeat `--attach` per file). `gh` uploads each file and rewrites the
-   reference. Uploads render inline, videos as players; never link to files
-   instead. A non-zero exit means some uploads failed, so check and retry those.
+8. **Embed proof.** Use the artifacts selected by
+   [PR proof](../pr-proof/SKILL.md). Optimize and upload visual attachments per
+   repo or workspace instructions, embed them inline in `## Proof`, and verify
+   the published body renders media inline and opens evidence links.
 9. Print the PR URL and verified head. Every later change requires
    refreshed after proof and a rewritten current body before handoff.
 

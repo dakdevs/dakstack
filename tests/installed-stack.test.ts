@@ -338,7 +338,7 @@ test("installed PR example keeps proof visible and all context collapsed", () =>
     join(installation, "pr-this/references/body.md"),
     "utf8",
   );
-  const example = body.match(/```md\n([\s\S]*?)\n```/)?.[1];
+  const example = body.match(/^````md\n([\s\S]*?)\n````$/m)?.[1];
   expect(example).toBeDefined();
   if (!example) throw new Error("PR body guidance needs a complete example");
 
@@ -359,9 +359,14 @@ test("installed PR example keeps proof visible and all context collapsed", () =>
   expect(visible.match(/^## .+$/gm)?.map((heading) => heading.trim())).toEqual([
     "## Proof",
   ]);
-  expect(visible).toMatch(/^\|\s*Before\s*\|/m);
-  expect(visible).toMatch(/^\|\s*After\s*\|/m);
-  for (const heading of ["Why", "Summary", "What", "Who this helps"]) {
+  expect(visible).toMatch(/^```diff\n- .+\n\+ .+\n```$/m);
+  const visibleProse = visible
+    .replace(/^## Proof$/m, "")
+    .replace(/^```diff\n[\s\S]*?^```$/m, "")
+    .replace(/^\[[^\]]+\]\(https:\/\/[^)]+\)$/gm, "")
+    .trim();
+  expect(visibleProse).toBe("");
+  for (const heading of ["Why", "What changed", "How it works"]) {
     expect(
       summary?.[2].match(/^## .+$/gm)?.map((line) => line.trim()),
     ).toContain(`## ${heading}`);

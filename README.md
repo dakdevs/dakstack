@@ -127,9 +127,16 @@ scope. PR publication requires authorization.
 
 Reviews begin after the entire implementation is finished and published.
 Each commit is a complete, working version with its tests. Every PR includes
-inspectable before and after proof; any later change refreshes the after
-record. The main thread owns fixes and finding dispositions. Unclear product
-intent returns to the user before a dependent fix or resolution.
+inspectable before and after proof. Capture comparable screenshots for changed
+visible UI states and before and after videos for changed workflows. Reproduce
+backend changes that affect the UI through the full stack under the same
+visual rule. When the visible outcome is genuinely identical or nonvisual, use
+a clear, minimal fenced pseudocode diff. Add diagrams only rarely for
+substantial high-level architecture changes. Keep the visible PR body to proof
+artifacts, short labels, and optional descriptive links, with everything else
+inside one closed LLM Context section. Refresh the after proof whenever the
+head changes. The main thread owns fixes and finding dispositions. Unclear
+product intent returns to the user before a dependent fix or resolution.
 
 `docs-context` runs throughout this flow. Understand the observed incident or
 desired capability, read the relevant product/architecture/runbook docs and
