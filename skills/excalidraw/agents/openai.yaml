@@ -1,0 +1,4 @@
+interface:
+  display_name: "Excalidraw"
+  short_description: "Create, edit, or review readable Excalidraw visuals"
+  default_prompt: "Use $excalidraw to create, edit, or review this Excalidraw drawing, diagram, or slide, checking overlaps, clipping, and readability."
