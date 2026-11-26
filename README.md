@@ -48,7 +48,7 @@ to plan improvements. The advisor leaves source files unchanged.
 | `unslop`                             | Removes AI-writing patterns from prose while keeping meaning, evidence, and formats.                                 |
 | `no-comments`                        | Inspects source comments and hidden workarounds within the same review pass.                                         |
 | `replicate-issue`                    | Reproduces bugs and findings, checks product intent, and guides verified fixes and thread dispositions.              |
-| `excalidraw`                         | Creates, edits, or reviews Excalidraw drawings and checks their readability.                                         |
+| `excalidraw`                         | Creates, edits, or reviews Excalidraw drawings, diagrams, and slides, checking overlaps, clipping, and readability.  |
 | `pr-proof`                           | Captures before/after evidence for every PR and refreshes the after record whenever work changes.                    |
 
 ## UI and motion
