@@ -19,6 +19,9 @@ one that already exists.
   template asks for one.
 - Never post, edit, or reply to PR comments. This skill writes the title and
   body only.
+- Read the full branch diff to write the body, but never paste a diff into it.
+  No raw, simplified, or pseudocode diffs, `diff` fences, or old and new code
+  excerpts, even inside LLM Context.
 - No em dashes in titles, bodies, or commit messages. Use a hyphen or rewrite.
 - Show only `## Proof` above the fold: proof artifacts, short labels, and
   optional descriptive links. Put everything else in one closed `<details>`
@@ -54,8 +57,9 @@ one that already exists.
    [break UI](../break-ui/SKILL.md) if coverage is missing; never mark blocked
    UI review-ready. Include before and current after proof, and record
    revisions, scenarios, checks, and limits in LLM Context. Write the title and
-   body with [references/body.md](references/body.md). For substantial
-   architecture diagrams, see [references/diagrams.md](references/diagrams.md).
+   body with [references/body.md](references/body.md). When the PR changes a
+   flow, boundary, state or data model, or architecture, add Excalidraw
+   diagrams with [references/diagrams.md](references/diagrams.md).
 6. **Push.** `git push -u origin HEAD`; link an existing PR with the harness.
 7. **Create or update.** `gh pr view --json number,url` tells you which.
    Write the body to a temp file and pass it with `--body-file`.

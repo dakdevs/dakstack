@@ -17,12 +17,16 @@ observe.
 - **Backend change affects the UI.** Reproduce it through the full stack in the
   affected UI, then use the same screenshot or video rule above.
 - **Visible outcome is genuinely identical, or there is no visible outcome.**
-  Write a clear, minimal fenced `diff` in pseudocode using `-` and `+` lines
-  for old and new behavior. Back it up with logs, tests, or source links.
-- **Substantial high-level architecture change.** Rarely, add matching before
-  and after diagrams when they make the new flow easier to understand,
-  alongside the outcome proof above. See
-  [diagrams](../pr-this/references/diagrams.md).
+  Run the same scenario at base and head and capture the real result: command
+  output, logs, API responses, or test results. Link tests, CI runs, and logs
+  at the pinned SHAs.
+- **Flow, boundary, state or data model, or architecture change.** Add
+  matching before and after Excalidraw diagrams alongside the outcome proof
+  above. Skip them for simple changes; a missing diagram never blocks
+  readiness. See [diagrams](../pr-this/references/diagrams.md).
+
+Never use a diff as proof. Raw, simplified, and pseudocode diffs restate the
+code instead of showing its outcome, and they stay out of the PR body.
 
 Missing required proof blocks readiness. If you cannot run or capture a
 required outcome, report the missing environment, access, or product decision.
@@ -42,8 +46,8 @@ required outcome, report the missing environment, access, or product decision.
    checks.
 3. **Inspect and verify.** Review every artifact yourself. Record the checked
    base and head SHAs, the checks actually run, and what the evidence proves
-   versus its limits. A pseudocode diff explains behavior; supporting logs,
-   tests, or runtime checks establish verification.
+   versus its limits. A diagram explains the change; logs, tests, or runtime
+   checks establish verification.
 4. **Refresh on every change.** Any later edit, fix, test update, rebase,
    conflict resolution, or amended commit invalidates the after proof. Rerun
    affected scenarios and checks at the new head, replace stale artifacts,
@@ -55,6 +59,6 @@ required outcome, report the missing environment, access, or product decision.
 
 Follow [the PR body format](../pr-this/references/body.md). Put visual proof in
 a `Before | After` table of screenshots or videos, one row per matching
-scenario or viewport, without fabricating a baseline. Link supporting evidence
-at URLs reviewers can open, and put verification and implementation context
-inside collapsed `LLM Context`.
+scenario or viewport, without fabricating a baseline. Put diagram pairs in the
+same table. Link supporting evidence at URLs reviewers can open, and put
+verification and implementation context inside collapsed `LLM Context`.

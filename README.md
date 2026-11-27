@@ -131,10 +131,12 @@ Each commit is a complete, working version with its tests. Every PR includes
 inspectable before and after proof. Capture comparable screenshots for changed
 visible UI states and before and after videos for changed workflows. Reproduce
 backend changes that affect the UI through the full stack under the same
-visual rule. When the visible outcome is genuinely identical or nonvisual, use
-a clear, minimal fenced pseudocode diff. Add diagrams only rarely for
-substantial high-level architecture changes. Keep the visible PR body to proof
-artifacts, short labels, and optional descriptive links, with everything else
+visual rule. When the visible outcome is genuinely identical or nonvisual,
+capture real output, logs, or test results at base and head. Add before and
+after Excalidraw diagrams when a PR changes a flow, boundary, state or data
+model, or architecture. PR bodies never include raw, simplified, or
+pseudocode diffs. Keep the visible PR body to proof artifacts, short labels,
+and optional descriptive links, with everything else
 inside one closed LLM Context section. Refresh the after proof whenever the
 head changes. The main thread owns fixes and finding dispositions. Unclear
 product intent returns to the user before a dependent fix or resolution.

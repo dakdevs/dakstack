@@ -18,10 +18,16 @@ Show only `## Proof` above the fold. Put everything else inside one closed
   `Unavailable`) and record the limit in `LLM Context`. Verify every artifact
   renders inline in the published PR.
 - When the visible outcome is genuinely identical or there is no visible
-  outcome, use one clear, minimal fenced pseudocode `diff`.
-- Rarely, add matching `Before` and `After` diagrams for a substantial
-  high-level architecture change alongside the outcome proof. Follow
-  [diagrams.md](diagrams.md).
+  outcome, show real evidence captured at base and head: short `Before` and
+  `After` excerpts of actual command output, logs, or responses, or links to
+  tests, CI runs, and logs at the pinned SHAs.
+- When the PR changes a flow, boundary, state or data model, or architecture,
+  add matching `Before | After` Excalidraw diagrams alongside the outcome
+  evidence. Follow [diagrams.md](diagrams.md).
+- Never put a diff anywhere in the body, above or below the fold: no raw,
+  simplified, or pseudocode diffs, `diff` code fences, or old and new code
+  excerpts. Reviewers read code in the PR's changed files; read the branch
+  diff only to write the body.
 - Keep optional links brief and plain, such as "Replay the duplicate event" or
   "See the retry contract".
 
@@ -55,15 +61,15 @@ For visual proof, put screenshots or videos in a `Before | After` table above
 | ![Before, desktop](https://example.com/before.png) | ![After, desktop](https://example.com/after.png) |
 ```
 
-For a change whose visible outcome stays the same:
+For a change whose visible outcome stays the same, pair a diagram of the
+changed flow with links to real evidence:
 
-````md
+```md
 ## Proof
 
-```diff
-- On duplicate event: enqueue another receipt
-+ On duplicate event: reuse the existing receipt
-```
+| Before                                                                       | After                                                                      |
+| ---------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| ![Before: a retry enqueues a second receipt](https://example.com/before.png) | ![After: a retry reuses the stored receipt](https://example.com/after.png) |
 
 [Replay a duplicate event](https://github.com/example/repo/blob/7f3c91a/tests/receipts.test.ts)
 
@@ -86,7 +92,9 @@ duplicate-event regression test verifies that a retry keeps one receipt.
 ## Verification
 
 - Base `4b8e210` to head `7f3c91a`
-- `bun test tests/receipts.test.ts` passed; live queue worker not exercised
+- `bun test tests/receipts.test.ts` passed: one receipt per replayed event
+  at head, two at base
+- Live queue worker not exercised
 
 </details>
-````
+```

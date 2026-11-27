@@ -343,7 +343,10 @@ test("installed PR example keeps proof visible and all context collapsed", () =>
     /^\| Before \| After \|\n\| -+ \| -+ \|\n\| !\[Before[^\]]*\]\(https:\/\/[^)]+\) \| !\[After[^\]]*\]\(https:\/\/[^)]+\) \|$/m,
   );
 
-  const example = body.match(/^````md\n([\s\S]*?)\n````$/m)?.[1];
+  expect(body).not.toMatch(/^`{3,}diff$/m);
+  const example = [...body.matchAll(/^```md\n([\s\S]*?)\n```$/gm)]
+    .map((match) => match[1])
+    .find((block) => block.includes("<details"));
   expect(example).toBeDefined();
   if (!example) throw new Error("PR body guidance needs a complete example");
 
@@ -364,10 +367,12 @@ test("installed PR example keeps proof visible and all context collapsed", () =>
   expect(visible.match(/^## .+$/gm)?.map((heading) => heading.trim())).toEqual([
     "## Proof",
   ]);
-  expect(visible).toMatch(/^```diff\n- .+\n\+ .+\n```$/m);
+  const imageRow =
+    /^\| !\[Before[^\]]*\]\(https:\/\/[^)]+\) +\| !\[After[^\]]*\]\(https:\/\/[^)]+\) +\|$/m;
+  expect(visible).toMatch(imageRow);
   const visibleProse = visible
     .replace(/^## Proof$/m, "")
-    .replace(/^```diff\n[\s\S]*?^```$/m, "")
+    .replace(/^\|.*\|$/gm, "")
     .replace(/^\[[^\]]+\]\(https:\/\/[^)]+\)$/gm, "")
     .trim();
   expect(visibleProse).toBe("");

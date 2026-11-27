@@ -1,67 +1,50 @@
 # Before and after diagrams
 
-Use diagrams rarely, only for a substantial change in high-level architecture
-when they make the changed flow easier to understand. Show matching Before and
-After diagrams in `## Proof` alongside the required outcome artifacts. Render
-Mermaid diagrams to images before embedding them.
+Prefer a matching pair of Excalidraw diagrams when the PR changes something a
+reviewer would otherwise have to rebuild from the diff in their head: a
+request or control flow, a service or module boundary, a state machine or
+data model, or high-level architecture. Diagrams explain the change; they do
+not prove it. Keep the outcome evidence that [PR proof](../../pr-proof/SKILL.md)
+requires.
 
-## Pick a type
+Skip diagrams for simple changes, such as a local bug fix, a copy or style
+tweak, a config or dependency bump, or a UI change that screenshots already
+show.
 
-Use the same type for both diagrams.
+## Draw
 
-- `flowchart`: control flow, request paths, pipelines, decisions.
-- `sequenceDiagram`: who calls whom, and in what order.
-- `classDiagram`: types, structs, module boundaries.
-- `graph`: dependencies or data flow between modules.
+Use the [Excalidraw skill](../../excalidraw/SKILL.md) for every diagram and
+follow its layout, overlap, and readability checks.
 
-## Content
+- Draw Before from the pinned base and After from the current head. Never
+  invent a Before; for a new capability, label the Before cell
+  `Not present before`.
+- Show only the slice the PR touches plus the context needed to read it, in
+  about 12 nodes or fewer per diagram.
+- Use real names from the code so nodes map to the changed files. Label each
+  connector with what moves along it: a data type, an event, an HTTP method.
+- Keep layout, positions, and names identical across both diagrams so the
+  change stands out. Put each diagram in its own frame.
+- Leave Before uncolored. In After, mark added and changed elements with a
+  distinct fill and a short text cue, such as `new` or `changed`, so the
+  distinction survives without color. Add a small legend.
+- Keep code, diffs, and prose out of the drawing. Nodes hold names or actions.
 
-- Show only the slice the PR touches plus the context needed to read it.
-- Label each edge with what moves along it: a data type, an event, an HTTP
-  method.
-- Use real names from the code so nodes map to the diff.
-- Keep each diagram to about 12 nodes or fewer.
-- Give a node the same ID in both diagrams so reviewers can see what moved.
-- Each diagram must make sense on its own.
+## Deliver
 
-## Color
+1. Export each frame to PNG on a solid white background, or take a frame
+   screenshot when export is unavailable. Inspect each image at GitHub's body
+   width and fix anything clipped, overlapping, or too small to read.
+2. Optimize and upload the PNGs with the visual proof, following repo and
+   workspace instructions. Upload only as part of authorized PR publication.
+3. Embed them inline in the `## Proof` `Before | After` table, one row per
+   diagram pair. Keep labels short; put the architectural explanation in
+   `LLM Context`.
+4. Link the editable Excalidraw scene only when reviewers already have access
+   and sharing it is within the task's authorization. Never change a scene's
+   sharing settings to make a link work.
+5. Verify the published body renders every diagram inline.
 
-Leave Before uncolored. In After, color only what changed, with medium fills
-and white text so both GitHub themes stay readable:
-
-```
-style Node fill:#2ea043,stroke:#3fb950,color:#fff  %% added
-style Node fill:#d29922,stroke:#e3b341,color:#fff  %% changed
-style Node fill:#388bfd,stroke:#58a6ff,color:#fff  %% context, use rarely
-```
-
-End After with a legend:
-
-```
-subgraph Legend
-  direction LR
-  added[Added]
-  changed[Changed]
-  style added fill:#2ea043,stroke:#3fb950,color:#fff
-  style changed fill:#d29922,stroke:#e3b341,color:#fff
-end
-```
-
-## Layout
-
-Keep only short `Before` and `After` labels with the diagrams in `## Proof`.
-Put architectural explanation inside `LLM Context`.
-
-```md
-![Before](https://example.com/before.png)
-
-![After](https://example.com/after.png)
-```
-
-## Syntax check
-
-- Subgraph names are unquoted: `subgraph My Name`.
-- Node IDs have no spaces or special characters.
-- Arrows are valid: `-->`, `-.->`, `==>`.
-- Every `style` line names a node that exists.
-- Every subgraph, including nested ones, closes with `end`.
+If Excalidraw tools are unavailable or a diagram cannot pass its visual checks,
+publish without diagrams and record the gap in `LLM Context`. A missing
+optional diagram never blocks the PR.
