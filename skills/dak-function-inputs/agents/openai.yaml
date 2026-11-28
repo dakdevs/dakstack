@@ -1,0 +1,4 @@
+interface:
+  display_name: "Function input types"
+  short_description: "Define inline, module-local function inputs and project only the fields a function needs."
+  default_prompt: "Use $dak-function-inputs for this task."

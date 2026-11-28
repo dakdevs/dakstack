@@ -20,8 +20,8 @@ Apply this branch alongside any opted-in style.
 
 When the task opts into [Dak Style](../../dak-style/SKILL.md), read it
 before planning changes. Apply it to implementation, the focused review, and
-subsequent fixes. Include the style decision and its skill path in briefs for
-those roles, including any follow-up work.
+subsequent fixes. Include the style decision and paths to the bundle and its
+linked skills in briefs for those roles, including any follow-up work.
 
 For improvement work, read [improve](../../improve/SKILL.md): investigate and plan
 within scope; keep the advisor read-only on source. Hand selected plans to a

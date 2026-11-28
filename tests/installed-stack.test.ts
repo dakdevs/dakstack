@@ -87,8 +87,19 @@ test.each(
       "principle-test-behavior-not-implementation",
     ],
     "dak-style/SKILL.md": [
+      "dak-package-priorities",
+      "dak-type-flow",
+      "dak-function-inputs",
+      "dak-stepwise-workflows",
+      "dak-local-helpers",
+      "dak-module-queries",
+      "dak-file-scoped-lint",
+      "build-with-effect",
+    ],
+    "dak-type-flow/SKILL.md": [
       "principle-boundary-discipline",
       "principle-preserve-type-flow",
+      "dak-function-inputs",
     ],
     "ship-to-pr/references/shipping.md": [
       "principle-sequence-verifiable-units",

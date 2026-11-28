@@ -1,0 +1,4 @@
+interface:
+  display_name: "Package priorities"
+  short_description: "Choose Dak Style defaults for dates and times and for animation packages."
+  default_prompt: "Use $dak-package-priorities for this task."

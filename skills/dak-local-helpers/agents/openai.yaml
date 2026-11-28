@@ -1,0 +1,4 @@
+interface:
+  display_name: "Local helpers"
+  short_description: "Keep one-off helpers private and share stable behavior when callers need it."
+  default_prompt: "Use $dak-local-helpers for this task."

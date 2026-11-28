@@ -1,0 +1,4 @@
+interface:
+  display_name: "Module-owned database queries"
+  short_description: "Keep named database operations private to the module that owns the use case."
+  default_prompt: "Use $dak-module-queries for this task."
