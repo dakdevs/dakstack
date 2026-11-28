@@ -2,14 +2,14 @@
 
 # dakstack
 
-Dakstack is 62 skills for building, reviewing, and shipping with Claude Code
+Dakstack is 67 skills for building, reviewing, and shipping with Claude Code
 and Codex, with extras in [T3 Code](https://t3.codes). I started it with the
 instructions I kept repeating across about 6,900 prompts.
 
 The easiest way in is a local [Executor](https://executor.sh) app that reads
 the skills straight from this repo, so updates show up on their own.
 
-**[Install with Executor](#install)** · [All 62 skills](#skills) ·
+**[Install with Executor](#install)** · [All 67 skills](#skills) ·
 [Credits](#credits-and-licenses)
 
 ## How shipping works
@@ -27,6 +27,16 @@ they stop.
 - **`ship` needs your go-ahead for that PR.** Saying "ship" picks where it
   stops; it isn't permission to merge.
 - **PR steps need your permission.** Local work still runs its own checks.
+
+For readable workflows, boundary validation, producer-owned types, private
+helpers, module-owned queries, and file-scoped lint, use
+[`dak-style`](skills/dak-style/SKILL.md) on its own or opt in during shipping
+with `ship-dakstyle` or `ship-to-pr-dakstyle`.
+
+When the codebase uses Effect, shipping automatically loads
+[`build-with-effect`](skills/build-with-effect/SKILL.md) and its
+[`verify-effect`](skills/verify-effect/SKILL.md) guidance. Both skills can
+also be invoked directly.
 
 <details>
 <summary><b>Which skills run at each step, and why</b></summary>
@@ -251,25 +261,30 @@ this stack.
 
 ### Workflows
 
-| Skill         | Say                           | What it does                                                                                       | Source                                                                                                                                                                            |
-| ------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ship`        | "ship it", "get it merged"    | Builds, checks, reviews and publishes a PR, then merges only with your go-ahead for that PR.       | Original. Folds in Theo's tstack full-send (workflow, proof rules, merge gate) and the merge-conflict rules from Cursor's cursor-team-kit fix-merge-conflicts.                    |
-| `ship-to-pr`  | "ship to PR"                  | Same work as `ship`, but stops with the PR open for you to merge.                                  | Original. Folds in Theo's tstack full-stop (no-merge rules, handoff states). Its shared workflow and roles adapt ideas from pstack's poteto-agent, poteto-mode and comment-sicko. |
-| `bar`         | "make sure it passes the bar" | Reviews finished work in one focused pass, checks each finding, and turns repeat checks into lint. | Original.                                                                                                                                                                         |
-| `show-me`     | "show me"                     | Takes real desktop and mobile screenshots and videos, and sends them to the PR, your phone or Dia. | Original.                                                                                                                                                                         |
-| `design-loop` | "design it in Paper"          | Studies references, prototypes in Paper, applies your notes literally, and builds after you OK it. | Original.                                                                                                                                                                         |
-| `fanout`      | "use Opus delegates"          | Gives each independent piece of work its own delegate, worktree and PR, stacked when they depend.  | Original. Handoff notes adapted from Matt Pocock's handoff skill.                                                                                                                 |
-| `status`      | "what's next?"                | Checks git, PRs, deploys and threads, then tells you where things stand and what to do next.       | Original. Handoff notes adapted from Matt Pocock's handoff skill.                                                                                                                 |
-| `prod-triage` | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one at its cause in its own PR.      | Original. Reproduce-first loop adapted from Matt Pocock's diagnose skill (now diagnosing-bugs).                                                                                   |
-| `scaffold`    | "set up a new repo"           | Starts a project with Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.         | Original.                                                                                                                                                                         |
-| `sweep`       | "free up space"               | Finds what's filling your disk, proves what's unused, and deletes only that.                       | Original.                                                                                                                                                                         |
-| `film`        | "make a launch video"         | Plans, generates, edits and critiques a product film, sending each cut to your phone.              | Original.                                                                                                                                                                         |
+| Skill                 | Say                           | What it does                                                                                       | Source                                                                                                                                                                            |
+| --------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ship`                | "ship it", "get it merged"    | Builds, checks, reviews and publishes a PR, then merges only with your go-ahead for that PR.       | Original. Folds in Theo's tstack full-send (workflow, proof rules, merge gate) and the merge-conflict rules from Cursor's cursor-team-kit fix-merge-conflicts.                    |
+| `ship-to-pr`          | "ship to PR"                  | Same work as `ship`, but stops with the PR open for you to merge.                                  | Original. Folds in Theo's tstack full-stop (no-merge rules, handoff states). Its shared workflow and roles adapt ideas from pstack's poteto-agent, poteto-mode and comment-sicko. |
+| `ship-dakstyle`       | "ship with Dak Style"         | Runs `ship` with Dak Style applied through implementation and review.                              | Original.                                                                                                                                                                         |
+| `ship-to-pr-dakstyle` | "ship to PR with Dak Style"   | Runs `ship-to-pr` with Dak Style and leaves the PR open for you to merge.                          | Original.                                                                                                                                                                         |
+| `bar`                 | "make sure it passes the bar" | Reviews finished work in one focused pass, checks each finding, and turns repeat checks into lint. | Original.                                                                                                                                                                         |
+| `show-me`             | "show me"                     | Takes real desktop and mobile screenshots and videos, and sends them to the PR, your phone or Dia. | Original.                                                                                                                                                                         |
+| `design-loop`         | "design it in Paper"          | Studies references, prototypes in Paper, applies your notes literally, and builds after you OK it. | Original.                                                                                                                                                                         |
+| `fanout`              | "use Opus delegates"          | Gives each independent piece of work its own delegate, worktree and PR, stacked when they depend.  | Original. Handoff notes adapted from Matt Pocock's handoff skill.                                                                                                                 |
+| `status`              | "what's next?"                | Checks git, PRs, deploys and threads, then tells you where things stand and what to do next.       | Original. Handoff notes adapted from Matt Pocock's handoff skill.                                                                                                                 |
+| `prod-triage`         | "look at the prod errors"     | Ranks Sentry and log errors by severity, then fixes each real one at its cause in its own PR.      | Original. Reproduce-first loop adapted from Matt Pocock's diagnose skill (now diagnosing-bugs).                                                                                   |
+| `scaffold`            | "set up a new repo"           | Starts a project with Bun, Turborepo, Effect, oxlint, oxfmt, and CI that deploys on merge.         | Original.                                                                                                                                                                         |
+| `sweep`               | "free up space"               | Finds what's filling your disk, proves what's unused, and deletes only that.                       | Original.                                                                                                                                                                         |
+| `film`                | "make a launch video"         | Plans, generates, edits and critiques a product film, sending each cut to your phone.              | Original.                                                                                                                                                                         |
 
 ### Commands
 
 | Skill                                | What it does                                                                                                          | Source                                                                                               |
 | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | `improve`                            | Audits a codebase and writes self-contained improvement plans for other agents. Never edits code.                     | Exact copy from [shadcn/improve](https://github.com/shadcn/improve).                                 |
+| `build-with-effect`                  | Builds function-based Effect flows with version-matched APIs, typed failures, and explicit layers.                    | Original guidance informed by the official Effect skills, Effect Institute, and Effect Solutions.    |
+| `verify-effect`                      | Tests and reviews Effect behavior, layer wiring, cancellation, and cleanup.                                           | Original.                                                                                            |
+| `dak-style`                          | Builds and reviews touched flows with readable steps, private helpers, and module-owned queries.                      | Original.                                                                                            |
 | `pr-this`                            | Creates or updates the PR for the current branch, rewriting the title and body from the full diff.                    | Original.                                                                                            |
 | `babysit-pr`                         | Watches a PR through CI and review bots, fixing real failures and findings at their cause.                            | Adapted from Theo's [tstack](https://github.com/t3dotgg/tstack) babysit-pr, without its wait script. |
 | `thermo-nuclear-review`              | Deep audit of a branch for bugs, breaking changes, security holes and feature-gate leaks.                             | Exact copy from Cursor's thermos plugin.                                                             |

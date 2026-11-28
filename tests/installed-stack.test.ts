@@ -74,6 +74,22 @@ test("all hidden upstream leaves can be discovered on disk and read by absolute 
 
 test.each(
   Object.entries({
+    "ship-to-pr/references/workflow.md": ["build-with-effect"],
+    "scaffold/SKILL.md": ["build-with-effect"],
+    "build-with-effect/SKILL.md": [
+      "principle-effect-boundary",
+      "principle-boundary-discipline",
+      "principle-preserve-type-flow",
+      "verify-effect",
+    ],
+    "verify-effect/SKILL.md": [
+      "principle-effect-boundary",
+      "principle-test-behavior-not-implementation",
+    ],
+    "dak-style/SKILL.md": [
+      "principle-boundary-discipline",
+      "principle-preserve-type-flow",
+    ],
     "ship-to-pr/references/shipping.md": [
       "principle-sequence-verifiable-units",
     ],
@@ -282,6 +298,23 @@ test.each([
     join(installation, "ship-to-pr/references/workflow.md"),
   );
   expect(entry).not.toMatch(/\.\.\/ship(?:-to-pr)?\/SKILL\.md/);
+  expect(manifest?.interface.default_prompt).toContain(`$${name} `);
+});
+
+test.each([
+  ["ship-dakstyle", "ship"],
+  ["ship-to-pr-dakstyle", "ship-to-pr"],
+])("%s applies Dak Style and uses the %s workflow", (name, base) => {
+  const installation = install();
+  const entry = readFileSync(join(installation, name, "SKILL.md"), "utf8");
+  const manifest = Bun.YAML.parse(
+    readFileSync(join(installation, name, "agents/openai.yaml"), "utf8"),
+  );
+  const [style, shipping] = [...entry.matchAll(/\]\(([^)]+)\)/g)].map(
+    ([, path]) => resolve(installation, name, path),
+  );
+  expect(style).toBe(join(installation, "dak-style/SKILL.md"));
+  expect(shipping).toBe(join(installation, base, "SKILL.md"));
   expect(manifest?.interface.default_prompt).toContain(`$${name} `);
 });
 

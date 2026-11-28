@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ship with Dak Style"
+  short_description: "Ship with Dak Style, merging only with explicit authorization"
+  default_prompt: "Use $ship-dakstyle for this task."

@@ -39,28 +39,34 @@ test("the Node stdio entry point exposes bundled skills from outside the repo", 
       }),
     );
 
-    for (const file of [
-      "SKILL.md",
-      "references/workflow.md",
-      "agents/implementation-agent.md",
+    for (const [name, file] of [
+      ["ship-to-pr", "SKILL.md"],
+      ["ship-to-pr", "references/workflow.md"],
+      ["ship-to-pr", "agents/implementation-agent.md"],
+      ["dak-style", "SKILL.md"],
+      ["build-with-effect", "SKILL.md"],
+      ["verify-effect", "SKILL.md"],
+      ["ship-dakstyle", "SKILL.md"],
+      ["ship-to-pr-dakstyle", "SKILL.md"],
     ]) {
       const skill = await client.callTool({
         name: "get_skill",
         arguments: {
-          name: "ship-to-pr",
+          name,
           ...(file === "SKILL.md" ? {} : { file }),
         },
       });
       expect(skill.isError).toBeUndefined();
       expect(JSON.parse(skill.content[0].text)).toMatchObject({
-        name: "ship-to-pr",
+        name,
         file,
-        files: expect.arrayContaining([
-          "references/workflow.md",
-          "agents/implementation-agent.md",
-        ]),
+        files: expect.arrayContaining(
+          name === "ship-to-pr"
+            ? ["references/workflow.md", "agents/implementation-agent.md"]
+            : ["SKILL.md", "agents/openai.yaml"],
+        ),
         content: await readFile(
-          new URL(`ship-to-pr/${file}`, skillsDirectory),
+          new URL(`${name}/${file}`, skillsDirectory),
           "utf8",
         ),
       });

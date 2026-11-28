@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build with Effect"
+  short_description: "Function-based Effect with typed failures and explicit layers"
+  default_prompt: "Use $build-with-effect for this task."

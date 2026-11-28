@@ -35,7 +35,7 @@ operation to Effect, benchmark the real operation with and without it.
   recomputes each run. Use `sync` for anything time- or state-dependent.
 - Failures accumulate in the error type as a union. `Effect.catchTag`
   handles one tag and narrows it; `Effect.catch` handles all. An error type
-  of `never` proves the operation cannot fail.
+  of `never` rules out typed failures but still allows defects or interruption.
 - `Effect.gen` with `yield*` is sequential composition, like `async`/`await`.
   Build the whole operation as one Effect and run it once, at the edge.
 
@@ -50,7 +50,8 @@ operation to Effect, benchmark the real operation with and without it.
   fiber's `AbortSignal`, so interruption aborts the request.
 - Run at the edge with `Effect.runPromise` or `Effect.runPromiseExit`; map
   the result to the existing Promise API so callers and their tests stay
-  unchanged. Catch defects at that edge, not inside the operation.
+  unchanged. Handle defects at that edge, preserving their distinction from
+  expected errors.
 - Parse untrusted input once at the entrypoint. Keep a Zod schema that owns
   a boundary; do not duplicate it as an Effect `Schema`.
 - See [references/example.md](references/example.md) for a service, a layer,
@@ -73,7 +74,7 @@ Use the repo's test runner; do not add an Effect-specific one. Provide stub
 layers, run to a Promise or `Exit`, and assert literal values and typed
 failures (read [test behavior](../principle-test-behavior-not-implementation/SKILL.md)): a stub answering
 503 makes `post(...).pipe(Effect.flip, Effect.provide(transportLayer(stub)))`
-resolve to `{ _tag: "Refused", status: 503 }`. For time, provide
-`TestClock.layer()` from `effect/testing` and move it with `TestClock.adjust`
-instead of sleeping. For cancellation, interrupt the operation and assert
+resolve to `{ _tag: "Refused", status: 503 }`. For time, provide the installed
+version's test clock and move it with `TestClock.adjust`. For cancellation,
+interrupt the operation and assert
 that the injected request saw an aborted signal.

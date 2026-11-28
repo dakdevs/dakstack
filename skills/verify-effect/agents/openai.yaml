@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verify Effect"
+  short_description: "Verify Effect behavior, layers, cancellation, and cleanup"
+  default_prompt: "Use $verify-effect to verify this change."

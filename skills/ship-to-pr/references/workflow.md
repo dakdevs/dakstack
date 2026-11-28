@@ -11,6 +11,18 @@ yourself; ask only about material decisions evidence cannot settle. Continue
 independent work while pending. Apply [docs context](../../docs-context/SKILL.md)
 throughout; carry sources, expectations, checks, and gaps into each brief.
 
+When the codebase uses Effect, or the task introduces it, load
+[Build with Effect](../../build-with-effect/SKILL.md) before planning code
+changes. Check workspace dependencies and imports to find the affected
+Effect packages and their resolved versions. Carry the Effect skill paths,
+versions, and verification scope into implementation, review, and fix briefs.
+Apply this branch alongside any opted-in style.
+
+When the task opts into [Dak Style](../../dak-style/SKILL.md), read it
+before planning changes. Apply it to implementation, the focused review, and
+subsequent fixes. Include the style decision and its skill path in briefs for
+those roles, including any follow-up work.
+
 For improvement work, read [improve](../../improve/SKILL.md): investigate and plan
 within scope; keep the advisor read-only on source. Hand selected plans to a
 separate executor only when implementation and delegation are authorized.

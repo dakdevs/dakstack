@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ship to PR with Dak Style"
+  short_description: "Prepare a PR with Dak Style and leave it open for manual merge"
+  default_prompt: "Use $ship-to-pr-dakstyle to get this ready to merge."
