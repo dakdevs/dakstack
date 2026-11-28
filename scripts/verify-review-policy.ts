@@ -5,7 +5,9 @@ const workflows = [
   "bar",
   "no-comments",
   "ship",
+  "ship-dakstyle",
   "ship-to-pr",
+  "ship-to-pr-dakstyle",
   "babysit-pr",
   "replicate-issue",
 ];

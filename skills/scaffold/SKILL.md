@@ -32,8 +32,8 @@ repo first and copy its setup instead of these defaults.
 2. oxlint with `dakdevs/oxlint-plugin/config`, warnings as errors, and oxfmt.
    Add `lint`, `format`, `typecheck`, `test`, and `test:e2e` scripts at the
    root.
-3. Effect in functional style with layers for dependency injection. No
-   Effect classes.
+3. Follow [Build with Effect](../build-with-effect/SKILL.md) for function-based
+   Effect and dependency layers.
 4. All infrastructure as code (Alchemy). Store deploy secrets as GitHub
    Actions secrets, read from 1Password with `op`; never in the repo or
    chat.

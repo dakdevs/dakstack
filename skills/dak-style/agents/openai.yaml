@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dak Style"
+  short_description: "Readable application workflows, private helpers, and module-owned queries"
+  default_prompt: "Use $dak-style for this task."
