@@ -1,4 +1,4 @@
 interface:
   display_name: "Dak Style"
-  short_description: "Readable application workflows, private helpers, and module-owned queries"
+  short_description: "Apply the full Dak Style skill set to application code"
   default_prompt: "Use $dak-style for this task."

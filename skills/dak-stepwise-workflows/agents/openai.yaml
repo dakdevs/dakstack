@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stepwise workflows"
+  short_description: "Write high-level workflows as readable sequences of named domain operations."
+  default_prompt: "Use $dak-stepwise-workflows for this task."

@@ -2,14 +2,14 @@
 
 # dakstack
 
-Dakstack is 67 skills for building, reviewing, and shipping with Claude Code
+Dakstack is 74 skills for building, reviewing, and shipping with Claude Code
 and Codex, with extras in [T3 Code](https://t3.codes). I started it with the
 instructions I kept repeating across about 6,900 prompts.
 
 The easiest way in is a local [Executor](https://executor.sh) app that reads
 the skills straight from this repo, so updates show up on their own.
 
-**[Install with Executor](#install)** · [All 67 skills](#skills) ·
+**[Install with Executor](#install)** · [All 74 skills](#skills) ·
 [Credits](#credits-and-licenses)
 
 ## How shipping works
@@ -28,10 +28,9 @@ they stop.
   stops; it isn't permission to merge.
 - **PR steps need your permission.** Local work still runs its own checks.
 
-For readable workflows, boundary validation, producer-owned types, private
-helpers, module-owned queries, and file-scoped lint, use
-[`dak-style`](skills/dak-style/SKILL.md) on its own or opt in during shipping
-with `ship-dakstyle` or `ship-to-pr-dakstyle`.
+Use [`dak-style`](skills/dak-style/SKILL.md) to apply all the
+[Dak Style skills](#dak-style) together, or opt in during shipping with
+`ship-dakstyle` or `ship-to-pr-dakstyle`.
 
 When the codebase uses Effect, shipping automatically loads
 [`build-with-effect`](skills/build-with-effect/SKILL.md) and its
@@ -284,7 +283,6 @@ this stack.
 | `improve`                            | Audits a codebase and writes self-contained improvement plans for other agents. Never edits code.                     | Exact copy from [shadcn/improve](https://github.com/shadcn/improve).                                 |
 | `build-with-effect`                  | Builds function-based Effect flows with version-matched APIs, typed failures, and explicit layers.                    | Original guidance informed by the official Effect skills, Effect Institute, and Effect Solutions.    |
 | `verify-effect`                      | Tests and reviews Effect behavior, layer wiring, cancellation, and cleanup.                                           | Original.                                                                                            |
-| `dak-style`                          | Builds and reviews touched flows with readable steps, private helpers, and module-owned queries.                      | Original.                                                                                            |
 | `pr-this`                            | Creates or updates the PR for the current branch, rewriting the title and body from the full diff.                    | Original.                                                                                            |
 | `babysit-pr`                         | Watches a PR through CI and review bots, fixing real failures and findings at their cause.                            | Adapted from Theo's [tstack](https://github.com/t3dotgg/tstack) babysit-pr, without its wait script. |
 | `thermo-nuclear-review`              | Deep audit of a branch for bugs, breaking changes, security holes and feature-gate leaks.                             | Exact copy from Cursor's thermos plugin.                                                             |
@@ -296,6 +294,21 @@ this stack.
 | `replicate-issue`                    | Reproduces a bug or review finding, checks what the product should do, then guides a tested fix.                      | Original.                                                                                            |
 | `excalidraw`                         | Creates and reviews diagrams and slides, then checks the rendered result for overlap, clipped labels and readability. | Original.                                                                                            |
 | `pr-proof`                           | Captures comparable before-and-after evidence for every PR and refreshes it when the PR changes.                      | Original.                                                                                            |
+
+### Dak Style
+
+Each skill can be invoked on its own. All are original Dakstack guidance.
+
+| Skill                    | What it does                                                                   |
+| ------------------------ | ------------------------------------------------------------------------------ |
+| `dak-style`              | Applies the full set of rules to the flow you build or review.                 |
+| `dak-package-priorities` | Chooses the preferred packages for dates, times, and animation.                |
+| `dak-type-flow`          | Validates data at the boundary and keeps producer-owned types intact.          |
+| `dak-function-inputs`    | Defines local parameter shapes and passes only the fields each function needs. |
+| `dak-stepwise-workflows` | Makes high-level workflows read as named steps with visible decisions.         |
+| `dak-local-helpers`      | Keeps one-off helpers private and shares stable behavior when needed.          |
+| `dak-module-queries`     | Keeps named database queries with their owning use case.                       |
+| `dak-file-scoped-lint`   | Enforces narrow file contracts through the project's lint and CI.              |
 
 ### UI and motion
 

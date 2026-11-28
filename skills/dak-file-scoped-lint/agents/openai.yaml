@@ -1,0 +1,4 @@
+interface:
+  display_name: "File-scoped lint"
+  short_description: "Enforce narrow file contracts through the project's lint command and CI."
+  default_prompt: "Use $dak-file-scoped-lint for this task."

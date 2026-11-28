@@ -1,0 +1,4 @@
+interface:
+  display_name: "Boundary validation and type flow"
+  short_description: "Apply Dak Style boundary validation and preserve producer-owned types without unsafe assertions."
+  default_prompt: "Use $dak-type-flow for this task."
